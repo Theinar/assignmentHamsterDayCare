@@ -136,7 +136,7 @@ namespace UI
         {
             var hamster = hDCDbContext.Hamsters.First();
             var cage = hDCDbContext.Cages.First(c => c.Gender == hamster.Gender && c.Capacity > c.NrOfHamsters || c.NrOfHamsters == 0);
-            hDCDbContext.DayCareStays.Add()
+          //  hDCDbContext.DayCareStays.Add()
 
         }
 
