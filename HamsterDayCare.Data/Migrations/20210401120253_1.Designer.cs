@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HamsterDayCare.Data.Migrations
 {
     [DbContext(typeof(HDCDbContext))]
-    [Migration("20210331134728_asfaDSF")]
-    partial class asfaDSF
+    [Migration("20210401120253_1")]
+    partial class _1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -60,6 +60,9 @@ namespace HamsterDayCare.Data.Migrations
                     b.Property<int>("Gender")
                         .HasColumnType("int");
 
+                    b.Property<int>("NrOfHamsters")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.ToTable("Cages");
@@ -74,7 +77,7 @@ namespace HamsterDayCare.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("DayCareLog");
+                    b.ToTable("DayCareLogs");
                 });
 
             modelBuilder.Entity("HamsterDayCare.Domain.DayCareStay", b =>
@@ -87,10 +90,13 @@ namespace HamsterDayCare.Data.Migrations
                     b.Property<DateTime>("Arrival")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("CageId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("CheckOut")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("DayCareLogId")
+                    b.Property<int>("DayCareLogId")
                         .HasColumnType("int");
 
                     b.Property<int>("HamasterId")
@@ -110,9 +116,15 @@ namespace HamsterDayCare.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("Capacity")
+                        .HasColumnType("int");
+
+                    b.Property<int>("NrOfHamsters")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
-                    b.ToTable("ExerciseArea");
+                    b.ToTable("ExerciseAreas");
                 });
 
             modelBuilder.Entity("HamsterDayCare.Domain.Hamster", b =>
@@ -160,7 +172,9 @@ namespace HamsterDayCare.Data.Migrations
                 {
                     b.HasOne("HamsterDayCare.Domain.DayCareLog", null)
                         .WithMany("DayCareStays")
-                        .HasForeignKey("DayCareLogId");
+                        .HasForeignKey("DayCareLogId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("HamsterDayCare.Domain.Hamster", b =>
@@ -169,11 +183,13 @@ namespace HamsterDayCare.Data.Migrations
                         .WithMany("Hamsters")
                         .HasForeignKey("CageId");
 
-                    b.HasOne("HamsterDayCare.Domain.ExerciseArea", null)
+                    b.HasOne("HamsterDayCare.Domain.ExerciseArea", "ExerciseArea")
                         .WithMany("Hamsters")
                         .HasForeignKey("ExerciseAreaId");
 
                     b.Navigation("Cage");
+
+                    b.Navigation("ExerciseArea");
                 });
 
             modelBuilder.Entity("HamsterDayCare.Domain.Cage", b =>

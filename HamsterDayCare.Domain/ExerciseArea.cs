@@ -12,6 +12,6 @@ namespace HamsterDayCare.Domain
         public int Id { get; set; }
         public virtual ICollection<Hamster> Hamsters { get; set; } = new List<Hamster>();
         public int Capacity { get; set; }
-        public int NrOfHamsters { get => Hamsters.Count; }
+        public int NrOfHamsters { get; set; }
     }
 }

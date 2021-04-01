@@ -11,6 +11,7 @@ namespace HamsterDayCare.Domain
         public int Id { get; set; }
         public int HamasterId { get; set; }
         public int CageId { get; set; }
+        public int DayCareLogId { get; set; }
         public DateTime Arrival { get; set; }
         public DateTime CheckOut { get; set; }
         public virtual ICollection<Activity> Activities { get; set; } = new List<Activity>();

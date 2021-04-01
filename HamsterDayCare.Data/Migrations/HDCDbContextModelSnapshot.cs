@@ -75,7 +75,7 @@ namespace HamsterDayCare.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("DayCareLog");
+                    b.ToTable("DayCareLogs");
                 });
 
             modelBuilder.Entity("HamsterDayCare.Domain.DayCareStay", b =>
@@ -94,7 +94,7 @@ namespace HamsterDayCare.Data.Migrations
                     b.Property<DateTime>("CheckOut")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("DayCareLogId")
+                    b.Property<int>("DayCareLogId")
                         .HasColumnType("int");
 
                     b.Property<int>("HamasterId")
@@ -115,6 +115,9 @@ namespace HamsterDayCare.Data.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("Capacity")
+                        .HasColumnType("int");
+
+                    b.Property<int>("NrOfHamsters")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -140,6 +143,9 @@ namespace HamsterDayCare.Data.Migrations
 
                     b.Property<int>("Gender")
                         .HasColumnType("int");
+
+                    b.Property<DateTime>("LastExercise")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -167,7 +173,9 @@ namespace HamsterDayCare.Data.Migrations
                 {
                     b.HasOne("HamsterDayCare.Domain.DayCareLog", null)
                         .WithMany("DayCareStays")
-                        .HasForeignKey("DayCareLogId");
+                        .HasForeignKey("DayCareLogId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("HamsterDayCare.Domain.Hamster", b =>

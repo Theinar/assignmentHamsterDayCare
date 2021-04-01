@@ -9,89 +9,38 @@ using System.Text;
 
 namespace UI
 {
+
     class Program
     {
+
         public static HDCDbContext hDCDbContext = new HDCDbContext();
         public static DateTime StartsFrom = DateTime.Now;
         static void Main(string[] args)
         {
-            CheckInHamster();
-
+            //CreateAndAddHamsterClientele();
+            //CheckInHamsters();
+            //AddDaycareLog();
+            //AddCage(10);
+            //CheckOutHamsters();
         }
 
-
-        /* Fiffig hjälp i Console PM  get-help Entityframework
-         * _context.blabla.TaqWith() lägger till en kommentar i SQL
-         
-         
-         
-         */
-
-
-
-
-        private static void Shuffle<T>(IList<T> list)
-        {
-            Random rng = new Random();
-            int n = list.Count;
-            while (n > 1)
-            {
-                n--;
-                int k = rng.Next(n + 1);
-                T value = list[k];
-                list[k] = list[n];
-                list[n] = value;
-            }
-        }
-        private static List<Hamster> CreateHamsterClientele()
-        {
-            List<Hamster> hamsterClientele = new List<Hamster>();
-            StringBuilder sb = new StringBuilder();
-            using (StreamReader sr = new StreamReader("Hamsterlista30.csv"))
-            {
-                while (!sr.EndOfStream)
-                {
-                    sb.Append(sr.ReadLine());
-                    sb.Append("¤");
-                }
-            }
-            var attribs = sb.ToString();
-            var hamsterAttribArr = attribs.Split("¤");
-
-            for (int i = 0; i < hamsterAttribArr.Length - 1; i++)
-            {
-                var thisHamster = hamsterAttribArr[i].Split(";");
-                int isMale = 0;
-                if (thisHamster[2] == "K")
-                {
-                    isMale = 1;
-                }
-                hamsterClientele.Add(new Hamster()
-                {
-                    Name = thisHamster[0],
-                    Age = int.Parse(thisHamster[1]),
-                    Gender = (Gender)isMale,
-                    Owner = thisHamster[3]
-                });
-            }
-           // Shuffle<Hamster>(hamsterClientele);
-            return hamsterClientele;
-
-        }
+        /// <summary>
+        /// Creates the hamster from .csv file. And adds them to the database
+        /// </summary>
         private static void CreateAndAddHamsterClientele()
         {
-            List<Hamster> hamsterClientele = new List<Hamster>();
+            List<Hamster> hamsterClientele = new List<Hamster>();   //List for hamsters
             StringBuilder sb = new StringBuilder();
-            using (StreamReader sr = new StreamReader("Hamsterlista30.csv"))
+            using (StreamReader sr = new StreamReader("Hamsterlista30.csv"))    //File containing hamsters
             {
-                while (!sr.EndOfStream)
+                while (!sr.EndOfStream)         // Creates a string of the complete file
                 {
                     sb.Append(sr.ReadLine());
                     sb.Append("¤");
                 }
             }
             var attribs = sb.ToString();
-            var hamsterAttribArr = attribs.Split("¤");
+            var hamsterAttribArr = attribs.Split("¤");              //Spliting the string frirst into lines and then down to parsible string objects
 
             for (int i = 0; i < hamsterAttribArr.Length - 1; i++)
             {
@@ -109,10 +58,10 @@ namespace UI
                     Owner = thisHamster[3]
                 });
             }
-            hamsterClientele = hamsterClientele.OrderBy(h => h.Gender).ToList();
+            hamsterClientele = hamsterClientele.OrderBy(h => h.Gender).ToList();    // Sorts the list by gender to simplefy cage assignment
 
 
-            for (int i = 0; i < hamsterClientele.Count; i++)
+            for (int i = 0; i < hamsterClientele.Count; i++)    // Adds list to Hamsters DB entity
             {
                 hDCDbContext.Hamsters.Add(hamsterClientele[i]);
                 hDCDbContext.SaveChanges();
@@ -120,48 +69,117 @@ namespace UI
             }
 
         }
-        private static void GetHamsters(string text)
+        /// <summary>
+        /// Initial seeding of cages. Takes an int wich represents the number of cages that will be added to database
+        /// </summary>
+        /// <param name="length"></param>
+        private static void AddCage(int length)
         {
-            var hamsters = hDCDbContext.Hamsters.ToList();
-            Console.WriteLine($"{text}: Hamster count is {hamsters.Count}");
-            foreach (var hamster in hamsters)
+            for (int i = 0; i < length; i++)
             {
-                Console.Write(hamster.Name);
+                hDCDbContext.Cages.Add(new Cage() { Capacity = 3 });
+                hDCDbContext.SaveChanges(); 
             }
         }
-        private static void AddCage()
+        /// <summary>
+        /// Methode that wich is callen att the start of each simulated day. A representation of the arrival of the hamsters. On methodecall the
+        /// methode instansiates a new DayCareLog instance wich each DayCareStay is added to. A DayCAreStay is a object containing all 
+        /// recorded activities of each animal for this spesific day.
+        /// </summary>
+        private static void CheckInHamsters()
         {
-            hDCDbContext.Cages.Add(new Cage() { Capacity = 6 });
+            bool loopBool = true;
+            Cage defaultCage = null;
+            hDCDbContext.DayCareLogs.Add(new DayCareLog());
             hDCDbContext.SaveChanges();
-        }
-        private static void AddDaycareLog()
-        {
-            hDCDbContext.DayCareLog.Add(new DayCareLog());
-            hDCDbContext.SaveChanges();
-        }
+            var dayCareLog = hDCDbContext.DayCareLogs.OrderByDescending(d => d.Id).First();
 
-        private static void CheckInHamster()
-        {
-            var hamster = hDCDbContext.Hamsters.First();
-            var cage = hDCDbContext.Cages.AsEnumerable().First(c => c.Gender == hamster.Gender || c.NrOfHamsters == 0);
+            while (loopBool)
+            {
+                var hamster = hDCDbContext.Hamsters //Selects e hamster from hamsters in DB
+                    .FirstOrDefault(h => h.CageId == null) ?? new Hamster();
 
-            hDCDbContext.DayCareStays.Add(new DayCareStay()
-            {
-                HamasterId = hamster.id,
-                CageId = cage.Id,
-                Arrival = StartsFrom
-            });
-            hamster.CageId = cage.Id;
-            cage.Hamsters.Add(hamster);
-            if (cage.Gender == Gender.NotChosen)
-            {
-                cage.Gender = hamster.Gender;
+                var cage = hDCDbContext.Cages   // Selects first avaleble cage
+                        .AsEnumerable()
+                        .FirstOrDefault(c => c.Capacity > c.NrOfHamsters
+                        & ((c.Gender == hamster.Gender)
+                        || (c.NrOfHamsters == 0))) ?? defaultCage;
+
+
+                if (hamster != null && cage != null)
+                {
+                    hDCDbContext.DayCareStays.Add(new DayCareStay() //instansiates i new DayCareStays with above selected objects
+                    {
+                        DayCareLogId = dayCareLog.Id,
+                        HamasterId = hamster.id,
+                        CageId = cage.Id,
+                        Arrival = StartsFrom,
+
+                    });
+                    hamster.CageId = cage.Id;   // Updates database fields for each entity 
+                    cage.Hamsters.Add(hamster);
+                    cage.NrOfHamsters++;
+
+                    if (cage.Gender == Gender.NotChosen)
+                    {
+                        cage.Gender = hamster.Gender;
+                    }
+
+
+                    hDCDbContext.SaveChanges();     //Saves changes in database before loop starts over
+                }
+                else
+                {
+                    loopBool = false;
+                }
+
             }
-
-
-            hDCDbContext.SaveChanges();
-
         }
+        /// <summary>
+        /// Metode that represents the outchecking of all animals in the daycare, CageId of each animal 
+        /// is set to null, animals are removed from thair cages, when a cage is empty cage.Gender is set 
+        /// to unchosen, checkout time is set
+        /// </summary>
+        private static void CheckOutHamsters()
+        {
+            bool loopBool = true;   // Defaule values wich is given to Linq operationes if thay end up without an object
+            Cage defaultCage = null;
+
+            while (loopBool) // while wich continues untill all animals hav left thair cages
+            {
+                var hamster = hDCDbContext.Hamsters                             // Selects the hamster wich is agout to check put
+                    .FirstOrDefault(h=>h.CageId != null) ?? new Hamster();      // sets a dummy instans to prevens false value in next step
+
+                var cage = hDCDbContext.Cages                                   // Finds wich cage that animal is in 
+                    .FirstOrDefault(c=>c.Id == hamster.CageId) ?? defaultCage;
+
+                var thisStay = hDCDbContext.DayCareStays.OrderByDescending(d => d.Id).FirstOrDefault(d => d.Id == hamster.id) ?? null;
+
+
+                if (cage != null)        // see xml summary of methode for explanation
+                {
+
+                    hamster.CageId = null;      
+
+                    cage.Hamsters.Remove(hamster);
+                    cage.NrOfHamsters--;
+                    if (cage.NrOfHamsters == 0)
+                    {
+                        cage.Gender = Gender.NotChosen;
+                    }
+
+                    thisStay.CheckOut = DateTime.Now;
+
+                    hDCDbContext.SaveChanges();
+                }
+                else
+                {
+                    loopBool = false;
+                }
+
+            }
+        }
+
 
 
     }

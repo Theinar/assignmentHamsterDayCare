@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace HamsterDayCare.Data.Migrations
 {
-    public partial class adaasd : Migration
+    public partial class _1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -14,7 +14,8 @@ namespace HamsterDayCare.Data.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Gender = table.Column<int>(type: "int", nullable: false),
-                    Capacity = table.Column<int>(type: "int", nullable: false)
+                    Capacity = table.Column<int>(type: "int", nullable: false),
+                    NrOfHamsters = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -22,7 +23,7 @@ namespace HamsterDayCare.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "DayCareLog",
+                name: "DayCareLogs",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -30,19 +31,21 @@ namespace HamsterDayCare.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_DayCareLog", x => x.Id);
+                    table.PrimaryKey("PK_DayCareLogs", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "ExerciseArea",
+                name: "ExerciseAreas",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1")
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Capacity = table.Column<int>(type: "int", nullable: false),
+                    NrOfHamsters = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ExerciseArea", x => x.Id);
+                    table.PrimaryKey("PK_ExerciseAreas", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -52,19 +55,20 @@ namespace HamsterDayCare.Data.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     HamasterId = table.Column<int>(type: "int", nullable: false),
+                    CageId = table.Column<int>(type: "int", nullable: false),
+                    DayCareLogId = table.Column<int>(type: "int", nullable: false),
                     Arrival = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CheckOut = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DayCareLogId = table.Column<int>(type: "int", nullable: true)
+                    CheckOut = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_DayCareStays", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_DayCareStays_DayCareLog_DayCareLogId",
+                        name: "FK_DayCareStays_DayCareLogs_DayCareLogId",
                         column: x => x.DayCareLogId,
-                        principalTable: "DayCareLog",
+                        principalTable: "DayCareLogs",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -90,9 +94,9 @@ namespace HamsterDayCare.Data.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Hamsters_ExerciseArea_ExerciseAreaId",
+                        name: "FK_Hamsters_ExerciseAreas_ExerciseAreaId",
                         column: x => x.ExerciseAreaId,
-                        principalTable: "ExerciseArea",
+                        principalTable: "ExerciseAreas",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -155,10 +159,10 @@ namespace HamsterDayCare.Data.Migrations
                 name: "Cages");
 
             migrationBuilder.DropTable(
-                name: "ExerciseArea");
+                name: "ExerciseAreas");
 
             migrationBuilder.DropTable(
-                name: "DayCareLog");
+                name: "DayCareLogs");
         }
     }
 }
