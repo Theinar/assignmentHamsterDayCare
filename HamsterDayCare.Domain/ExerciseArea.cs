@@ -8,9 +8,10 @@ namespace HamsterDayCare.Domain
 {
     public class ExerciseArea
     {
+        int a;
         public int Id { get; set; }
-        public ICollection<Hamster> Hamsters { get; set; } = new List<Hamster>();
+        public virtual ICollection<Hamster> Hamsters { get; set; } = new List<Hamster>();
         public int Capacity { get; set; }
-        public int NrOfHamsters { get; set; }
+        public int NrOfHamsters { get => Hamsters.Count; }
     }
 }

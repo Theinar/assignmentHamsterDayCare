@@ -8,7 +8,6 @@ namespace HamsterDayCare.Domain
 {
     public class DayCareInfo : EventArgs
     {
-
         public ICollection<Hamster> Hamsters { get; set; } = new List<Hamster>();
         public ICollection<Activity> Activities { get; set; } = new List<Activity>();
     }

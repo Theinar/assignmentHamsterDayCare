@@ -117,12 +117,9 @@ namespace HamsterDayCare.Data.Migrations
                     b.Property<int>("Capacity")
                         .HasColumnType("int");
 
-                    b.Property<int>("NrOfHamsters")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
-                    b.ToTable("ExerciseArea");
+                    b.ToTable("ExerciseAreas");
                 });
 
             modelBuilder.Entity("HamsterDayCare.Domain.Hamster", b =>
@@ -179,11 +176,13 @@ namespace HamsterDayCare.Data.Migrations
                         .WithMany("Hamsters")
                         .HasForeignKey("CageId");
 
-                    b.HasOne("HamsterDayCare.Domain.ExerciseArea", null)
+                    b.HasOne("HamsterDayCare.Domain.ExerciseArea", "ExerciseArea")
                         .WithMany("Hamsters")
                         .HasForeignKey("ExerciseAreaId");
 
                     b.Navigation("Cage");
+
+                    b.Navigation("ExerciseArea");
                 });
 
             modelBuilder.Entity("HamsterDayCare.Domain.Cage", b =>

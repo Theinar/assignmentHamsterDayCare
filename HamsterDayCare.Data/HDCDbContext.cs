@@ -17,7 +17,7 @@ namespace HamsterDayCare.Data
         public DbSet<Hamster> Hamsters { get; set; }
         public DbSet<Cage> Cages { get; set; }
         public DbSet<Activity> Activities { get; set; }
-        public DbSet<ExerciseArea> ExerciseArea { get; set; }
+        public DbSet<ExerciseArea> ExerciseAreas { get; set; }
         public DbSet<DayCareStay> DayCareStays { get; set; }
         public DbSet<DayCareLog> DayCareLog { get; set; }
 
@@ -32,8 +32,8 @@ namespace HamsterDayCare.Data
         {
            
             optionsBuilder.UseSqlServer(
-                " Server = BARRI\\SQLEXPRESS; Database = TestHamster; Trusted_Connection = True;")
-                .LogTo(Console.WriteLine, LogLevel.Information).EnableSensitiveDataLogging();
+                " Server = BARRI\\SQLEXPRESS; Database = TestHamster; Trusted_Connection = True; MultipleActiveResultSets=True;")
+                .LogTo(Console.WriteLine, LogLevel.Information).EnableSensitiveDataLogging().UseLazyLoadingProxies();
            
     //        optionsBuilder.UseSqlServer(
     //" Server = BARRI\\SQLEXPRESS; Database = TestHamster; Trusted_Connection = True;")
@@ -41,16 +41,8 @@ namespace HamsterDayCare.Data
 
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            //modelBuilder.Entity<Hamster>()
-            //    .HasMany(h => h.Battles)
-            //    .WithMany(b => b.Samurais)
-            //    .UsingEntity<BattleSamurai>(bs => bs.HasOne<Battle>().WithMany(), bs => bs.HasOne<Samurai>().WithMany())
-            //    .Property(bs => bs.JoinedBattle)
-            //    .HasDefaultValueSql("getdate()");
+        {        
 
-            //modelBuilder.Entity<Horse>().ToTable("Hourse");
-            //modelBuilder.Entity<DayCareLog>().HasNoKey();
 
         }
         //private void ReadAndWriter()

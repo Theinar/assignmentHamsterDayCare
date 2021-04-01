@@ -15,10 +15,9 @@ namespace HamsterDayCare.Domain
         public Gender Gender { get; set; }
         public int? CageId { get; set; }
         public virtual Cage Cage { get; set; }
+        public int? ExerciseAreaId { get; set; }
+        public virtual ExerciseArea ExerciseArea { get; set; }
 
-        public Hamster()
-        {
 
-        }
     }
 }

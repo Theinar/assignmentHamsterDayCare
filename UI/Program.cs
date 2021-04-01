@@ -12,8 +12,10 @@ namespace UI
     class Program
     {
         public static HDCDbContext hDCDbContext = new HDCDbContext();
+        public static DateTime StartsFrom = DateTime.Now;
         static void Main(string[] args)
         {
+            CheckInHamster();
 
         }
 
@@ -132,11 +134,32 @@ namespace UI
             hDCDbContext.Cages.Add(new Cage() { Capacity = 6 });
             hDCDbContext.SaveChanges();
         }
+        private static void AddDaycareLog()
+        {
+            hDCDbContext.DayCareLog.Add(new DayCareLog());
+            hDCDbContext.SaveChanges();
+        }
+
         private static void CheckInHamster()
         {
             var hamster = hDCDbContext.Hamsters.First();
-            var cage = hDCDbContext.Cages.First(c => c.Gender == hamster.Gender && c.Capacity > c.NrOfHamsters || c.NrOfHamsters == 0);
-          //  hDCDbContext.DayCareStays.Add()
+            var cage = hDCDbContext.Cages.AsEnumerable().First(c => c.Gender == hamster.Gender || c.NrOfHamsters == 0);
+
+            hDCDbContext.DayCareStays.Add(new DayCareStay()
+            {
+                HamasterId = hamster.id,
+                CageId = cage.Id,
+                Arrival = StartsFrom
+            });
+            hamster.CageId = cage.Id;
+            cage.Hamsters.Add(hamster);
+            if (cage.Gender == Gender.NotChosen)
+            {
+                cage.Gender = hamster.Gender;
+            }
+
+
+            hDCDbContext.SaveChanges();
 
         }
 

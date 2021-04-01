@@ -9,7 +9,7 @@ namespace HamsterDayCare.Domain
     public class DayCareLog
     {
         public int Id { get; set; }
-        public ICollection<DayCareStay> DayCareStays { get; set; } = new List<DayCareStay>();
+        public virtual ICollection<DayCareStay> DayCareStays { get; set; } = new List<DayCareStay>();
 
     }
 }
