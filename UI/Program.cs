@@ -22,7 +22,21 @@ namespace UI
             //AddDaycareLog();
             //AddCage(10);
             //CheckOutHamsters();
+            MoveHamsterToExersiceArea();
+           // AddExersiceArea(1);
         }
+
+
+        /*
+         *  Alla datetime är satta till Now mins checkout och MoveHamsterToExersiceArea
+         * 
+            */
+
+
+
+
+
+
 
         /// <summary>
         /// Creates the hamster from .csv file. And adds them to the database
@@ -78,7 +92,15 @@ namespace UI
             for (int i = 0; i < length; i++)
             {
                 hDCDbContext.Cages.Add(new Cage() { Capacity = 3 });
-                hDCDbContext.SaveChanges(); 
+                hDCDbContext.SaveChanges();
+            }
+        }
+        private static void AddExersiceArea(int length)
+        {
+            for (int i = 0; i < length; i++)
+            {
+                hDCDbContext.ExerciseAreas.Add(new ExerciseArea() { Capacity = 6 });
+                hDCDbContext.SaveChanges();
             }
         }
         /// <summary>
@@ -142,45 +164,76 @@ namespace UI
         /// </summary>
         private static void CheckOutHamsters()
         {
-            bool loopBool = true;   // Defaule values wich is given to Linq operationes if thay end up without an object
+            bool loopBool = true;   // Defaule values wich is given while lopp to Linq operationes if thay end up without an object
             Cage defaultCage = null;
 
             while (loopBool) // while wich continues untill all animals hav left thair cages
             {
-                var hamster = hDCDbContext.Hamsters                             // Selects the hamster wich is agout to check put
-                    .FirstOrDefault(h=>h.CageId != null) ?? new Hamster();      // sets a dummy instans to prevens false value in next step
+                var hamster = hDCDbContext.Hamsters                             // Selects the hamster wich is about to check put
+                    .FirstOrDefault(h => h.CageId != null) ?? new Hamster();      // sets a dummy instans to prevens false value in next step
 
                 var cage = hDCDbContext.Cages                                   // Finds wich cage that animal is in 
-                    .FirstOrDefault(c=>c.Id == hamster.CageId) ?? defaultCage;
+                    .FirstOrDefault(c => c.Id == hamster.CageId) ?? defaultCage;
 
                 var thisStay = hDCDbContext.DayCareStays.OrderByDescending(d => d.Id).FirstOrDefault(d => d.Id == hamster.id) ?? null;
 
 
-                if (cage != null)        // see xml summary of methode for explanation
+                if (cage != null)
                 {
 
-                    hamster.CageId = null;      
+                    hamster.CageId = null;      // resets hamster cageid to defaulr
 
-                    cage.Hamsters.Remove(hamster);
+                    cage.Hamsters.Remove(hamster);  //removes specific hamster form specified cage
                     cage.NrOfHamsters--;
                     if (cage.NrOfHamsters == 0)
                     {
-                        cage.Gender = Gender.NotChosen;
+                        cage.Gender = Gender.NotChosen;     // if cage is empty cage.Gender is set to NotChosen
                     }
 
-                    thisStay.CheckOut = DateTime.Now;
+                    thisStay.CheckOut = DateTime.Now;   // Sets checkout time on DayCareStay
 
-                    hDCDbContext.SaveChanges();
+                    hDCDbContext.SaveChanges(); //saves to db each loop itteration
                 }
                 else
                 {
-                    loopBool = false;
+                    loopBool = false; // if cage is null loopBoll is set to false
                 }
-
             }
         }
+        private static void MoveHamsterToExersiceArea(int length)
+        {
+            for (int i = 0; i < length; i++)
+            {
+                Cage defaultCage = null; // Defaule values wich is given Linq operationes if thay end up without an object
 
+                var hamster = hDCDbContext.Hamsters             // Selects the hamster wich is about to exersice
+                    .OrderBy(h => h.LastExercise).FirstOrDefault(c => c.CageId != null) ?? new Hamster();      // sets a dummy instans to prevens false value in next step
 
+                var cage = hDCDbContext.Cages                    // Finds wich cage that animal is in 
+                    .FirstOrDefault(c => c.Id == hamster.CageId) ?? defaultCage;
 
+                var thisStay = hDCDbContext.DayCareStays        //Finds ongoing DayCareStay instatnce
+                    .OrderByDescending(d => d.Id)
+                    .FirstOrDefault(d => d.Id == hamster.id) ?? null;
+
+                var ExersiceArea = hDCDbContext.ExerciseAreas.First(e => e.NrOfHamsters < e.Capacity);
+
+                var activity = new Activity    // Adding Exersice to DayCareStay.Activity and setting dage and hamster values
+                {
+                    AccuredAt = DateTime.Now,
+                    HamsterId = hamster.id,
+                    TypeOfActivity = TypeOfActivity.Exercises
+                };
+
+                cage.NrOfHamsters--;
+                hamster.CageId = null;
+                hamster.ExerciseAreaId = ExersiceArea.Id;
+                thisStay.Activities.Add(activity);
+                ExersiceArea.NrOfHamsters++;
+
+                hDCDbContext.SaveChanges(); //saves to db each loop itteration 
+            }
+
+        }
     }
 }
