@@ -22,13 +22,15 @@ namespace UI
             //AddDaycareLog();
             //AddCage(10);
             //CheckOutHamsters();
-            MoveHamsterToExersiceArea();
-           // AddExersiceArea(1);
+            //MoveHamsterToExersiceArea(6);
+            MoveHamsterFromExersiceArea(6);
+            // AddExersiceArea(1);
         }
 
 
         /*
          *  Alla datetime är satta till Now mins checkout och MoveHamsterToExersiceArea
+         *  Lägga till meddelanden ifall metoden körs utan utall
          * 
             */
 
@@ -200,9 +202,9 @@ namespace UI
                 }
             }
         }
-        private static void MoveHamsterToExersiceArea(int length)
+        private static void MoveHamsterToExersiceArea(int nrOfHamsters)
         {
-            for (int i = 0; i < length; i++)
+            for (int i = 0; i < nrOfHamsters; i++)
             {
                 Cage defaultCage = null; // Defaule values wich is given Linq operationes if thay end up without an object
 
@@ -216,22 +218,87 @@ namespace UI
                     .OrderByDescending(d => d.Id)
                     .FirstOrDefault(d => d.Id == hamster.id) ?? null;
 
-                var ExersiceArea = hDCDbContext.ExerciseAreas.First(e => e.NrOfHamsters < e.Capacity);
-
-                var activity = new Activity    // Adding Exersice to DayCareStay.Activity and setting dage and hamster values
+                var ExersiceArea = hDCDbContext.ExerciseAreas.FirstOrDefault(e => e.NrOfHamsters < e.Capacity) ?? null;
+                
+                if (ExersiceArea != null)
                 {
-                    AccuredAt = DateTime.Now,
-                    HamsterId = hamster.id,
-                    TypeOfActivity = TypeOfActivity.Exercises
-                };
 
-                cage.NrOfHamsters--;
-                hamster.CageId = null;
-                hamster.ExerciseAreaId = ExersiceArea.Id;
-                thisStay.Activities.Add(activity);
-                ExersiceArea.NrOfHamsters++;
+                    if (ExersiceArea.Gender == Gender.NotChosen)
+                    {
+                        ExersiceArea.Gender = hamster.Gender;
+                    }
 
-                hDCDbContext.SaveChanges(); //saves to db each loop itteration 
+                    var activity = new Activity    // Adding Exersice to DayCareStay.Activity and setting dage and hamster values
+                    {
+                        AccuredAt = DateTime.Now,
+                        HamsterId = hamster.id,
+                        TypeOfActivity = TypeOfActivity.Exercises
+                    };
+
+                    cage.NrOfHamsters--;            // Cage set to gender.NotChosen if empty
+                    if (cage.NrOfHamsters == 0)
+                    {
+                        cage.Gender = Gender.NotChosen;
+                    }
+                    hamster.CageId = null;
+                    hamster.ExerciseAreaId = ExersiceArea.Id;
+                    thisStay.Activities.Add(activity);
+                    ExersiceArea.NrOfHamsters++;
+
+                    hDCDbContext.SaveChanges(); //saves to db each loop itteration  
+                }
+            }
+
+        }
+        private static void MoveHamsterFromExersiceArea(int nrOfHamsters)
+        {
+            for (int i = 0; i < nrOfHamsters; i++)
+            {
+                Cage defaultCage = null; // Defaule values wich is given Linq operationes if thay end up without an object
+
+                var hamster = hDCDbContext.Hamsters             // Selects the hamster wich is about to exersice
+                    .OrderBy(h => h.LastExercise).FirstOrDefault(c => c.ExerciseAreaId != null) ?? new Hamster();      // sets a dummy instans to prevens false value in next step
+
+                var cage = hDCDbContext.Cages                    // Finds wich cage that animal is in 
+                    .FirstOrDefault(c => c.NrOfHamsters < c.Capacity && c.Gender == hamster.Gender || c.Gender == Gender.NotChosen) ?? defaultCage;
+
+                var thisStay = hDCDbContext.DayCareStays        //Finds ongoing DayCareStay instatnce
+                    .OrderByDescending(d => d.Id)
+                    .FirstOrDefault(d => d.Id == hamster.id) ?? null;
+
+                var ExersiceArea = hDCDbContext.ExerciseAreas.FirstOrDefault(e => e.NrOfHamsters > 0) ?? null;
+
+                if (ExersiceArea != null)
+                {
+                    ExersiceArea.NrOfHamsters--;
+                    if (ExersiceArea.NrOfHamsters == 0)
+                    {
+                        ExersiceArea.Gender = Gender.NotChosen;
+                    }
+
+                    var activity = new Activity    // Adding Exersice to DayCareStay.Activity and setting dage and hamster values
+                    {
+                        AccuredAt = DateTime.Now,
+                        HamsterId = hamster.id,
+                        TypeOfActivity = TypeOfActivity.Exercises
+                    };
+
+                    if (cage.Gender == Gender.NotChosen)
+                    {
+                        cage.Gender = hamster.Gender;
+                    }
+                    cage.NrOfHamsters++;
+
+                    hamster.CageId = cage.Id;
+                    hamster.ExerciseAreaId = null;
+                    hamster.LastExercise = DateTime.Now;
+
+
+
+
+
+                    hDCDbContext.SaveChanges(); //saves to db each loop itteration  
+                }
             }
 
         }

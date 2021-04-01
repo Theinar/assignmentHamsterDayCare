@@ -31,8 +31,7 @@ namespace HamsterDayCare.Data
            
             optionsBuilder.UseSqlServer(
                 " Server = BARRI\\SQLEXPRESS; Database = TestHamster; Trusted_Connection = True; MultipleActiveResultSets=True;")
-                .LogTo(Console.WriteLine, LogLevel.Information).EnableSensitiveDataLogging().UseLazyLoadingProxies();
-           
+                .LogTo(Console.WriteLine, LogLevel.Information).EnableSensitiveDataLogging().UseLazyLoadingProxies();       
 
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
