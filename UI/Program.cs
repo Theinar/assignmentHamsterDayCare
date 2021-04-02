@@ -16,8 +16,8 @@ namespace UI
     {
 
         public static HDCDbContext hDCDbContext = new HDCDbContext();
-        public static DateTime StartsFrom;
-        public static DateTime SimulatedTime;
+        public static DateTime StartsFrom = DateTime.Now;
+        public static DateTime SimulatedTime = DateTime.Now;
 
         static void Main(string[] args)
         {
@@ -25,15 +25,11 @@ namespace UI
             //CheckInHamsters();
             //AddDaycareLog();
             //AddCage(10);
+            //SetTimes();
             //CheckOutHamsters();
             // AddExersiceArea(1);
-            Console.WriteLine("pick a date (YYYY.MM.dd):");
-            string date = Console.ReadLine();
-
-            SetTimes(date);
-
-            Console.WriteLine(StartsFrom);
-
+            //MoveHamsterToExersiceArea(6);
+            MoveHamsterFromExersiceArea(6);
 
         }
 
@@ -427,8 +423,11 @@ namespace UI
         /// Sets the Datetime StartsFrom and simulated time to 7:00:00 on the date thet the user enter
         /// </summary>
         /// <param name="date"></param>
-        private static void SetTimes(string date)
+        private static void SetTimes()
         {
+            Console.WriteLine("pick a date (YYYY.MM.dd):           -- Change så klart");
+            string date = Console.ReadLine();
+
             string sevenOclock = " 07:00:00:0000";
             string startsFromString = date + sevenOclock;
             string format = "yyyy.MM.dd HH:mm:ss:ffff";
