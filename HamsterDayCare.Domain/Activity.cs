@@ -6,10 +6,6 @@ using System.Threading.Tasks;
 
 namespace HamsterDayCare.Domain
 {
-    public enum TypeOfActivity
-    {
-        Exercises
-    }
     public class Activity
     {
         public int Id { get; set; }
