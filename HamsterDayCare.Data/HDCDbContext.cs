@@ -22,8 +22,8 @@ namespace HamsterDayCare.Data
         public DbSet<DayCareLog> DayCareLogs { get; set; }
 
         
-        private  StreamWriter logAll = new StreamWriter("HamsterProdictionLogAll.txt", append: true);
-        private StreamWriter logLast = new StreamWriter("HamsterProdictionLogLast.txt");
+        //private  StreamWriter logAll = new StreamWriter("HamsterProdictionLogAll.txt", append: true);
+        //private StreamWriter logLast = new StreamWriter("HamsterProdictionLogLast.txt");
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -31,7 +31,8 @@ namespace HamsterDayCare.Data
            
             optionsBuilder.UseSqlServer(
                 " Server = BARRI\\SQLEXPRESS; Database = TestHamster; Trusted_Connection = True; MultipleActiveResultSets=True;")
-                .LogTo(Console.WriteLine, LogLevel.Information).EnableSensitiveDataLogging().UseLazyLoadingProxies();       
+                //.LogTo(Console.WriteLine, LogLevel.Information).EnableSensitiveDataLogging().UseLazyLoadingProxies();       
+                .EnableSensitiveDataLogging().UseLazyLoadingProxies();       
 
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)

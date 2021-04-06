@@ -40,6 +40,7 @@ namespace HamsterDayCare.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    Gender = table.Column<int>(type: "int", nullable: false),
                     Capacity = table.Column<int>(type: "int", nullable: false),
                     NrOfHamsters = table.Column<int>(type: "int", nullable: false)
                 },
@@ -82,6 +83,7 @@ namespace HamsterDayCare.Data.Migrations
                     Age = table.Column<int>(type: "int", nullable: false),
                     Gender = table.Column<int>(type: "int", nullable: false),
                     CageId = table.Column<int>(type: "int", nullable: true),
+                    LastExercise = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ExerciseAreaId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
