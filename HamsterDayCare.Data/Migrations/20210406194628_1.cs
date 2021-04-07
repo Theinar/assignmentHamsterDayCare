@@ -83,7 +83,7 @@ namespace HamsterDayCare.Data.Migrations
                     Age = table.Column<int>(type: "int", nullable: false),
                     Gender = table.Column<int>(type: "int", nullable: false),
                     CageId = table.Column<int>(type: "int", nullable: true),
-                    LastExercise = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    LastActivity = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ExerciseAreaId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>

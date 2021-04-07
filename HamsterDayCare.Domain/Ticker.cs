@@ -13,8 +13,8 @@ namespace HamsterDayCare.Domain
         public void Start(TickerArgs _theArgs)
         {
             while (!_theArgs.PauseRequest
-                && _theArgs.SimulationTime
-                < _theArgs.FictionalEndDate)
+                && _theArgs.TickCounter
+                < _theArgs.EndTick)
             {
                 tick?.Invoke(this, _theArgs);
                 Thread.Sleep(_theArgs.TickInMilliseconds);
@@ -26,7 +26,7 @@ namespace HamsterDayCare.Domain
                 {
                     _theArgs.SimulationTime = _theArgs.SimulationTime.AddHours(14);
                 }
-
+                _theArgs.TickCounter++;
             }
         }
 

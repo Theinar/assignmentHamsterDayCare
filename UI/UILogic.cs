@@ -15,25 +15,126 @@ namespace UI
     class UILogic
     {
         HDCDbContext hDCDbContext;
-        DateTime startsFrom;
+        TickerArgs theArgs;
 
-        public UILogic(HDCDbContext _hDCDbContext, DateTime _startsFrom)
+        public UILogic(HDCDbContext _hDCDbContext, TickerArgs _theArgs)
         {
             hDCDbContext = _hDCDbContext;
-            startsFrom = _startsFrom;
+            theArgs = _theArgs;
         }
-        internal async Task UIReport(TickerArgs e)
+        //void UIReport()
+        //{
+        //    PURPLE();
+        //    Console.Write("╔═════════════════════════════════════════════════════════════════════════════════════════════════════════╗\n");
+        //    Console.Write("║                                               AFTERYELP                                                 ║\n");
+        //    Console.Write("║╔═══════════════════════════════════════════════════════════════════════════════════════════════════════╗║\n");
+        //    Console.Write("║║   ");
+        //    WriteOut(hDCDbContext, 0);
+        //    Console.Write("║║   \n");
+        //    Console.Write("║║   ");
+        //    WriteOut(hDCDbContext, 1);
+        //    Console.Write("║║   \n");
+        //    Console.Write("║║   ");
+        //    WriteOut(hDCDbContext, 2);
+        //    Console.Write("║║   \n");
+        //    Console.Write("║║   ");
+        //    WriteOut(hDCDbContext, 3);
+        //    Console.Write("║║   \n");
+        //    Console.Write("║║   ");
+        //    WriteOut(hDCDbContext, 4);
+        //    Console.Write("║║   \n");
+        //    Console.Write("║║   ");
+        //    WriteOut(hDCDbContext, 5);
+        //    Console.Write("║║   \n");
+        //    Console.Write("║║   ");
+        //    WriteOut(hDCDbContext, 6);
+        //    Console.Write("║║   \n");
+        //    Console.Write("║║   ");
+        //    WriteOut(hDCDbContext, 7);
+        //    Console.Write("║║   \n");
+        //    Console.Write("║║   ");
+        //    WriteOut(hDCDbContext, 8);
+        //    Console.Write("║║   \n");
+        //    Console.Write("║║   ");
+        //    WriteOut(hDCDbContext, 9);
+        //    Console.Write("║║   \n");
+        //    Console.Write("║╚═══════════════════════════════════════════════════════════════════════════════════════════════════════╝║\n");
+        //    Console.Write("╚═════════════════════════════════════════════════════════════════════════════════════════════════════════╝\n");
+        //    STANDARDCOLOR();
+
+
+        //    //═══╝╚═ ╚═╝ ╗ ╔═█████╗
+        //} // Själva afterYeldrutan
+
+        public async Task WriteOut() // skriver ut den dödes klagomål
         {
+            var cages = hDCDbContext.Cages.Where(c => c.Id > 0).ToList();
+            Console.SetCursorPosition(0,0);
+            Console.WriteLine(theArgs.TickCounter);
+            for (int i = 0; i < cages.Count; i++)
+            {
+                Console.WriteLine($"Cage nr {i}: {cages[i].NrOfHamsters}");
 
-            var nrHamInCages = hDCDbContext.Hamsters.Where(h => h.CageId != null).Count();
-            var nrHamInExArea = hDCDbContext.Hamsters.Where(h => h.ExerciseAreaId != null).Count();
-            var exArea = hDCDbContext.ExerciseAreas.First();
+            }
 
-            Console.SetCursorPosition(0, 0);
-            //Console.WriteLine($"NUmber of hamsters in their cages: {nrHamInCages}");
-            //Console.WriteLine($"Number of hamsters in ExerciseArea: {nrHamInExArea}");
-            //Console.WriteLine($"The gendet of the hamsters in exersicearea is at the moment:{exArea.Gender}");
+            var exArea = hDCDbContext.ExerciseAreas.Where(c => c.Id > 0).ToList();
+
+            for (int i = 0; i < cages.Count; i++)
+            {
+                Console.WriteLine($"ExArea nr {i}: {exArea[i].NrOfHamsters}");
+
+            }
+
+
             await Task.CompletedTask;
         }
+
+
+        #region Mini Methods for ConsolFontColor
+        public static void RED()
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+        }
+        public static void DARKRED()
+        {
+            Console.ForegroundColor = ConsoleColor.DarkRed;
+        }
+        public static void PURPLE()
+        {
+            Console.ForegroundColor = ConsoleColor.Magenta;
+        }
+        public static void DARKPURPLE()
+        {
+            Console.ForegroundColor = ConsoleColor.DarkMagenta;
+        }
+        public static void BLUE()
+        {
+            Console.ForegroundColor = ConsoleColor.Blue;
+        }
+        public static void DARKBLUE()
+        {
+            Console.ForegroundColor = ConsoleColor.DarkBlue;
+        }
+        public static void GREEN()
+        {
+            Console.ForegroundColor = ConsoleColor.Green;
+        }
+        public static void DARKGREEN()
+        {
+            Console.ForegroundColor = ConsoleColor.DarkGreen;
+        }
+        public static void YELLOW()
+        {
+            Console.ForegroundColor = ConsoleColor.Yellow;
+        }
+        public static void CYAN()
+        {
+            Console.ForegroundColor = ConsoleColor.Cyan;
+        }
+        public static void STANDARDCOLOR()
+        {
+            Console.ForegroundColor = ConsoleColor.White;
+        }
+        #endregion
     }
 }

@@ -24,17 +24,19 @@ namespace UI
         private static int nrOfDaysInSimulation;
         private static int tickInMilliSec;
 
-        static  void Main(string[] args)
+        static void Main(string[] args)
         {
             SetTimes();
             TickerArgs theArgs = new TickerArgs(fictionalDate, nrOfDaysInSimulation, tickInMilliSec);
             Ticker theTicker = new Ticker();
 
             theTicker.tick += StartSimulation;
- 
+
             dayCareBackEnd = new BackendLogic(hDCDbContext, fictionalDate);
 
-            dayCareUI = new UILogic(hDCDbContext, fictionalDate);
+            dayCareUI = new UILogic(hDCDbContext, theArgs);
+
+            dayCareBackEnd.EnsureDaysReadyToStart();
 
             theTicker.Start(theArgs);
 
@@ -63,15 +65,16 @@ namespace UI
             string format = "yyyy.MM.dd HH:mm:ss:ffff";
             fictionalDate = DateTime.ParseExact(startsFromString, format,
                                              CultureInfo.InvariantCulture);
-            nrOfDaysInSimulation = 1;
+            nrOfDaysInSimulation = 2;
             //Console.WriteLine("Please chose a tickrate (ms)");
             //tickInMilliSec = int.Parse(Console.ReadLine());
             tickInMilliSec = 500;
         }
         private static async void StartSimulation(object sender, TickerArgs e)
         {
-            dayCareUI.UIReport(e);
-            dayCareBackEnd.SimulationProgress(e);
+
+           await dayCareBackEnd.SimulationProgress(e);
+           dayCareUI.WriteOut();
         }
 
     }

@@ -11,8 +11,8 @@ namespace HamsterDayCare.Domain
         int numberOfTicks;
         DateTime actualTimeStart;
         DateTime fictionalStartDate;
-        DateTime fictionalEndDate;
         DateTime simulationTime;
+        int endTick;
         int tickInMilliseconds;
         bool pauseRequest;
         int maxnrOfHamInEachCage;
@@ -21,17 +21,17 @@ namespace HamsterDayCare.Domain
         private int numberOfExAreas;
 
 
-        public int NumberOfTicks { get => numberOfTicks; set => numberOfTicks = value; }
+        public int TickCounter { get => numberOfTicks; set => numberOfTicks = value; }
         public DateTime ActualTimeStart { get => actualTimeStart; private set => actualTimeStart = value; }
         public DateTime FictionalDate { get => fictionalStartDate; private set => fictionalStartDate = value; }
         public DateTime SimulationTime { get => simulationTime; set => simulationTime = value; }
         public bool PauseRequest { get => pauseRequest; private set => pauseRequest = value; }
-        public DateTime FictionalEndDate { get => fictionalEndDate; private set => fictionalEndDate = value; }
         public int TickInMilliseconds { get => tickInMilliseconds; private set => tickInMilliseconds = value; }
         public int MaxnrOfHamInEachCage { get => maxnrOfHamInEachCage; private set => maxnrOfHamInEachCage = value; }
         public int MaxnrOfHamInExArea { get => maxnrOfHamInExArea; private set => maxnrOfHamInExArea = value; }
         public int NumberOfcages { get => numberOfcages; set => numberOfcages = value; }
         public int NumberOfExAreas { get => numberOfExAreas; set => numberOfExAreas = value; }
+        public int EndTick { get => endTick; private set => endTick = value; }
 
         public TickerArgs(DateTime _fictionalDate
                         , int _nrOfDaysInSimulation
@@ -40,8 +40,8 @@ namespace HamsterDayCare.Domain
             ActualTimeStart = DateTime.Now;
             FictionalDate = _fictionalDate;
             SimulationTime = _fictionalDate;
-            FictionalEndDate = _fictionalDate.AddDays(_nrOfDaysInSimulation);
-            NumberOfTicks = 0;
+            EndTick = (_nrOfDaysInSimulation * 100);
+            TickCounter = 0;
             TickInMilliseconds = _tickInMilliseconds;
             PauseRequest = false;
             MaxnrOfHamInEachCage = 3;

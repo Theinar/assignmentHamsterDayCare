@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HamsterDayCare.Data.Migrations
 {
     [DbContext(typeof(HDCDbContext))]
-    [Migration("20210402090651_1")]
+    [Migration("20210406194628_1")]
     partial class _1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -149,7 +149,7 @@ namespace HamsterDayCare.Data.Migrations
                     b.Property<int>("Gender")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("LastExercise")
+                    b.Property<DateTime>("LastActivity")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Name")

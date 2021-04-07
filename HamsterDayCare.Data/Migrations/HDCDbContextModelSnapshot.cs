@@ -147,7 +147,7 @@ namespace HamsterDayCare.Data.Migrations
                     b.Property<int>("Gender")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("LastExercise")
+                    b.Property<DateTime>("LastActivity")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
