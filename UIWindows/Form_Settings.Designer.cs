@@ -33,16 +33,16 @@ namespace UIWindows
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form_Settings));
             this.label_Initial_Head = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.textBox_change_nr_of_EXAREA = new System.Windows.Forms.TextBox();
             this.textBox_Change_EXArea_cap = new System.Windows.Forms.TextBox();
             this.checkBox_Change_ExArea_cap = new System.Windows.Forms.CheckBox();
             this.textBox_set_nr_of_days = new System.Windows.Forms.TextBox();
             this.textBox_Set_ticks_Per_Second = new System.Windows.Forms.TextBox();
             this.checkBox_Change_number_Of_ExAreas = new System.Windows.Forms.CheckBox();
-            this.textBox_Change_nr_of_exAreas = new System.Windows.Forms.TextBox();
+            this.textBox_Change_Cage_Cap = new System.Windows.Forms.TextBox();
             this.textBox_Change_number_of_cages = new System.Windows.Forms.TextBox();
             this.textBox_set_Fictional_Date = new System.Windows.Forms.TextBox();
-            this.textBox_Cage_cap = new System.Windows.Forms.TextBox();
-            this.checkBox_Cange_nr_Of_exAreas = new System.Windows.Forms.CheckBox();
+            this.checkBox_Cange_Cage_cap = new System.Windows.Forms.CheckBox();
             this.checkBox_Change_nr_of_cages = new System.Windows.Forms.CheckBox();
             this.Button_Submit = new System.Windows.Forms.Button();
             this.checkBox_Import_csv = new System.Windows.Forms.CheckBox();
@@ -50,9 +50,9 @@ namespace UIWindows
             this.radioButton_Paulstandard = new System.Windows.Forms.RadioButton();
             this.panel3 = new System.Windows.Forms.Panel();
             this.label_mandetory = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
+            this.label_Change_ExArea_Cap = new System.Windows.Forms.Label();
             this.label_Set_Nr_Of_Days = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
+            this.label_Set_ticksPerS = new System.Windows.Forms.Label();
             this.label_Set_Date = new System.Windows.Forms.Label();
             this.label_Change_Nr_ExAreas = new System.Windows.Forms.Label();
             this.label_Change_NR_Of_Cages = new System.Windows.Forms.Label();
@@ -73,20 +73,19 @@ namespace UIWindows
             this.label_Initial_Head.Size = new System.Drawing.Size(288, 19);
             this.label_Initial_Head.TabIndex = 0;
             this.label_Initial_Head.Text = "Choose the settings for the simulation";
-            this.label_Initial_Head.Click += new System.EventHandler(this.label1_Click);
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.textBox_change_nr_of_EXAREA);
             this.panel1.Controls.Add(this.textBox_Change_EXArea_cap);
             this.panel1.Controls.Add(this.checkBox_Change_ExArea_cap);
             this.panel1.Controls.Add(this.textBox_set_nr_of_days);
             this.panel1.Controls.Add(this.textBox_Set_ticks_Per_Second);
             this.panel1.Controls.Add(this.checkBox_Change_number_Of_ExAreas);
-            this.panel1.Controls.Add(this.textBox_Change_nr_of_exAreas);
+            this.panel1.Controls.Add(this.textBox_Change_Cage_Cap);
             this.panel1.Controls.Add(this.textBox_Change_number_of_cages);
             this.panel1.Controls.Add(this.textBox_set_Fictional_Date);
-            this.panel1.Controls.Add(this.textBox_Cage_cap);
-            this.panel1.Controls.Add(this.checkBox_Cange_nr_Of_exAreas);
+            this.panel1.Controls.Add(this.checkBox_Cange_Cage_cap);
             this.panel1.Controls.Add(this.checkBox_Change_nr_of_cages);
             this.panel1.Controls.Add(this.Button_Submit);
             this.panel1.Controls.Add(this.checkBox_Import_csv);
@@ -98,12 +97,21 @@ namespace UIWindows
             this.panel1.Size = new System.Drawing.Size(238, 752);
             this.panel1.TabIndex = 2;
             // 
+            // textBox_change_nr_of_EXAREA
+            // 
+            this.textBox_change_nr_of_EXAREA.Location = new System.Drawing.Point(33, 347);
+            this.textBox_change_nr_of_EXAREA.Name = "textBox_change_nr_of_EXAREA";
+            this.textBox_change_nr_of_EXAREA.Size = new System.Drawing.Size(100, 22);
+            this.textBox_change_nr_of_EXAREA.TabIndex = 17;
+            this.textBox_change_nr_of_EXAREA.Visible = false;
+            // 
             // textBox_Change_EXArea_cap
             // 
-            this.textBox_Change_EXArea_cap.Location = new System.Drawing.Point(20, 397);
+            this.textBox_Change_EXArea_cap.Location = new System.Drawing.Point(33, 397);
             this.textBox_Change_EXArea_cap.Name = "textBox_Change_EXArea_cap";
             this.textBox_Change_EXArea_cap.Size = new System.Drawing.Size(100, 22);
             this.textBox_Change_EXArea_cap.TabIndex = 16;
+            this.textBox_Change_EXArea_cap.Visible = false;
             // 
             // checkBox_Change_ExArea_cap
             // 
@@ -113,17 +121,18 @@ namespace UIWindows
             this.checkBox_Change_ExArea_cap.Size = new System.Drawing.Size(15, 14);
             this.checkBox_Change_ExArea_cap.TabIndex = 15;
             this.checkBox_Change_ExArea_cap.UseVisualStyleBackColor = true;
+            this.checkBox_Change_ExArea_cap.CheckedChanged += new System.EventHandler(this.checkBox_Change_ExArea_cap_CheckedChanged);
             // 
             // textBox_set_nr_of_days
             // 
-            this.textBox_set_nr_of_days.Location = new System.Drawing.Point(20, 497);
+            this.textBox_set_nr_of_days.Location = new System.Drawing.Point(33, 497);
             this.textBox_set_nr_of_days.Name = "textBox_set_nr_of_days";
             this.textBox_set_nr_of_days.Size = new System.Drawing.Size(100, 22);
             this.textBox_set_nr_of_days.TabIndex = 14;
             // 
             // textBox_Set_ticks_Per_Second
             // 
-            this.textBox_Set_ticks_Per_Second.Location = new System.Drawing.Point(20, 547);
+            this.textBox_Set_ticks_Per_Second.Location = new System.Drawing.Point(33, 547);
             this.textBox_Set_ticks_Per_Second.Name = "textBox_Set_ticks_Per_Second";
             this.textBox_Set_ticks_Per_Second.Size = new System.Drawing.Size(100, 22);
             this.textBox_Set_ticks_Per_Second.TabIndex = 13;
@@ -136,46 +145,40 @@ namespace UIWindows
             this.checkBox_Change_number_Of_ExAreas.Size = new System.Drawing.Size(15, 14);
             this.checkBox_Change_number_Of_ExAreas.TabIndex = 12;
             this.checkBox_Change_number_Of_ExAreas.UseVisualStyleBackColor = true;
+            this.checkBox_Change_number_Of_ExAreas.CheckedChanged += new System.EventHandler(this.checkBox_Change_number_Of_ExAreas_CheckedChanged);
             // 
-            // textBox_Change_nr_of_exAreas
+            // textBox_Change_Cage_Cap
             // 
-            this.textBox_Change_nr_of_exAreas.Location = new System.Drawing.Point(20, 347);
-            this.textBox_Change_nr_of_exAreas.Name = "textBox_Change_nr_of_exAreas";
-            this.textBox_Change_nr_of_exAreas.Size = new System.Drawing.Size(100, 22);
-            this.textBox_Change_nr_of_exAreas.TabIndex = 11;
+            this.textBox_Change_Cage_Cap.Location = new System.Drawing.Point(33, 247);
+            this.textBox_Change_Cage_Cap.Name = "textBox_Change_Cage_Cap";
+            this.textBox_Change_Cage_Cap.Size = new System.Drawing.Size(100, 22);
+            this.textBox_Change_Cage_Cap.TabIndex = 11;
+            this.textBox_Change_Cage_Cap.Visible = false;
             // 
             // textBox_Change_number_of_cages
             // 
-            this.textBox_Change_number_of_cages.Location = new System.Drawing.Point(20, 297);
+            this.textBox_Change_number_of_cages.Location = new System.Drawing.Point(33, 297);
             this.textBox_Change_number_of_cages.Name = "textBox_Change_number_of_cages";
             this.textBox_Change_number_of_cages.Size = new System.Drawing.Size(100, 22);
             this.textBox_Change_number_of_cages.TabIndex = 10;
+            this.textBox_Change_number_of_cages.Visible = false;
             // 
             // textBox_set_Fictional_Date
             // 
-            this.textBox_set_Fictional_Date.Location = new System.Drawing.Point(20, 447);
+            this.textBox_set_Fictional_Date.Location = new System.Drawing.Point(33, 447);
             this.textBox_set_Fictional_Date.Name = "textBox_set_Fictional_Date";
             this.textBox_set_Fictional_Date.Size = new System.Drawing.Size(100, 22);
             this.textBox_set_Fictional_Date.TabIndex = 9;
             // 
-            // textBox_Cage_cap
+            // checkBox_Cange_Cage_cap
             // 
-            this.textBox_Cage_cap.Location = new System.Drawing.Point(20, 247);
-            this.textBox_Cage_cap.Name = "textBox_Cage_cap";
-            this.textBox_Cage_cap.ReadOnly = true;
-            this.textBox_Cage_cap.Size = new System.Drawing.Size(100, 22);
-            this.textBox_Cage_cap.TabIndex = 7;
-            this.textBox_Cage_cap.ReadOnlyChanged += new System.EventHandler(this.textBox_Cage_cap_ReadOnlyChanged);
-            // 
-            // checkBox_Cange_nr_Of_exAreas
-            // 
-            this.checkBox_Cange_nr_Of_exAreas.AutoSize = true;
-            this.checkBox_Cange_nr_Of_exAreas.Location = new System.Drawing.Point(0, 253);
-            this.checkBox_Cange_nr_Of_exAreas.Name = "checkBox_Cange_nr_Of_exAreas";
-            this.checkBox_Cange_nr_Of_exAreas.Size = new System.Drawing.Size(15, 14);
-            this.checkBox_Cange_nr_Of_exAreas.TabIndex = 6;
-            this.checkBox_Cange_nr_Of_exAreas.UseVisualStyleBackColor = true;
-            this.checkBox_Cange_nr_Of_exAreas.CheckedChanged += new System.EventHandler(this.textBox_Cage_cap_ReadOnlyChanged);
+            this.checkBox_Cange_Cage_cap.AutoSize = true;
+            this.checkBox_Cange_Cage_cap.Location = new System.Drawing.Point(0, 253);
+            this.checkBox_Cange_Cage_cap.Name = "checkBox_Cange_Cage_cap";
+            this.checkBox_Cange_Cage_cap.Size = new System.Drawing.Size(15, 14);
+            this.checkBox_Cange_Cage_cap.TabIndex = 6;
+            this.checkBox_Cange_Cage_cap.UseVisualStyleBackColor = true;
+            this.checkBox_Cange_Cage_cap.CheckedChanged += new System.EventHandler(this.checkBox_Cange_Cage_cap_CheckedChanged);
             // 
             // checkBox_Change_nr_of_cages
             // 
@@ -185,6 +188,7 @@ namespace UIWindows
             this.checkBox_Change_nr_of_cages.Size = new System.Drawing.Size(15, 14);
             this.checkBox_Change_nr_of_cages.TabIndex = 5;
             this.checkBox_Change_nr_of_cages.UseVisualStyleBackColor = true;
+            this.checkBox_Change_nr_of_cages.CheckedChanged += new System.EventHandler(this.checkBox_Change_nr_of_cages_CheckedChanged);
             // 
             // Button_Submit
             // 
@@ -239,9 +243,9 @@ namespace UIWindows
             // panel3
             // 
             this.panel3.Controls.Add(this.label_mandetory);
-            this.panel3.Controls.Add(this.label2);
+            this.panel3.Controls.Add(this.label_Change_ExArea_Cap);
             this.panel3.Controls.Add(this.label_Set_Nr_Of_Days);
-            this.panel3.Controls.Add(this.label1);
+            this.panel3.Controls.Add(this.label_Set_ticksPerS);
             this.panel3.Controls.Add(this.label_Set_Date);
             this.panel3.Controls.Add(this.label_Change_Nr_ExAreas);
             this.panel3.Controls.Add(this.label_Change_NR_Of_Cages);
@@ -255,7 +259,6 @@ namespace UIWindows
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(252, 752);
             this.panel3.TabIndex = 3;
-            this.panel3.Paint += new System.Windows.Forms.PaintEventHandler(this.panel3_Paint);
             // 
             // label_mandetory
             // 
@@ -266,17 +269,16 @@ namespace UIWindows
             this.label_mandetory.Size = new System.Drawing.Size(221, 15);
             this.label_mandetory.TabIndex = 10;
             this.label_mandetory.Text = "* feilds are mandetory for new settings";
-            this.label_mandetory.Click += new System.EventHandler(this.label3_Click);
             // 
-            // label2
+            // label_Change_ExArea_Cap
             // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.label2.Location = new System.Drawing.Point(57, 400);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(195, 16);
-            this.label2.TabIndex = 9;
-            this.label2.Text = "Change Exersice Area Capacity";
+            this.label_Change_ExArea_Cap.AutoSize = true;
+            this.label_Change_ExArea_Cap.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.label_Change_ExArea_Cap.Location = new System.Drawing.Point(57, 400);
+            this.label_Change_ExArea_Cap.Name = "label_Change_ExArea_Cap";
+            this.label_Change_ExArea_Cap.Size = new System.Drawing.Size(195, 16);
+            this.label_Change_ExArea_Cap.TabIndex = 9;
+            this.label_Change_ExArea_Cap.Text = "Change Exersice Area Capacity";
             // 
             // label_Set_Nr_Of_Days
             // 
@@ -288,15 +290,15 @@ namespace UIWindows
             this.label_Set_Nr_Of_Days.TabIndex = 8;
             this.label_Set_Nr_Of_Days.Text = "Set number of Days*";
             // 
-            // label1
+            // label_Set_ticksPerS
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.label1.Location = new System.Drawing.Point(134, 550);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(118, 16);
-            this.label1.TabIndex = 7;
-            this.label1.Text = "Set Ticks / Second*";
+            this.label_Set_ticksPerS.AutoSize = true;
+            this.label_Set_ticksPerS.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.label_Set_ticksPerS.Location = new System.Drawing.Point(134, 550);
+            this.label_Set_ticksPerS.Name = "label_Set_ticksPerS";
+            this.label_Set_ticksPerS.Size = new System.Drawing.Size(118, 16);
+            this.label_Set_ticksPerS.TabIndex = 7;
+            this.label_Set_ticksPerS.Text = "Set Ticks / Second*";
             // 
             // label_Set_Date
             // 
@@ -367,7 +369,6 @@ namespace UIWindows
             this.label_PaulStandard.Size = new System.Drawing.Size(87, 16);
             this.label_PaulStandard.TabIndex = 0;
             this.label_PaulStandard.Text = "Paul Standard";
-            this.label_PaulStandard.Click += new System.EventHandler(this.label1_Click_1);
             // 
             // Form_Settings
             // 
@@ -401,9 +402,8 @@ namespace UIWindows
         private Label label_Initial_Head;
         private CheckBox checkBox_Import_csv;
         private CheckBox checkBox_Change_nr_of_cages;
-        private CheckBox checkBox_Cange_nr_Of_exAreas;
-        private TextBox textBox_Cage_cap;
-        private TextBox textBox_Change_nr_of_exAreas;
+        private CheckBox checkBox_Cange_Cage_cap;
+        private TextBox textBox_Change_Cage_Cap;
         private TextBox textBox_Change_number_of_cages;
         private TextBox textBox_set_Fictional_Date;
         private Panel panel3;
@@ -415,14 +415,15 @@ namespace UIWindows
         private Label label_Import_Clientele;
         private Label label_Custom;
         private TextBox textBox_Set_ticks_Per_Second;
-        private Label label1;
+        private Label label_Set_ticksPerS;
         private Label label_Set_Date;
         private TextBox textBox_set_nr_of_days;
         private Label label_Set_Nr_Of_Days;
         private TextBox textBox_Change_EXArea_cap;
         private CheckBox checkBox_Change_ExArea_cap;
-        private Label label2;
+        private Label label_Change_ExArea_Cap;
         private Label label_mandetory;
+        private TextBox textBox_change_nr_of_EXAREA;
     }
 }
 

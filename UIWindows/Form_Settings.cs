@@ -24,18 +24,44 @@ namespace UIWindows
             InitializeComponent();
             Paul_Standard_Checked = true;
         }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
         private void radioButton_Paulstandard_Click_Changed(object sender, EventArgs e)
         {
             Paul_Standard_Checked = true;
+            // If Palstandard is chosen the rest of the settings labels gets hidden
+            this.label_Change_Cage_Cap.Visible = true;
+            this.label_Change_ExArea_Cap.Visible = true;
+            this.label_Change_Nr_ExAreas.Visible = true;
+            this.label_Change_NR_Of_Cages.Visible = true;
+            this.label_Import_Clientele.Visible = true;
+            // same with thair checkboxes
+            this.checkBox_Cange_Cage_cap.Visible = true;
+            this.checkBox_Change_ExArea_cap.Visible = true;
+            this.checkBox_Change_nr_of_cages.Visible = true;
+            this.checkBox_Change_number_Of_ExAreas.Visible = true;
+            this.checkBox_Import_csv.Visible = true;
         }
         private void radioButton_Cunstom_Click_Changed(object sender, EventArgs e)
         {
             Paul_Standard_Checked = false;
+
+            // If Palstandard is chosen the rest of the settings labels gets hidden
+            this.label_Change_Cage_Cap.Visible = false;
+            this.label_Change_ExArea_Cap.Visible = false;
+            this.label_Change_Nr_ExAreas.Visible = false;
+            this.label_Change_NR_Of_Cages.Visible = false;
+            this.label_Import_Clientele.Visible = false;
+            // same with thair checkboxes
+            this.checkBox_Cange_Cage_cap.Visible = false;
+            this.checkBox_Change_ExArea_cap.Visible = false;
+            this.checkBox_Change_nr_of_cages.Visible = false;
+            this.checkBox_Change_number_Of_ExAreas.Visible = false;
+            this.checkBox_Import_csv.Visible = false;
+            // and sets thair properties to unchecked
+            this.checkBox_Cange_Cage_cap.Checked = false;
+            this.checkBox_Change_ExArea_cap.Checked = false;
+            this.checkBox_Change_nr_of_cages.Checked = false;
+            this.checkBox_Change_number_Of_ExAreas.Checked = false;
+            this.checkBox_Import_csv.Checked = false;
 
         }
 
@@ -50,11 +76,6 @@ namespace UIWindows
 
         }
 
-        private void label1_Click_1(object sender, EventArgs e)
-        {
-
-        }
-
         private void Button_Submit_Click(object sender, EventArgs e)
         {
 
@@ -64,7 +85,7 @@ namespace UIWindows
             int? _NumberOfcages = null;
             int? _NumberOfExAreas = null;
             string _FilePath = null;
-            DateTime? _FictionalDate = null;
+            DateTime? _FictionalDate = DateTime.Now;
             int? _EndTick = null;
             int? _TickInMilliseconds = null;
 
@@ -72,12 +93,12 @@ namespace UIWindows
             bool everythingParseble = true;
 
             // Taking string from textbox to parse into datetime
-            string dateString = this.textBox_Cage_cap.Text;
+            string dateString = this.textBox_set_Fictional_Date.Text;
 
 
             string sevenOclock = " 07:00:00:0000";
-            string startsFromString = dateString + sevenOclock;
-            string format = "yyyy.MM.dd HH:mm:ss:ffff";
+           string startsFromString = dateString + sevenOclock;
+            string format = "yyyyMMdd HH:mm:ss:ffff";
 
 
             try
@@ -87,7 +108,7 @@ namespace UIWindows
                 _EndTick = int.Parse(this.textBox_set_nr_of_days.Text);
                 _TickInMilliseconds = int.Parse(this.textBox_Set_ticks_Per_Second.Text) / 1000;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 everythingParseble = false;
             }
@@ -119,7 +140,7 @@ namespace UIWindows
                     }
                     if (checkBox_Change_number_Of_ExAreas.Checked)
                     {
-                        _NumberOfExAreas = int.Parse(this.textBox_Change_nr_of_exAreas.Text);
+                        _NumberOfExAreas = int.Parse(this.textBox_Change_Cage_Cap.Text);
                     }
                     if (checkBox_Import_csv.Checked)
                     {
@@ -135,19 +156,15 @@ namespace UIWindows
 
             if (everythingParseble == true)
             {
-                var newArgs = new
-                {
-                   maxnrOfHamInEachCage = _MaxnrOfHamInEachCage,
-                   maxnrOfHamInExArea = _MaxnrOfHamInExArea,                
-                   numberOfcages = _NumberOfcages,
-                   numberOfExAreas = _NumberOfExAreas,
-                   filePath = _FilePath,
-                   fictionalDate = _FictionalDate,
-                   endTick = _EndTick,
-                   tickInMilliseconds = _TickInMilliseconds
-                };
 
-                Program.ChangeTheArgs(newArgs);
+                Program.ChangeTheArgs(_MaxnrOfHamInEachCage,
+                _MaxnrOfHamInExArea,
+                _NumberOfcages,
+                 _NumberOfExAreas,
+                _FilePath,
+                 _FictionalDate,
+                 _EndTick,
+                _TickInMilliseconds);
                 MessageBox.Show("Your settings has now been applied");
             }
             else
@@ -158,19 +175,59 @@ namespace UIWindows
         
         }
 
-        private void label3_Click(object sender, EventArgs e)
-        {
 
+
+        #region Logics of Checkboxes
+
+        private void checkBox_Cange_Cage_cap_CheckedChanged(object sender, EventArgs e)
+        {
+            if (this.checkBox_Cange_Cage_cap.Checked)
+            {
+                this.textBox_Change_Cage_Cap.Visible = true;
+            }
+            if (!this.checkBox_Cange_Cage_cap.Checked)
+            {
+                this.textBox_Change_Cage_Cap.Visible = false;
+            }
         }
 
-        private void panel3_Paint(object sender, PaintEventArgs e)
+        private void checkBox_Change_nr_of_cages_CheckedChanged(object sender, EventArgs e)
         {
-
+            if (this.checkBox_Change_nr_of_cages.Checked)
+            {
+                this.textBox_Change_number_of_cages.Visible = true;
+            }
+            if (!this.checkBox_Change_nr_of_cages.Checked)
+            {
+                this.textBox_Change_number_of_cages.Visible = false;
+            }
         }
 
-        private void textBox_Cage_cap_ReadOnlyChanged(object sender, EventArgs e)
+        private void checkBox_Change_number_Of_ExAreas_CheckedChanged(object sender, EventArgs e)
         {
-
+            if (this.checkBox_Change_number_Of_ExAreas.Checked)
+            {
+                this.textBox_change_nr_of_EXAREA.Visible = true;
+            }
+            if (!this.checkBox_Change_number_Of_ExAreas.Checked)
+            {
+                this.textBox_change_nr_of_EXAREA.Visible = false;
+            }
         }
+
+        private void checkBox_Change_ExArea_cap_CheckedChanged(object sender, EventArgs e)
+        {
+            if (this.checkBox_Change_ExArea_cap.Checked)
+            {
+                this.textBox_Change_EXArea_cap.Visible = true;
+            }
+            if (!this.checkBox_Change_ExArea_cap.Checked)
+            {
+                this.textBox_Change_EXArea_cap.Visible = false;
+            }
+        } 
+        #endregion
+
+
     }
 }

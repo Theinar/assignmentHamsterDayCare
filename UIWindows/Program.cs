@@ -23,6 +23,7 @@ namespace UIWindows
 
 
         private static HDCDbContext hDCDbContext = new HDCDbContext();
+        private static TickerArgs theArgs;
         private static DateTime fictionalDate;
         private static BackendLogic dayCareBackEnd;
         private static UILogic dayCareUI;
@@ -39,7 +40,7 @@ namespace UIWindows
             Application.SetCompatibleTextRenderingDefault(false);
 
             SetTimes();
-            TickerArgs theArgs = new TickerArgs(fictionalDate, nrOfDaysInSimulation, tickInMilliSec);
+            theArgs = new TickerArgs(fictionalDate, nrOfDaysInSimulation, tickInMilliSec);
             Ticker theTicker = new Ticker();
 
             theTicker.tick += StartSimulation;
@@ -48,14 +49,10 @@ namespace UIWindows
 
             dayCareUI = new UILogic(hDCDbContext, theArgs);
 
-
-
-            Application.Run(new Form_Main(dayCareBackEnd, dayCareUI.WriteOut() ));
-        }
-        public static void CallBeckendTicker()
-        {
+            Application.Run(new Form_Main(dayCareBackEnd, dayCareUI.WriteOut()));
 
         }
+
 
         private static void SetTimes()
         {
@@ -76,9 +73,49 @@ namespace UIWindows
         {
             dayCareBackEnd.SimulationProgress(_theArgs);
         }
-        internal static void ChangeTheArgs(Object _newArgs)
+        internal static void ChangeTheArgs(int _MaxnrOfHamInEachCage,
+                                           int _MaxnrOfHamInExArea,
+                                           int _NumberOfcages,
+                                           int _NumberOfExAreas,
+                                           string _FilePath,
+                                           DateTime _FictionalDate,
+                                           int _EndTick,
+                                           int _TickInMilliseconds)
         {
-                
+
+            if (_MaxnrOfHamInEachCage != null)
+            {
+                theArgs.MaxnrOfHamInEachCage = _MaxnrOfHamInEachCage;
+            }
+            if (_MaxnrOfHamInExArea != null)
+            {
+
+            }
+            if (_NumberOfcages != null)
+            {
+
+            }
+            if (_NumberOfExAreas != null)
+            {
+
+            }
+            if (_FilePath != null)
+            {
+
+            }
+            if (_FictionalDate != null)
+            {
+
+            }
+            if (_EndTick != null)
+            {
+
+            }
+            if (_TickInMilliseconds != null)
+            {
+
+            }
+
         }
     }
 }
