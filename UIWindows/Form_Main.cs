@@ -1,4 +1,5 @@
 ﻿using System;
+using UI;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -20,7 +21,7 @@ namespace UIWindows
         {
             DayCareBackEnd = _dayCareBackEnd;
             InitializeComponent();
-            this.textBox1.Text = _aString;
+            this.textBox_Main_TextBox.Text = _aString;
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -53,6 +54,15 @@ namespace UIWindows
             if (!Form_Choose.IsShowing)
             {
                 Form_Choose form = new Form_Choose(labelString);
+                form.Show();
+            }
+        }
+
+        private void button_Settings_Click(object sender, EventArgs e)
+        {
+            if (!Form_Settings.IsShowing)
+            {
+                Form_Settings form = new Form_Settings();
                 form.Show();
             }
         }

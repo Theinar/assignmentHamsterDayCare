@@ -15,7 +15,7 @@ using System.Globalization;
 namespace UI
 {
 
-    internal class BackendLogic
+    public class BackendLogic
     {
 
         private HDCDbContext hDCDbContext;
@@ -29,12 +29,10 @@ namespace UI
 
         }
 
-
-
-
         #region Methodes
 
         #region Initial seeding
+
         /// <summary>
         /// Initial seeding of DB
         /// </summary>
@@ -49,50 +47,127 @@ namespace UI
             await Task.WhenAll(addCage, addExersiceAreas);
 
         }
-        internal void UnSeedDBAndStartFresh(TickerArgs e)
+        /// <summary>
+        /// Methode is a type of Reset, resets all values to NULL exept for the logs
+        /// Varning this renders parts of earlier logs useles sins re entered enteties vill get new IDs
+        /// and there by get uncompairable.
+        /// </summary>
+        /// <param name="e"></param>
+        internal void UnSeedDBAndStartFresh(TickerArgs _theArgs)
         {
-            var resetDb = ResetDb();                /////////// not implemented
-            Thread.Sleep(500);
+            var resetDb = ResetDb();           
+         
 
-            var seedDb = SeedDB(e);
-            Thread.Sleep(500);
+            var seedDb = SeedDB(_theArgs);
+         
 
-            var createAndAddHamsterClientele = CreateAndAddHamsterClientele();
+            var createAndAddHamsterClientele = CreateAndAddHamsterClientele(_theArgs);
 
             Task.WhenAll(resetDb, seedDb, createAndAddHamsterClientele);
 
         }
-        internal void UnSeedDBAndStartWithOldClientel(TickerArgs e)
+        /// <summary>
+        /// Methode is a type of Reset, resets all values to NULL exept for the logs
+        /// Varning this renders parts of earlier logs useles sins re entered enteties vill get new IDs
+        /// and there by get uncompairable. Paul standard is as the directives given by teacher in assignment explaination
+        /// </summary>
+        /// <param name="e"></param>
+        internal void UnSeedDBAndStartWithPaulStandard(TickerArgs _theArgs)
         {
-            var resetDb = ResetDb();                /////////// not implemented
-            Thread.Sleep(500);
+            var resetDb = ResetDb();  
 
-            var seedDb = SeedDB(e);
-            Thread.Sleep(500);
+            var seedDb = SeedDB(_theArgs);
 
-            var createAndAddHamsterClientele = CreateAndAddHamsterClientele();
+            var createAndAddHamsterClientele = CreateAndAddHamsterClientele(_theArgs);
 
             Task.WhenAll(resetDb, seedDb, createAndAddHamsterClientele);
 
         }
-        internal Task ResetDb()
+        /// <summary>
+        /// Methode used to resed db in order to reseed it with different DB model
+        /// </summary>
+        /// <returns></returns>
+        private Task ResetDb()
         {
+            // Selecting all entities that needs to be removed in order to reed seed db (not logs)
+            var hamsters = hDCDbContext.Hamsters;
+            
             var cages = hDCDbContext.Cages;
 
-            hDCDbContext.Cages.RemoveRange(cages);
+            var exAreas = hDCDbContext.ExerciseAreas;
+
+            //Removes selected entities
+            if (hamsters != null)
+            {
+                hDCDbContext.Hamsters.RemoveRange(hamsters); 
+            }
+            if (cages != null)
+            {
+                hDCDbContext.Cages.RemoveRange(cages); 
+            }
+            if (exAreas != null)
+            {
+                hDCDbContext.ExerciseAreas.RemoveRange(exAreas); 
+            }
+
+            // Saves changes
             hDCDbContext.SaveChanges();
 
             return Task.CompletedTask;
-        }       // Not yet implemented !!!!!!!!!!!
+        }
+        /// <summary>
+        /// Methode used to resed db in order to reseed it with different DB model
+        /// </summary>
+        /// <returns>A db with totaly blank datasets</returns>       
+        private Task ResetDbCompleetly()
+        {
+            // Selecting all entities that needs to be removed in order to reed seed db (INKL LOGS!!!)
+            var hamsters = hDCDbContext.Hamsters;
+
+            var cages = hDCDbContext.Cages;
+
+            var exAreas = hDCDbContext.ExerciseAreas;
+
+            var logs = hDCDbContext.DayCareLogs;
+
+            var stays = hDCDbContext.DayCareStays;
+
+            //Removes selected entities
+            if (hamsters != null)
+            {
+                hDCDbContext.Hamsters.RemoveRange(hamsters);
+            }
+            if (cages != null)
+            {
+                hDCDbContext.Cages.RemoveRange(cages);
+            }
+            if (exAreas != null)
+            {
+                hDCDbContext.ExerciseAreas.RemoveRange(exAreas);
+            }
+            if (logs != null)
+            {
+                hDCDbContext.DayCareLogs.RemoveRange(logs);
+            }
+            if (stays != null)
+            {
+                hDCDbContext.DayCareStays.RemoveRange(stays);
+            }
+
+            // Saves changes
+            hDCDbContext.SaveChanges();
+
+            return Task.CompletedTask;
+        }
 
         /// <summary>
         /// methode thet is part off initial seeding, creates the hamster from .csv file. And adds them to the database
         /// </summary>
-        internal Task CreateAndAddHamsterClientele()
+        internal Task CreateAndAddHamsterClientele(TickerArgs _theArgs)
         {
             List<Hamster> hamsterClientele = new List<Hamster>();   //List for hamsters
             StringBuilder sb = new StringBuilder();
-            using (StreamReader sr = new StreamReader("Hamsterlista30.csv"))    //File containing hamsters
+            using (StreamReader sr = new StreamReader(_theArgs.FilePath))    //File containing hamsters
             {
                 while (!sr.EndOfStream)         // Creates a string of the complete file
                 {
@@ -180,20 +255,7 @@ namespace UI
             return Task.CompletedTask;
 
         }
-        /// <summary>
-        /// methode thet is part off initial seeding, creates initial number of cages following the Paaul initial pattern
-        /// </summary>
-        /// <param name="_numberOfCages"></param>
-        private async Task AddCage()
-        {
-            for (int i = 0; i < 10; i++)
-            {
-                this.hDCDbContext.Cages.Add(new Cage() { Capacity = 3 });
-                this.hDCDbContext.SaveChanges();
-            }
 
-            await Task.CompletedTask;
-        }
         /// <summary>
         /// methode thet is part off initial seeding, creates initial number of cages
         /// </summary>
@@ -264,15 +326,20 @@ namespace UI
 
         #region Animal activity methodes
 
-        internal async Task SimulationProgress(TickerArgs e)
+        /// <summary>
+        /// The metode that gets called every tick, uses theArgs to determen course of action in the spesific tick
+        /// </summary>
+        /// <param name="_theArgs"></param>
+        /// <returns></returns>
+        public async Task SimulationProgress(TickerArgs _theArgs)
         {
 
-            if (e.TickCounter % 100 == 0)               
+            if (_theArgs.TickCounter % 100 == 0)               
             {
-               await CheckInHamsters(e);
+               await CheckInHamsters(_theArgs);
             }
 
-            if ( e.TickCounter % 10 == 0)
+            if ( _theArgs.TickCounter % 10 == 0)
             {
                 //selects the exersicearea wich decides course of action
                 var exArea = hDCDbContext.ExerciseAreas.FirstOrDefault(e => e.NrOfHamsters != 0) ?? null;
@@ -280,24 +347,24 @@ namespace UI
                 // if exArea.NumberOfHmasters != 0 exArea must be unpopulated first
                 if (exArea != null)
                 {
-                    MoveHamsterFromExersiceArea(e);
-                    MoveHamsterToExersiceArea(e);
+                    MoveHamsterFromExersiceArea(_theArgs);
+                    MoveHamsterToExersiceArea(_theArgs);
                 }
                 // if exArea.NumberOfHmasters == 0 exArea can be populates first
                 else
                 {
-                    MoveHamsterToExersiceArea(e);
+                    MoveHamsterToExersiceArea(_theArgs);
                 }
             }
             // else occures when daycare closes. a last move is made befour checkout
-            if ((e.TickCounter + 1) % 100 == 0)
+            if ((_theArgs.TickCounter + 1) % 100 == 0)
             {
                 var exArea = hDCDbContext.ExerciseAreas.First();
                 if (exArea.NrOfHamsters != 0)
                 {
-                    await MoveHamsterFromExersiceArea(e); /////////////// kanske sker samtidigt som den nedan
+                    await MoveHamsterFromExersiceArea(_theArgs); /////////////// kanske sker samtidigt som den nedan
                 }
-                CheckOutHamsters(e);
+                CheckOutHamsters(_theArgs);
             }
 
             await Task.WhenAll();
@@ -308,7 +375,7 @@ namespace UI
         /// methode instansiates a new DayCareLog instance wich each DayCareStay is added to. A DayCAreStay is a object containing all 
         /// recorded activities of each animal for this spesific day.
         /// </summary>
-        public async Task CheckInHamsters(TickerArgs e)
+        public async Task CheckInHamsters(TickerArgs _theArgs)
         {
             // Defaule values wich is given while lopp to Linq operationes if thay end up without an object
             bool loopBool = true;
@@ -352,7 +419,7 @@ namespace UI
                         DayCareLogId = dayCareLog.Id,
                         HamasterId = hamster.id,
                         CageId = cage.Id,
-                        Arrival = e.SimulationTime,
+                        Arrival = _theArgs.SimulationTime,
 
                     });
 
@@ -363,13 +430,13 @@ namespace UI
                     var thisStay = this.hDCDbContext.DayCareStays.OrderByDescending(d => d.Id).First();
                     thisStay.Activities.Add(new Activity()
                     {
-                        AccuredAt = e.SimulationTime,
+                        AccuredAt = _theArgs.SimulationTime,
                         TypeOfActivity = TypeOfActivity.CheckIn
                     });
 
                     // Updates database fields for each entity 
                     hamster.CageId = cage.Id;
-                    hamster.LastActivity = e.SimulationTime;
+                    hamster.LastActivity = _theArgs.SimulationTime;
 
                     // Updates the hamsters in cage
                     cage.Hamsters.Add(hamster);
@@ -403,7 +470,7 @@ namespace UI
         /// is set to null, animals are removed from thair cages, when a cage is empty cage.Gender is set 
         /// to unchosen, checkout time is set
         /// </summary>
-        public void CheckOutHamsters(TickerArgs e)
+        public void CheckOutHamsters(TickerArgs _theArgs)
         {
             // Defaule values wich is given while lopp to Linq operationes if thay end up without an object
             bool loopBool = true;
@@ -444,7 +511,7 @@ namespace UI
                     }
 
                     // Sets checkout time on DayCareStay
-                    thisStay.CheckOut = e.SimulationTime;
+                    thisStay.CheckOut = _theArgs.SimulationTime;
 
                     //saves to db each loop itteration
                     this.hDCDbContext.SaveChanges();
@@ -465,11 +532,11 @@ namespace UI
         /// Moves animals from cage to exersiceArea, sets gender on ExersiceArea and cage if needed. Updates DaycareStay.Activitys aswell
         /// </summary>
         /// <param name="nrOfHamsters"></param>
-        public void MoveHamsterToExersiceArea(TickerArgs e)
+        public void MoveHamsterToExersiceArea(TickerArgs _theArgs)
         {
           
             //Loop itterates and add as manny animals as the nrOfHamsters variable indicates
-            for (int i = 0; i < e.MaxnrOfHamInExArea; i++)
+            for (int i = 0; i < _theArgs.MaxnrOfHamInExArea; i++)
             {
                 // Defaule values wich is given in Linq operations if thay end up without an object
                 Cage defaultCage = null;
@@ -503,13 +570,13 @@ namespace UI
                     // Adding Exersice to DayCareStay.Activity and setting dage and hamster values
                     thisStay.Activities.Add(new Activity
                     {
-                        AccuredAt = e.SimulationTime,
+                        AccuredAt = _theArgs.SimulationTime,
                         HamsterId = hamster.id,
                         TypeOfActivity = TypeOfActivity.MoveToExeExerciseArea
                     });
                     thisStay.Activities.Add(new Activity
                     {
-                        AccuredAt = e.SimulationTime,
+                        AccuredAt = _theArgs.SimulationTime,
                         HamsterId = hamster.id,
                         TypeOfActivity = TypeOfActivity.Exercise
                     });
@@ -538,9 +605,9 @@ namespace UI
         /// Moves animals exersiceArea to cage, sets gender on ExersiceArea and cage if needed. Updates DaycareStay.Activitys aswell
         /// </summary>
         /// <param name="nrOfHamsters"></param>
-        public async Task MoveHamsterFromExersiceArea(TickerArgs e)
+        public async Task MoveHamsterFromExersiceArea(TickerArgs _theArgs)
         {
-            for (int i = 0; i < e.MaxnrOfHamInExArea; i++)
+            for (int i = 0; i < _theArgs.MaxnrOfHamInExArea; i++)
             {
                 // Defaule values wich is given Linq operationes if thay end up without an object
                 Cage defaultCage = null;
@@ -563,7 +630,7 @@ namespace UI
                     .FirstOrDefault(d => d.Id == hamster.id) ?? null;
 
                 //selects a exersiceArea, null is default if none gets chosen
-                var ExersiceArea = this.hDCDbContext.ExerciseAreas.FirstOrDefault(e => e.NrOfHamsters > 0) ?? null;
+                var ExersiceArea = this.hDCDbContext.ExerciseAreas.FirstOrDefault(ex => ex.NrOfHamsters > 0) ?? null;
 
                 //Logic is invoked only if ExersiceArea gets selected
                 if (ExersiceArea != null)
@@ -578,7 +645,7 @@ namespace UI
                     // Adding Exersice to DayCareStay.Activity and setting dage and hamster values
                     var activity = new Activity
                     {
-                        AccuredAt = e.SimulationTime,
+                        AccuredAt = _theArgs.SimulationTime,
                         HamsterId = hamster.id,
                         TypeOfActivity = TypeOfActivity.MoveFromExerciseArea
                     };
@@ -597,7 +664,7 @@ namespace UI
                     //updates info in hamster
                     hamster.CageId = cage.Id;
                     hamster.ExerciseAreaId = null;
-                    hamster.LastActivity = e.SimulationTime;
+                    hamster.LastActivity = _theArgs.SimulationTime;
 
                     //saves to db each loop itteration  
                     this.hDCDbContext.SaveChanges();

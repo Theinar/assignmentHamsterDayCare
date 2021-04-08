@@ -36,10 +36,12 @@ namespace UIWindows
             this.button_Owner = new System.Windows.Forms.Button();
             this.Button_Hamster = new System.Windows.Forms.Button();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.button_Settings = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
             this.textBox2 = new System.Windows.Forms.TextBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.textBox_Main_TextBox = new System.Windows.Forms.TextBox();
             this.panel1.SuspendLayout();
+            this.panel3.SuspendLayout();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -133,11 +135,30 @@ namespace UIWindows
             // 
             // panel3
             // 
+            this.panel3.Controls.Add(this.button_Settings);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel3.Location = new System.Drawing.Point(0, 0);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(217, 160);
             this.panel3.TabIndex = 0;
+            // 
+            // button_Settings
+            // 
+            this.button_Settings.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.button_Settings.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Black;
+            this.button_Settings.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(57)))), ((int)(((byte)(75)))));
+            this.button_Settings.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button_Settings.Font = new System.Drawing.Font("Century Gothic", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.button_Settings.Image = ((System.Drawing.Image)(resources.GetObject("button_Settings.Image")));
+            this.button_Settings.Location = new System.Drawing.Point(0, 40);
+            this.button_Settings.Name = "button_Settings";
+            this.button_Settings.Size = new System.Drawing.Size(217, 120);
+            this.button_Settings.TabIndex = 3;
+            this.button_Settings.Tag = "";
+            this.button_Settings.Text = "Settings";
+            this.button_Settings.TextAlign = System.Drawing.ContentAlignment.TopLeft;
+            this.button_Settings.UseVisualStyleBackColor = true;
+            this.button_Settings.Click += new System.EventHandler(this.button_Settings_Click);
             // 
             // panel2
             // 
@@ -159,16 +180,16 @@ namespace UIWindows
             this.textBox2.Size = new System.Drawing.Size(869, 260);
             this.textBox2.TabIndex = 3;
             // 
-            // textBox1
+            // textBox_Main_TextBox
             // 
-            this.textBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(30)))), ((int)(((byte)(33)))));
-            this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBox1.Location = new System.Drawing.Point(223, 12);
-            this.textBox1.Margin = new System.Windows.Forms.Padding(10);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(869, 423);
-            this.textBox1.TabIndex = 2;
+            this.textBox_Main_TextBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(30)))), ((int)(((byte)(33)))));
+            this.textBox_Main_TextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.textBox_Main_TextBox.Location = new System.Drawing.Point(223, 12);
+            this.textBox_Main_TextBox.Margin = new System.Windows.Forms.Padding(10);
+            this.textBox_Main_TextBox.Multiline = true;
+            this.textBox_Main_TextBox.Name = "textBox_Main_TextBox";
+            this.textBox_Main_TextBox.Size = new System.Drawing.Size(869, 423);
+            this.textBox_Main_TextBox.TabIndex = 2;
             // 
             // Form_Main
             // 
@@ -176,7 +197,7 @@ namespace UIWindows
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(30)))), ((int)(((byte)(33)))));
             this.ClientSize = new System.Drawing.Size(1104, 734);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.textBox_Main_TextBox);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
@@ -186,6 +207,7 @@ namespace UIWindows
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.panel1.ResumeLayout(false);
+            this.panel3.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             this.ResumeLayout(false);
@@ -201,9 +223,10 @@ namespace UIWindows
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Button button_Owner;
         private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox textBox_Main_TextBox;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.Button button_Settings;
     }
 }
 

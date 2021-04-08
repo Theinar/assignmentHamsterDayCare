@@ -12,6 +12,7 @@ namespace HamsterDayCare.Domain
         DateTime actualTimeStart;
         DateTime fictionalStartDate;
         DateTime simulationTime;
+        string filePath;
         int endTick;
         int tickInMilliseconds;
         bool pauseRequest;
@@ -32,6 +33,7 @@ namespace HamsterDayCare.Domain
         public int NumberOfcages { get => numberOfcages; set => numberOfcages = value; }
         public int NumberOfExAreas { get => numberOfExAreas; set => numberOfExAreas = value; }
         public int EndTick { get => endTick; private set => endTick = value; }
+        public string FilePath { get => filePath; set => filePath = value; }
 
         public TickerArgs(DateTime _fictionalDate
                         , int _nrOfDaysInSimulation
@@ -48,6 +50,7 @@ namespace HamsterDayCare.Domain
             MaxnrOfHamInExArea = 6;
             NumberOfcages = 10;
             NumberOfExAreas = 1;
+            FilePath = "Hamsterlista30.csv";
         }
     }
 }

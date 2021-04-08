@@ -13,6 +13,7 @@ using RandomNameGeneratorLibrary;
 using System.Collections.Generic;
 using System.Text;
 using System.Globalization;
+using UI;
 
 namespace UIWindows
 {
@@ -45,10 +46,11 @@ namespace UIWindows
 
             dayCareBackEnd = new BackendLogic(hDCDbContext, fictionalDate);
 
-            dayCareUI = new UILogic(hDCDbContext, fictionalDate);
+            dayCareUI = new UILogic(hDCDbContext, theArgs);
 
-            dayCareBackEnd.
-            //Application.Run(new Form_Main(dayCareBackEnd, dayCareUI.WriteOut() ));
+
+
+            Application.Run(new Form_Main(dayCareBackEnd, dayCareUI.WriteOut() ));
         }
         public static void CallBeckendTicker()
         {
@@ -70,9 +72,13 @@ namespace UIWindows
             //tickInMilliSec = int.Parse(Console.ReadLine());
             tickInMilliSec = 200;
         }
-        private static async void StartSimulation(object sender, TickerArgs e)
+        private static async void StartSimulation(object sender, TickerArgs _theArgs)
         {
-            dayCareBackEnd.SimulationProgress(e);
+            dayCareBackEnd.SimulationProgress(_theArgs);
+        }
+        internal static void ChangeTheArgs(Object _newArgs)
+        {
+                
         }
     }
 }

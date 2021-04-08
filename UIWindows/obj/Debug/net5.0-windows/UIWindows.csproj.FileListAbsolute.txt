@@ -61,3 +61,10 @@ C:\Users\einar\source\repos\HamsterDayCare1.3\UIWindows\bin\Debug\net5.0-windows
 C:\Users\einar\source\repos\HamsterDayCare1.3\UIWindows\bin\Debug\net5.0-windows\HamsterDayCare.Data.pdb
 C:\Users\einar\source\repos\HamsterDayCare1.3\UIWindows\bin\Debug\net5.0-windows\HamsterDayCare.Domain.pdb
 C:\Users\einar\source\repos\HamsterDayCare1.3\UIWindows\obj\Debug\net5.0-windows\UIWindows.csproj.CopyComplete
+C:\Users\einar\source\repos\HamsterDayCare1.3\UIWindows\bin\Debug\net5.0-windows\UI.deps.json
+C:\Users\einar\source\repos\HamsterDayCare1.3\UIWindows\bin\Debug\net5.0-windows\UI.runtimeconfig.json
+C:\Users\einar\source\repos\HamsterDayCare1.3\UIWindows\bin\Debug\net5.0-windows\UI.runtimeconfig.dev.json
+C:\Users\einar\source\repos\HamsterDayCare1.3\UIWindows\bin\Debug\net5.0-windows\UI.exe
+C:\Users\einar\source\repos\HamsterDayCare1.3\UIWindows\bin\Debug\net5.0-windows\UI.dll
+C:\Users\einar\source\repos\HamsterDayCare1.3\UIWindows\bin\Debug\net5.0-windows\UI.pdb
+C:\Users\einar\source\repos\HamsterDayCare1.3\UIWindows\obj\Debug\net5.0-windows\UIWindows.Form_Settings.resources
