@@ -12,20 +12,19 @@ using System.Collections.Generic;
 using System.Text;
 using System.Globalization;
 
-namespace UI
+namespace UIWindows
 {
 
     public class BackendLogic
     {
 
         private HDCDbContext hDCDbContext;
-        private DateTime simulatedTime;
-        public DateTime SimulatedTime { get => simulatedTime;}
+        private TickerArgs theArgs;
 
-        public BackendLogic(HDCDbContext _hDCDbContext, DateTime _simulatedTime)
+        public BackendLogic(HDCDbContext _hDCDbContext, TickerArgs _theArgs)
         {
             hDCDbContext = _hDCDbContext;
-            simulatedTime = _simulatedTime;
+            theArgs = _theArgs;
 
         }
 
@@ -334,12 +333,12 @@ namespace UI
         public async Task SimulationProgress(TickerArgs _theArgs)
         {
 
-            if (_theArgs.TickCounter % 100 == 0)               
+            if (_theArgs.NumberOfTicks % 100 == 0)               
             {
                await CheckInHamsters(_theArgs);
             }
 
-            if ( _theArgs.TickCounter % 10 == 0)
+            if ( _theArgs.NumberOfTicks % 10 == 0)
             {
                 //selects the exersicearea wich decides course of action
                 var exArea = hDCDbContext.ExerciseAreas.FirstOrDefault(e => e.NrOfHamsters != 0) ?? null;
@@ -357,7 +356,7 @@ namespace UI
                 }
             }
             // else occures when daycare closes. a last move is made befour checkout
-            if ((_theArgs.TickCounter + 1) % 100 == 0)
+            if ((_theArgs.NumberOfTicks + 1) % 100 == 0)
             {
                 var exArea = hDCDbContext.ExerciseAreas.First();
                 if (exArea.NrOfHamsters != 0)
@@ -675,12 +674,9 @@ namespace UI
 
         #endregion
 
-        #region Other
+        #region UI Stuff
 
-        /// <summary>
-        /// Sets the Datetime StartsFrom and simulated time to 7:00:00 on the date thet the user enter
-        /// </summary>
-        /// <param name="date"></param>
+        
 
 
         #endregion

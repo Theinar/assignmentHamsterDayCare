@@ -2178,24 +2178,6 @@
         "runtime": {
           "bin/placeholder/HamsterDayCare.Domain.dll": {}
         }
-      },
-      "UI/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v5.0",
-        "dependencies": {
-          "HamsterDayCare.Data": "1.0.0",
-          "HamsterDayCare.Domain": "1.0.0",
-          "Microsoft.EntityFrameworkCore": "5.0.4",
-          "Microsoft.EntityFrameworkCore.Proxies": "5.0.4",
-          "Microsoft.EntityFrameworkCore.SqlServer": "5.0.4",
-          "RandomNameGeneratorLibrary": "1.2.2"
-        },
-        "compile": {
-          "bin/placeholder/UI.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/UI.dll": {}
-        }
       }
     }
   },
@@ -7424,18 +7406,12 @@
       "type": "project",
       "path": "../HamsterDayCare.Domain/HamsterDayCare.Domain.csproj",
       "msbuildProject": "../HamsterDayCare.Domain/HamsterDayCare.Domain.csproj"
-    },
-    "UI/1.0.0": {
-      "type": "project",
-      "path": "../UI/UI.csproj",
-      "msbuildProject": "../UI/UI.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net5.0-windows7.0": [
       "HamsterDayCare.Data >= 1.0.0",
-      "HamsterDayCare.Domain >= 1.0.0",
-      "UI >= 1.0.0"
+      "HamsterDayCare.Domain >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -7470,9 +7446,6 @@
             },
             "C:\\Users\\einar\\source\\repos\\HamsterDayCare1.3\\HamsterDayCare.Domain\\HamsterDayCare.Domain.csproj": {
               "projectPath": "C:\\Users\\einar\\source\\repos\\HamsterDayCare1.3\\HamsterDayCare.Domain\\HamsterDayCare.Domain.csproj"
-            },
-            "C:\\Users\\einar\\source\\repos\\HamsterDayCare1.3\\UI\\UI.csproj": {
-              "projectPath": "C:\\Users\\einar\\source\\repos\\HamsterDayCare1.3\\UI\\UI.csproj"
             }
           }
         }

@@ -1,5 +1,4 @@
 ﻿using System;
-using UI;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -17,11 +16,10 @@ namespace UIWindows
 
         internal BackendLogic DayCareBackEnd { get => dayCareBackEnd; set => dayCareBackEnd = value; }
 
-        public Form_Main(BackendLogic _dayCareBackEnd, string _aString)
+        public Form_Main(BackendLogic _dayCareBackEnd)
         {
             DayCareBackEnd = _dayCareBackEnd;
             InitializeComponent();
-            this.textBox_Main_TextBox.Text = _aString;
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -66,5 +64,16 @@ namespace UIWindows
                 form.Show();
             }
         }
+
+        private void Form_Main_Activated(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+
+        }
+
     }
 }

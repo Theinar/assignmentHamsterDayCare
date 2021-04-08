@@ -9,8 +9,7 @@
       "UIWindows/1.0.0": {
         "dependencies": {
           "HamsterDayCare.Data": "1.0.0",
-          "HamsterDayCare.Domain": "1.0.0",
-          "UI": "1.0.0"
+          "HamsterDayCare.Domain": "1.0.0"
         },
         "runtime": {
           "UIWindows.dll": {}
@@ -1359,19 +1358,6 @@
         "runtime": {
           "HamsterDayCare.Domain.dll": {}
         }
-      },
-      "UI/1.0.0": {
-        "dependencies": {
-          "HamsterDayCare.Data": "1.0.0",
-          "HamsterDayCare.Domain": "1.0.0",
-          "Microsoft.EntityFrameworkCore": "5.0.4",
-          "Microsoft.EntityFrameworkCore.Proxies": "5.0.4",
-          "Microsoft.EntityFrameworkCore.SqlServer": "5.0.4",
-          "RandomNameGeneratorLibrary": "1.2.2"
-        },
-        "runtime": {
-          "UI.dll": {}
-        }
       }
     }
   },
@@ -2297,11 +2283,6 @@
       "sha512": ""
     },
     "HamsterDayCare.Domain/1.0.0": {
-      "type": "project",
-      "serviceable": false,
-      "sha512": ""
-    },
-    "UI/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

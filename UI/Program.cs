@@ -21,7 +21,7 @@ namespace UI
 
         private static HDCDbContext hDCDbContext = new HDCDbContext();
         private static DateTime fictionalDate;
-        private static BackendLogic dayCareBackEnd;
+       // private static BackendLogic dayCareBackEnd;
         private static UILogic dayCareUI;
         private static int nrOfDaysInSimulation;
         private static int tickInMilliSec;
@@ -34,11 +34,11 @@ namespace UI
 
             theTicker.tick += StartSimulation;
 
-            dayCareBackEnd = new BackendLogic(hDCDbContext, fictionalDate);
+            //dayCareBackEnd = new BackendLogic(hDCDbContext, fictionalDate);
 
             dayCareUI = new UILogic(hDCDbContext, theArgs);
 
-            dayCareBackEnd.EnsureDaysReadyToStart();
+           // dayCareBackEnd.EnsureDaysReadyToStart();
 
             theTicker.Start(theArgs);
 
@@ -75,7 +75,7 @@ namespace UI
         private static async void StartSimulation(object sender, TickerArgs e)
         {
 
-           await dayCareBackEnd.SimulationProgress(e);
+            await dayCareBackEnd.SimulationProgress(e);
            dayCareUI.WriteOut();
         }
 

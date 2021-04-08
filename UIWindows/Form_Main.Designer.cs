@@ -75,6 +75,7 @@ namespace UIWindows
             this.button1.Text = "Run Simulation";
             this.button1.TextAlign = System.Drawing.ContentAlignment.TopLeft;
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // button3
             // 
@@ -205,6 +206,7 @@ namespace UIWindows
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "Form_Main";
             this.Text = "Form1";
+            this.Activated += new System.EventHandler(this.Form_Main_Activated);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.panel1.ResumeLayout(false);
             this.panel3.ResumeLayout(false);

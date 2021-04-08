@@ -1,5 +1,6 @@
 ﻿using System;
-using UI;
+using HamsterDayCare.Domain;
+using HamsterDayCare.Data;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -75,19 +76,16 @@ namespace UIWindows
             this.Dispose();
 
         }
-
+        /// <summary>
+        /// This button click sets new settings for simulation. This is done by constructing a new tickerargs and sending it to 
+        /// program where it replaces the old one
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Button_Submit_Click(object sender, EventArgs e)
         {
-
-            //Variables to be sent to build new args with
-            int? _MaxnrOfHamInEachCage = null;
-            int? _MaxnrOfHamInExArea = null;
-            int? _NumberOfcages = null;
-            int? _NumberOfExAreas = null;
-            string _FilePath = null;
-            DateTime? _FictionalDate = DateTime.Now;
-            int? _EndTick = null;
-            int? _TickInMilliseconds = null;
+            // Instanciates new Tickerargs wich is set to new values in From_Settings
+            TickerArgs newArgs = new TickerArgs();
 
             // bool that stays true if all variables gets parsed in the right format
             bool everythingParseble = true;
@@ -95,80 +93,81 @@ namespace UIWindows
             // Taking string from textbox to parse into datetime
             string dateString = this.textBox_set_Fictional_Date.Text;
 
-
+            // strings that is used to parse Datetime in right format
             string sevenOclock = " 07:00:00:0000";
-           string startsFromString = dateString + sevenOclock;
+            string startsFromString = dateString + sevenOclock;
             string format = "yyyyMMdd HH:mm:ss:ffff";
 
-
+            // Try tests if users format valid
             try
             {
-                _FictionalDate = DateTime.ParseExact(startsFromString, format,
+                newArgs.FictionalStartDate = DateTime.ParseExact(startsFromString, format,
                                          CultureInfo.InvariantCulture);
-                _EndTick = int.Parse(this.textBox_set_nr_of_days.Text);
-                _TickInMilliseconds = int.Parse(this.textBox_Set_ticks_Per_Second.Text) / 1000;
+                newArgs.EndTick = int.Parse(this.textBox_set_nr_of_days.Text) * 100;
+                newArgs.TickInMilliseconds = 1000 / (int.Parse(this.textBox_Set_ticks_Per_Second.Text));
             }
             catch (Exception ex)
             {
+                // sets to fals if exeprion is cought
                 everythingParseble = false;
             }
 
+            // Sets the values that are effected by paulstandard 
             if (!Paul_Standard_Checked)
             {
-                _MaxnrOfHamInEachCage = 3;
-                _MaxnrOfHamInExArea = 6;
-                _NumberOfcages = 10;
-                _NumberOfExAreas = 1;
-                _FilePath = "Hamsterlista30.csv";
+                newArgs.MaxnrOfHamInEachCage = 3;
+                newArgs.MaxnrOfHamInExArea = 6;
+                newArgs.NumberOfcages = 10;
+                newArgs.NumberOfExAreas = 1;
+                newArgs.FilePath = "Hamsterlista30.csv";
             }
+            // else if Custom is selected in form
             else
             {
-
+                // trys to catch format incorrection
                 try
                 {
-                    if (checkBox_Import_csv.Checked)
+                    // IFs to check if user has checked boxex in Settings form
+                    if (checkBox_Cange_Cage_cap.Checked)
                     {
-                        _MaxnrOfHamInEachCage = int.Parse(this.checkBox_Import_csv.Text);
+                        newArgs.MaxnrOfHamInEachCage = int.Parse(this.textBox_Change_Cage_Cap.Text);
                     }
                     if (checkBox_Change_ExArea_cap.Checked)
                     {
-                        _MaxnrOfHamInExArea = int.Parse(this.checkBox_Change_ExArea_cap.Text);
+                        newArgs.MaxnrOfHamInExArea = int.Parse(this.textBox_Change_EXArea_cap.Text);
                     }
                     if (checkBox_Change_nr_of_cages.Checked)
                     {
-                        _NumberOfcages = int.Parse(this.textBox_Change_number_of_cages.Text);
+                        newArgs.NumberOfcages = int.Parse(this.textBox_Change_number_of_cages.Text);
                     }
                     if (checkBox_Change_number_Of_ExAreas.Checked)
                     {
-                        _NumberOfExAreas = int.Parse(this.textBox_Change_Cage_Cap.Text);
+                        newArgs.NumberOfExAreas = int.Parse(this.textBox_Change_Cage_Cap.Text);
                     }
                     if (checkBox_Import_csv.Checked)
                     {
-                        _FilePath = "HamsterlistaCustom.csv";
+                        newArgs.FilePath = "HamsterlistaCustom.csv";
                     }
                 }
                 catch (Exception)
                 {
+                    // sets to false if exeprion is cought
                     everythingParseble = false;
                 }
 
             }
 
+            // If no format exeptions where cought everythingParseble is true and newArgs is sent to Program Class
             if (everythingParseble == true)
             {
+                Program.ChangeTheArgs(newArgs);
 
-                Program.ChangeTheArgs(_MaxnrOfHamInEachCage,
-                _MaxnrOfHamInExArea,
-                _NumberOfcages,
-                 _NumberOfExAreas,
-                _FilePath,
-                 _FictionalDate,
-                 _EndTick,
-                _TickInMilliseconds);
+                // Notefies user that new settings are in place
                 MessageBox.Show("Your settings has now been applied");
             }
             else
             {
+                // Notefies use that something is wrong with format
                 MessageBox.Show("It seems there is something wrong with your formating\n" +
                                 "Please check if all checked feilds are in correct format");
             }

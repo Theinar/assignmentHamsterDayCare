@@ -44,12 +44,19 @@ namespace UIWindows
             this.Dispose();
 
         }
-        private void CheckEnter(object sender, System.Windows.Forms.KeyPressEventArgs e)
+
+        private void Button_Submit_Click(object sender, EventArgs e)
         {
-            if (e.KeyChar == (char)13)
+            if (int.TryParse(textBox_For_ID.Text, out int a))
             {
-                IdWeAreLookingFor = int.Parse(textBox_For_ID.Text);
+                IdWeAreLookingFor = a;
             }
+            else
+            {
+                MessageBox.Show("Invalid Entry\nNo ID was chosen");
+            }
+            this.Close();
+            
         }
     }
 }
