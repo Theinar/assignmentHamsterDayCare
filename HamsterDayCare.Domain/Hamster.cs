@@ -8,7 +8,7 @@ namespace HamsterDayCare.Domain
 {
     public class Hamster
     {
-        public int id { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; }
         public string Owner { get; set; }
         public int Age { get; set; }

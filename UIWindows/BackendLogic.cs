@@ -300,6 +300,40 @@ namespace UIWindows
 
         #region Animal activity methodes
 
+        public async Task StartOfTheDayRoutine(TickerArgs _theArgs)
+        {
+            _theArgs.NumberOfTicks = 0;
+            _theArgs.SimulationTime = _theArgs.FictionalStartDate;
+
+            var cages = hDCDbContext.Cages.Where(c => c.Id > 0).ToList();
+
+            var exAreas = hDCDbContext.ExerciseAreas.Where(ex => ex.Id > 0).ToList();
+
+            var hamsters = hDCDbContext.Hamsters.Where(h => h.Id > 0).ToList();
+
+            for (int i = 0; i < cages.Count; i++)
+            {
+                cages[i].NrOfHamsters = 0;
+                cages[i].Gender = Gender.NotChosen;
+            }
+
+            for (int i = 0; i < exAreas.Count; i++)
+            {
+                exAreas[i].NrOfHamsters = 0;
+                exAreas[i].Gender = Gender.NotChosen;
+            }
+
+            for (int i = 0; i < hamsters.Count; i++)
+            {
+                hamsters[i].CageId = null;
+                hamsters[i].ExerciseAreaId = null;
+            }
+
+           await Task.CompletedTask;
+
+        }
+
+
         /// <summary>
         /// The metode that gets called every tick, uses theArgs to determen course of action in the spesific tick
         /// </summary>
@@ -373,7 +407,7 @@ namespace UIWindows
 
                 //Selects e hamster from hamsters in DB
                 var hamster = this.hDCDbContext.Hamsters
-                    .FirstOrDefault(h => h.CageId == null) ?? new Hamster() { id = 0 };
+                    .FirstOrDefault(h => h.CageId == null) ?? new Hamster() { Id = 0 };
 
                 
                 // Selects first avaleble cage
@@ -391,7 +425,7 @@ namespace UIWindows
                     this.hDCDbContext.DayCareStays.Add(new DayCareStay()
                     {
                         DayCareLogId = dayCareLog.Id,
-                        HamasterId = hamster.id,
+                        HamasterId = hamster.Id,
                         CageId = cage.Id,
                         Arrival = _theArgs.SimulationTime,
 
@@ -468,14 +502,14 @@ namespace UIWindows
                 // Selects the hamster wich is about to check put
                 // sets a dummy instans to prevens false value in next step
                 var hamster = this.hDCDbContext.Hamsters
-                    .FirstOrDefault(h => h.CageId != null) ?? new Hamster() { id = 0 };
+                    .FirstOrDefault(h => h.CageId != null) ?? new Hamster() { Id = 0 };
 
                 // Finds wich cage that animal is in 
                 var cage = this.hDCDbContext.Cages
                     .FirstOrDefault(c => c.Id == hamster.CageId) ?? defaultCage;
 
                 // Selects ongoing DaycareStay
-                var thisStay = this.hDCDbContext.DayCareStays.OrderByDescending(d => d.Id).FirstOrDefault(d => d.HamasterId == hamster.id) ?? null;
+                var thisStay = this.hDCDbContext.DayCareStays.OrderByDescending(d => d.Id).FirstOrDefault(d => d.HamasterId == hamster.Id) ?? null;
 
                 // Executes if cage is chosen
                 if (cage != null)
@@ -526,7 +560,7 @@ namespace UIWindows
                 // Selects the hamster wich is about to exersice
                 // sets a dummy instans to prevens false value in next step
                 var hamster = this.hDCDbContext.Hamsters
-                    .OrderBy(h => h.LastActivity).FirstOrDefault(c => c.CageId != null) ?? new Hamster() { id = 0 };
+                    .OrderBy(h => h.LastActivity).FirstOrDefault(c => c.CageId != null) ?? new Hamster() { Id = 0 };
 
                 // Finds wich cage that animal is in 
                 var cage = this.hDCDbContext.Cages
@@ -535,7 +569,7 @@ namespace UIWindows
                 //Finds ongoing DayCareStay instatnce for above selected hamster
                 var thisStay = this.hDCDbContext.DayCareStays
                     .OrderByDescending(d => d.Id)
-                    .FirstOrDefault(d => d.HamasterId == hamster.id) ?? null;
+                    .FirstOrDefault(d => d.HamasterId == hamster.Id) ?? null;
 
                 // Selects an Exersicerea sets to null if none is chosen
                 var ExersiceArea = this.hDCDbContext.ExerciseAreas.FirstOrDefault(e => e.NrOfHamsters < e.Capacity) ?? null;
@@ -553,13 +587,13 @@ namespace UIWindows
                     thisStay.Activities.Add(new Activity
                     {
                         AccuredAt = _theArgs.SimulationTime,
-                        HamsterId = hamster.id,
+                        HamsterId = hamster.Id,
                         TypeOfActivity = TypeOfActivity.MoveToExeExerciseArea
                     });
                     thisStay.Activities.Add(new Activity
                     {
                         AccuredAt = _theArgs.SimulationTime,
-                        HamsterId = hamster.id,
+                        HamsterId = hamster.Id,
                         TypeOfActivity = TypeOfActivity.Exercise
                     });
 
@@ -598,7 +632,7 @@ namespace UIWindows
                 // if there is no animals left a dummy instans is selected as default to prevens false value in next step
                 var hamster = this.hDCDbContext.Hamsters
                     .OrderBy(h => h.LastActivity)
-                    .FirstOrDefault(c => c.ExerciseAreaId != null) ?? new Hamster() { id = 0 };
+                    .FirstOrDefault(c => c.ExerciseAreaId != null) ?? new Hamster() { Id = 0 };
 
                 // Finds wich cage that animal is in 
                 var cage = this.hDCDbContext.Cages
@@ -609,7 +643,7 @@ namespace UIWindows
                 //Finds ongoing DayCareStay instatnce
                 var thisStay = this.hDCDbContext.DayCareStays
                     .OrderByDescending(d => d.Id)
-                    .FirstOrDefault(d => d.Id == hamster.id) ?? null;
+                    .FirstOrDefault(d => d.Id == hamster.Id) ?? null;
 
                 //selects a exersiceArea, null is default if none gets chosen
                 var ExersiceArea = this.hDCDbContext.ExerciseAreas.FirstOrDefault(ex => ex.NrOfHamsters > 0) ?? null;
@@ -628,7 +662,7 @@ namespace UIWindows
                     var activity = new Activity
                     {
                         AccuredAt = _theArgs.SimulationTime,
-                        HamsterId = hamster.id,
+                        HamsterId = hamster.Id,
                         TypeOfActivity = TypeOfActivity.MoveFromExerciseArea
                     };
 

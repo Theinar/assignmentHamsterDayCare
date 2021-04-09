@@ -80,6 +80,7 @@ namespace UIWindows
 
         private void button_Run_Simulation_Click(object sender, EventArgs e)
         {
+            Program.SimulationOnFirstClick();
             Program.simulationRelease = true;
         }
         private static async void StartSimulation(object sender, TickerArgs e)

@@ -60,7 +60,12 @@ namespace UIWindows
         {
             dayCareBackEnd.SimulationProgress(_theArgs);
         }
-        private static void SimulationAwaiter(Ticker _theTicker)
+        internal static void SimulationOnFirstClick()
+        {
+            dayCareBackEnd.StartOfTheDayRoutine(theArgs);
+
+        }
+        private async static void SimulationAwaiter(Ticker _theTicker)
         {
             bool whilebool = true;
 
@@ -69,6 +74,7 @@ namespace UIWindows
                 if (simulationRelease)
                 {
                     _theTicker.Start(theArgs);
+                    simulationRelease = false;
                 }
             }
         }
