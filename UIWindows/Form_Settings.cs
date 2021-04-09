@@ -1,5 +1,6 @@
 ﻿using System;
 using HamsterDayCare.Domain;
+using System.IO;
 using HamsterDayCare.Data;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -84,7 +85,7 @@ namespace UIWindows
         /// <param name="e"></param>
         private void Button_Submit_Click(object sender, EventArgs e)
         {
-            // Instanciates new Tickerargs wich is set to new values in From_Settings
+
             TickerArgs newArgs = new TickerArgs();
 
             // bool that stays true if all variables gets parsed in the right format
@@ -162,6 +163,21 @@ namespace UIWindows
             {
                 Program.ChangeTheArgs(newArgs);
 
+
+                using (StreamWriter saveSettings = new StreamWriter("Settings.csv"))
+                {
+                    saveSettings.Write($"{newArgs.EndTick}," +
+                                        $"{newArgs.FictionalStartDate}," +
+                                        $"{newArgs.FilePath}," +
+                                        $"{newArgs.MaxnrOfHamInEachCage}," +
+                                        $"{newArgs.MaxnrOfHamInExArea}," +
+                                        $"{newArgs.NumberOfcages}," +
+                                        $"{newArgs.NumberOfExAreas}," +
+                                        $"{newArgs.NumberOfTicks}," +
+                                        $"{newArgs.PauseRequest}," +
+                                        $"{newArgs.SimulationTime}," +
+                                        $"{newArgs.TickInMilliseconds}");
+                }
                 // Notefies user that new settings are in place
                 MessageBox.Show("Your settings has now been applied");
             }

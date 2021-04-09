@@ -38,7 +38,7 @@ namespace UIWindows
             this.panel3 = new System.Windows.Forms.Panel();
             this.button_Settings = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.textBox_Second_Main = new System.Windows.Forms.TextBox();
             this.textBox_Main_TextBox = new System.Windows.Forms.TextBox();
             this.panel1.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -164,23 +164,24 @@ namespace UIWindows
             // 
             // panel2
             // 
-            this.panel2.Controls.Add(this.textBox2);
+            this.panel2.Controls.Add(this.textBox_Second_Main);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel2.Location = new System.Drawing.Point(217, 441);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(887, 293);
             this.panel2.TabIndex = 1;
             // 
-            // textBox2
+            // textBox_Second_Main
             // 
-            this.textBox2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(30)))), ((int)(((byte)(33)))));
-            this.textBox2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBox2.Location = new System.Drawing.Point(6, 14);
-            this.textBox2.Margin = new System.Windows.Forms.Padding(10);
-            this.textBox2.Multiline = true;
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(869, 260);
-            this.textBox2.TabIndex = 3;
+            this.textBox_Second_Main.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(30)))), ((int)(((byte)(33)))));
+            this.textBox_Second_Main.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.textBox_Second_Main.Location = new System.Drawing.Point(6, 14);
+            this.textBox_Second_Main.Margin = new System.Windows.Forms.Padding(10);
+            this.textBox_Second_Main.Multiline = true;
+            this.textBox_Second_Main.Name = "textBox_Second_Main";
+            this.textBox_Second_Main.Size = new System.Drawing.Size(869, 260);
+            this.textBox_Second_Main.TabIndex = 3;
+            this.textBox_Second_Main.TextChanged += new System.EventHandler(this.textBox_Second_Main_TextChanged);
             // 
             // textBox_Main_TextBox
             // 
@@ -192,6 +193,7 @@ namespace UIWindows
             this.textBox_Main_TextBox.Name = "textBox_Main_TextBox";
             this.textBox_Main_TextBox.Size = new System.Drawing.Size(869, 423);
             this.textBox_Main_TextBox.TabIndex = 2;
+            this.textBox_Main_TextBox.TextChanged += new System.EventHandler(this.textBox_Main_TextBox_TextChanged);
             // 
             // Form_Main
             // 
@@ -228,7 +230,7 @@ namespace UIWindows
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.TextBox textBox_Main_TextBox;
         private System.Windows.Forms.Button button_Run_Simulation;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox textBox_Second_Main;
         private System.Windows.Forms.Button button_Settings;
     }
 }

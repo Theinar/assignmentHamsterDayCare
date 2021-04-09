@@ -17,11 +17,15 @@ namespace UIWindows
     {
         TickerArgs theArgs;
         static BackendLogic dayCareBackEnd;
+        static HDCDbContext hDCDbContext;
+        public static bool reportRelease = false;
+        public static bool reportAwaiter_whilebool = true;
 
-        public Form_Main()
+        public Form_Main(HDCDbContext _hDCDbContext)
         {
             InitializeComponent();
             theArgs =  new TickerArgs();
+            hDCDbContext = _hDCDbContext;
 
         }
 
@@ -58,7 +62,11 @@ namespace UIWindows
                 form.Show();
             }
         }
-
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            base.OnClosing(e);
+            Program.SimulationAwaiter_whilebool = false;
+        }
         private void button_Settings_Click(object sender, EventArgs e)
         {
             if (!Form_Settings.IsShowing)
@@ -78,15 +86,48 @@ namespace UIWindows
 
         }
 
-        private void button_Run_Simulation_Click(object sender, EventArgs e)
+        private async void button_Run_Simulation_Click(object sender, EventArgs e)
         {
             Program.SimulationOnFirstClick();
             Program.simulationRelease = true;
+            await UIInfo();
         }
         private static async void StartSimulation(object sender, TickerArgs e)
         {
             await dayCareBackEnd.SimulationProgress(e);
             //dayCareUI.WriteOut();
+        }
+        private async Task UIInfo()
+        {
+
+            while (reportAwaiter_whilebool)
+            {
+                if (reportRelease)
+                {
+                   var bla = MainTextboxInfoBuilder();
+                   var bla2 = MainTextboxInfoBuilder2();
+
+                    Task.WhenAll(bla, bla2);
+
+                    this.textBox_Main_TextBox.Text = bla.Result;
+                    this.textBox_Second_Main.Text = bla2.Result;
+
+
+
+
+                    reportRelease = false;
+                }
+            }
+        }
+
+        private void textBox_Main_TextBox_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox_Second_Main_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
