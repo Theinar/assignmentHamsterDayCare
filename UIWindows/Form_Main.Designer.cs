@@ -31,7 +31,7 @@ namespace UIWindows
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form_Main));
             this.panel1 = new System.Windows.Forms.Panel();
-            this.button1 = new System.Windows.Forms.Button();
+            this.button_Run_Simulation = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.button_Owner = new System.Windows.Forms.Button();
             this.Button_Hamster = new System.Windows.Forms.Button();
@@ -47,7 +47,7 @@ namespace UIWindows
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.button1);
+            this.panel1.Controls.Add(this.button_Run_Simulation);
             this.panel1.Controls.Add(this.button3);
             this.panel1.Controls.Add(this.button_Owner);
             this.panel1.Controls.Add(this.Button_Hamster);
@@ -58,24 +58,24 @@ namespace UIWindows
             this.panel1.Size = new System.Drawing.Size(217, 734);
             this.panel1.TabIndex = 0;
             // 
-            // button1
+            // button_Run_Simulation
             // 
-            this.button1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.button1.FlatAppearance.BorderColor = System.Drawing.Color.Black;
-            this.button1.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Black;
-            this.button1.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(57)))), ((int)(((byte)(75)))));
-            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button1.Font = new System.Drawing.Font("Century Gothic", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.button1.Image = ((System.Drawing.Image)(resources.GetObject("button1.Image")));
-            this.button1.Location = new System.Drawing.Point(0, 520);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(217, 222);
-            this.button1.TabIndex = 3;
-            this.button1.Tag = "";
-            this.button1.Text = "Run Simulation";
-            this.button1.TextAlign = System.Drawing.ContentAlignment.TopLeft;
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.button_Run_Simulation.Dock = System.Windows.Forms.DockStyle.Top;
+            this.button_Run_Simulation.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.button_Run_Simulation.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Black;
+            this.button_Run_Simulation.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(57)))), ((int)(((byte)(75)))));
+            this.button_Run_Simulation.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button_Run_Simulation.Font = new System.Drawing.Font("Century Gothic", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.button_Run_Simulation.Image = ((System.Drawing.Image)(resources.GetObject("button_Run_Simulation.Image")));
+            this.button_Run_Simulation.Location = new System.Drawing.Point(0, 520);
+            this.button_Run_Simulation.Name = "button_Run_Simulation";
+            this.button_Run_Simulation.Size = new System.Drawing.Size(217, 222);
+            this.button_Run_Simulation.TabIndex = 3;
+            this.button_Run_Simulation.Tag = "";
+            this.button_Run_Simulation.Text = "Run Simulation";
+            this.button_Run_Simulation.TextAlign = System.Drawing.ContentAlignment.TopLeft;
+            this.button_Run_Simulation.UseVisualStyleBackColor = true;
+            this.button_Run_Simulation.Click += new System.EventHandler(this.button_Run_Simulation_Click);
             // 
             // button3
             // 
@@ -142,6 +142,7 @@ namespace UIWindows
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(217, 160);
             this.panel3.TabIndex = 0;
+            this.panel3.Paint += new System.Windows.Forms.PaintEventHandler(this.panel3_Paint);
             // 
             // button_Settings
             // 
@@ -226,7 +227,7 @@ namespace UIWindows
         private System.Windows.Forms.Button button_Owner;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.TextBox textBox_Main_TextBox;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button button_Run_Simulation;
         private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.Button button_Settings;
     }

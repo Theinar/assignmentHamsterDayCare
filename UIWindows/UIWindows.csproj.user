@@ -10,5 +10,8 @@
     <Compile Update="Form_Choose.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="UILogic.cs">
+      <SubType>Form</SubType>
+    </Compile>
   </ItemGroup>
 </Project>

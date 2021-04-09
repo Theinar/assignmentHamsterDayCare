@@ -21,7 +21,7 @@ namespace UIWindows
 
 
 
-        private static HDCDbContext hDCDbContext = new HDCDbContext();
+
         private static TickerArgs theArgs;
         private static BackendLogic dayCareBackEnd;
        // private static UILogic dayCareUI;
@@ -37,19 +37,15 @@ namespace UIWindows
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            //SetTimes();
-            theArgs = new TickerArgs();
-            Ticker theTicker = new Ticker();
 
-            theTicker.tick += StartSimulation;
+            //Thread t2 = new Thread(runUILogic);
+            //t2.Start();
 
-            dayCareBackEnd = new BackendLogic(hDCDbContext, theArgs);
 
-           // dayCareUI = new UILogic(hDCDbContext, theArgs);
+            Application.Run(new Form_Main());
 
-            Application.Run(new Form_Main(dayCareBackEnd));
+        }
 
-         }
 
 
         //private static void SetTimes()
@@ -71,9 +67,24 @@ namespace UIWindows
         {
             dayCareBackEnd.SimulationProgress(_theArgs);
         }
+
+
+
+
+
+
+/// <summary>
+/// ///////////////////////// Kolla så att det nedan funkar nu när mycket av program har flyttats
+/// </summary>
+/// <param name="_newArgs"></param>
+
+
+
+
+
+
         internal static void ChangeTheArgs(TickerArgs _newArgs)
         {
-            // If user acceses settings and makes changes theas are here enforcaed 
             theArgs = _newArgs;
         }
     }

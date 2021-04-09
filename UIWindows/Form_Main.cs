@@ -1,25 +1,33 @@
 ﻿using System;
 using System.Collections.Generic;
+using HamsterDayCare.Domain;
+using HamsterDayCare.Data;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace UIWindows
 {
     internal partial class Form_Main : Form
     {
+        private static HDCDbContext hDCDbContext = new HDCDbContext();
+        TickerArgs theArgs;
+        Ticker theTicker;
         BackendLogic dayCareBackEnd;
 
-        internal BackendLogic DayCareBackEnd { get => dayCareBackEnd; set => dayCareBackEnd = value; }
-
-        public Form_Main(BackendLogic _dayCareBackEnd)
+        public Form_Main()
         {
-            DayCareBackEnd = _dayCareBackEnd;
             InitializeComponent();
+            theArgs =  new TickerArgs();
+            theTicker = new Ticker();
+            theTicker.tick += StartSimulation;
+            dayCareBackEnd = new BackendLogic(hDCDbContext, theArgs);
+            dayCareBackEnd.UnSeedDBAndStartWithPaulStandard(theArgs);
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -70,10 +78,28 @@ namespace UIWindows
 
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void button_Run_Simulation_Click(object sender, EventArgs e)
+        {
+            theTicker.Start(theArgs);
+        }
+        private async void StartSimulation(object sender, TickerArgs e)
+        {
+
+            var beckend = dayCareBackEnd.SimulationProgress(e);
+            //var ui = runUILogic();
+
+            Task.WhenAll();
+
+        }
+        private async Task runUILogic()
+        {
+            Task<string> mainReport = this.MainTextboxInfoBuilder();
+            this.textBox_Main_TextBox.Text = mainReport.Result;
+        }
+
+        private void panel3_Paint(object sender, PaintEventArgs e)
         {
 
         }
-
     }
 }

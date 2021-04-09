@@ -33,7 +33,7 @@ namespace UIWindows
         #region Initial seeding
 
         /// <summary>
-        /// Initial seeding of DB
+        /// Initial seeding of DB, effects cages and ExAreas
         /// </summary>
         internal async Task SeedDB(TickerArgs e)
         {
@@ -292,34 +292,7 @@ namespace UIWindows
         /// Ensures that there are no old entitys from earlier canseld simulations
         /// </summary>
         /// <returns></returns>
-        internal void EnsureDaysReadyToStart()
-        {
-            //Selects all hamsters
-            var hamsters = hDCDbContext.Hamsters.Where(h => h.id > 0).ToList();
 
-            // itterates throu animals setting thair whereabouts to null
-            for (int i = 0; i < hamsters.Count; i++)
-            {
-                hamsters[i].CageId = null;
-                hamsters[i].ExerciseAreaId = null;
-            }
-
-            // selects cages and ensures that thay are empty
-            var cages = hDCDbContext.Cages.Where(c => c.Id > 0).ToList();
-
-            for (int i = 0; i < cages.Count; i++)
-            {
-                cages[i].NrOfHamsters = 0;
-            }
-            // selects ExerciseAreas and ensures that thay are empty
-            var exArea =  hDCDbContext.ExerciseAreas.Where(ex => ex.Id > 0).ToList();
-
-            for (int i = 0; i < exArea.Count; i++)
-            {
-                exArea[i].NrOfHamsters = 0;
-            }
-            hDCDbContext.SaveChanges();
-        }
 
         #endregion
 
@@ -332,7 +305,7 @@ namespace UIWindows
         /// <returns></returns>
         public async Task SimulationProgress(TickerArgs _theArgs)
         {
-
+            // Number of ticks determins action 
             if (_theArgs.NumberOfTicks % 100 == 0)               
             {
                await CheckInHamsters(_theArgs);
@@ -438,7 +411,15 @@ namespace UIWindows
                     hamster.LastActivity = _theArgs.SimulationTime;
 
                     // Updates the hamsters in cage
-                    cage.Hamsters.Add(hamster);
+                    try
+                    {
+                        cage.Hamsters.Add(hamster);
+                    }
+                    catch (Exception ex)
+                    {
+
+                        throw;
+                    }
                     cage.NrOfHamsters++;
 
                     // sets gender of cage if needed
