@@ -73,13 +73,15 @@ namespace UIWindows
         /// <param name="e"></param>
         internal void UnSeedDBAndStartWithPaulStandard(TickerArgs _theArgs)
         {
-            var resetDb = ResetDb();  
+           // var resetDb = ResetDb();  
 
-            var seedDb = SeedDB(_theArgs);
+            //var seedDb = SeedDB(_theArgs);
 
-            var createAndAddHamsterClientele = CreateAndAddHamsterClientele(_theArgs);
+            //var createAndAddHamsterClientele = CreateAndAddHamsterClientele(_theArgs);
 
-            Task.WhenAll(resetDb, seedDb, createAndAddHamsterClientele);
+            //Task.WhenAll(resetDb, seedDb, createAndAddHamsterClientele);
+
+            //Task.WhenAll(seedDb, createAndAddHamsterClientele);
 
         }
         /// <summary>

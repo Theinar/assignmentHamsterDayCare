@@ -10,7 +10,7 @@ using RandomNameGeneratorLibrary;
 using System.Collections.Generic;
 using System.Text;
 using System.Globalization;
-using UIWindows;
+//using UIWindows;
 
 namespace UI
 {
@@ -19,12 +19,12 @@ namespace UI
     {
 
 
-        private static HDCDbContext hDCDbContext = new HDCDbContext();
-        private static DateTime fictionalDate;
-       // private static BackendLogic dayCareBackEnd;
-        private static UILogic dayCareUI;
-        private static int nrOfDaysInSimulation;
-        private static int tickInMilliSec;
+       // private static HDCDbContext hDCDbContext = new HDCDbContext();
+       // private static DateTime fictionalDate;
+       //// private static BackendLogic dayCareBackEnd;
+       // private static UILogic dayCareUI;
+       // private static int nrOfDaysInSimulation;
+       // private static int tickInMilliSec;
 
         static void Main(string[] args)
         {

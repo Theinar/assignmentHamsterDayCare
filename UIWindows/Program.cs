@@ -24,7 +24,11 @@ namespace UIWindows
 
         private static TickerArgs theArgs;
         private static BackendLogic dayCareBackEnd;
-       // private static UILogic dayCareUI;
+        public static bool simulationRelease = false;
+        private static Ticker theTicker;
+        private static HDCDbContext hDCDbContext = new HDCDbContext();
+
+        // private static UILogic dayCareUI;
         private static int nrOfDaysInSimulation;
         private static int tickInMilliSec;
         /// <summary>
@@ -37,37 +41,37 @@ namespace UIWindows
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
+            theArgs = new TickerArgs();
+            theTicker = new Ticker();
+            theTicker.tick += StartSimulation;
+            dayCareBackEnd = new BackendLogic(hDCDbContext, theArgs);
 
-            //Thread t2 = new Thread(runUILogic);
-            //t2.Start();
+            Thread t2 = new Thread(StartSimulation);
+            t2.Start();
 
-
-            Application.Run(new Form_Main());
+            SimulationAwaiter(theTicker);
 
         }
-
-
-
-        //private static void SetTimes()
-        //{
-        //    //Console.WriteLine("pick a date (YYYY.MM.dd):           -- Change så klart");
-        //    string date = "1997.08.29";  // Console.ReadLine();
-
-        //    string sevenOclock = " 07:00:00:0000";
-        //    string startsFromString = date + sevenOclock;
-        //    string format = "yyyy.MM.dd HH:mm:ss:ffff";
-        //    fictionalDate = DateTime.ParseExact(startsFromString, format,
-        //                                     CultureInfo.InvariantCulture);
-        //    nrOfDaysInSimulation = 1;
-        //    //Console.WriteLine("Please chose a tickrate (ms)");
-        //    //tickInMilliSec = int.Parse(Console.ReadLine());
-        //    tickInMilliSec = 200;
-        //}
+        private static void StartSimulation()
+        {
+            Application.Run(new Form_Main());
+        }
         private static async void StartSimulation(object sender, TickerArgs _theArgs)
         {
             dayCareBackEnd.SimulationProgress(_theArgs);
         }
+        private static void SimulationAwaiter(Ticker _theTicker)
+        {
+            bool whilebool = true;
 
+            while (whilebool)
+            {
+                if (simulationRelease)
+                {
+                    _theTicker.Start(theArgs);
+                }
+            }
+        }
 
 
 
