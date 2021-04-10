@@ -19,12 +19,14 @@ namespace UIWindows
     {
 
         private HDCDbContext hDCDbContext;
-        private TickerArgs theArgs;
+        //private TickerArgs theArgs;
+        private ReportArgs reportArgs;
 
-        public BackendLogic(HDCDbContext _hDCDbContext, TickerArgs _theArgs)
+        public BackendLogic(HDCDbContext _hDCDbContext, TickerArgs _theArgs, ReportArgs _reportArgs)
         {
             hDCDbContext = _hDCDbContext;
-            theArgs = _theArgs;
+            //theArgs = _theArgs;
+            reportArgs = _reportArgs;
 
         }
 
@@ -54,11 +56,11 @@ namespace UIWindows
         /// <param name="e"></param>
         internal void UnSeedDBAndStartFresh(TickerArgs _theArgs)
         {
-            var resetDb = ResetDb();           
-         
+            var resetDb = ResetDb();
+
 
             var seedDb = SeedDB(_theArgs);
-         
+
 
             var createAndAddHamsterClientele = CreateAndAddHamsterClientele(_theArgs);
 
@@ -73,7 +75,7 @@ namespace UIWindows
         /// <param name="e"></param>
         internal void UnSeedDBAndStartWithPaulStandard(TickerArgs _theArgs)
         {
-           // var resetDb = ResetDb();  
+            // var resetDb = ResetDb();  
 
             //var seedDb = SeedDB(_theArgs);
 
@@ -92,7 +94,7 @@ namespace UIWindows
         {
             // Selecting all entities that needs to be removed in order to reed seed db (not logs)
             var hamsters = hDCDbContext.Hamsters;
-            
+
             var cages = hDCDbContext.Cages;
 
             var exAreas = hDCDbContext.ExerciseAreas;
@@ -100,15 +102,15 @@ namespace UIWindows
             //Removes selected entities
             if (hamsters != null)
             {
-                hDCDbContext.Hamsters.RemoveRange(hamsters); 
+                hDCDbContext.Hamsters.RemoveRange(hamsters);
             }
             if (cages != null)
             {
-                hDCDbContext.Cages.RemoveRange(cages); 
+                hDCDbContext.Cages.RemoveRange(cages);
             }
             if (exAreas != null)
             {
-                hDCDbContext.ExerciseAreas.RemoveRange(exAreas); 
+                hDCDbContext.ExerciseAreas.RemoveRange(exAreas);
             }
 
             // Saves changes
@@ -290,16 +292,17 @@ namespace UIWindows
 
             await Task.CompletedTask;
         }
-        /// <summary>
-        /// Ensures that there are no old entitys from earlier canseld simulations
-        /// </summary>
-        /// <returns></returns>
+
 
 
         #endregion
 
         #region Animal activity methodes
-
+        /// <summary>
+        /// Ensures that there are no old entitys from earlier canseld simulations
+        /// sets all alues to initial values
+        /// </summary>
+        /// <returns></returns>
         public async Task StartOfTheDayRoutine(TickerArgs _theArgs)
         {
             _theArgs.NumberOfTicks = 0;
@@ -329,7 +332,7 @@ namespace UIWindows
                 hamsters[i].ExerciseAreaId = null;
             }
 
-           await Task.CompletedTask;
+            await Task.CompletedTask;
 
         }
 
@@ -342,12 +345,12 @@ namespace UIWindows
         public async Task SimulationProgress(TickerArgs _theArgs)
         {
             // Number of ticks determins action 
-            if (_theArgs.NumberOfTicks % 100 == 0)               
+            if (_theArgs.NumberOfTicks % 100 == 0)
             {
-               await CheckInHamsters(_theArgs);
+                await CheckInHamsters(_theArgs);
             }
 
-            if ( _theArgs.NumberOfTicks % 10 == 0)
+            if (_theArgs.NumberOfTicks % 10 == 0)
             {
                 //selects the exersicearea wich decides course of action
                 var exArea = hDCDbContext.ExerciseAreas.FirstOrDefault(e => e.NrOfHamsters != 0) ?? null;
@@ -376,6 +379,9 @@ namespace UIWindows
             }
 
             await Task.WhenAll();
+
+            UpdateMainReport(_theArgs);
+
         }
 
         /// <summary>
@@ -409,7 +415,7 @@ namespace UIWindows
                 var hamster = this.hDCDbContext.Hamsters
                     .FirstOrDefault(h => h.CageId == null) ?? new Hamster() { Id = 0 };
 
-                
+
                 // Selects first avaleble cage
                 var cage = this.hDCDbContext.Cages
                         .AsEnumerable()
@@ -550,7 +556,7 @@ namespace UIWindows
         /// <param name="nrOfHamsters"></param>
         public void MoveHamsterToExersiceArea(TickerArgs _theArgs)
         {
-          
+
             //Loop itterates and add as manny animals as the nrOfHamsters variable indicates
             for (int i = 0; i < _theArgs.MaxnrOfHamInExArea; i++)
             {
@@ -693,9 +699,54 @@ namespace UIWindows
 
         #region UI Stuff
 
-        
+        internal void UpdateReportArgs(TickerArgs _theArgs)
+        {
+            UpdateMainReport(_theArgs);
+        }
+
+        private void UpdateMainReport(TickerArgs _theArgs)
+        {
+
+            var numberOfhamsters = hDCDbContext.Hamsters.Count();
+
+            //var numberOfActivities 
 
 
+
+            string mainReport = String.Format("Simulation started at: {0}\n" +
+                                              "Number of Hamdters in Cleintele this simulation: {1}\n" +
+                                              "The Hamster gender distribution is {2} (M/F)" +
+                                              "{3}"
+                                              
+                                              , _theArgs.FictionalStartDate
+                                              , numberOfhamsters
+                                              , GenderProcentQoute()
+                                              , _theArgs.NumberOfTicks);
+
+            reportArgs.MainReport = mainReport;
+
+
+
+
+        }
+        /// <summary>
+        /// Calculates Animal Gender % with dbQueries
+        /// </summary>
+        /// <returns></returns>
+        private string GenderProcentQoute()
+        {
+            // Queries for total number of hamsters and male hamsters
+            var numberOfhamsters = hDCDbContext.Hamsters.Count();
+            var numberOfMale = hDCDbContext.Hamsters.Where(h => h.Gender == Gender.Male).Count();
+
+            // calculates the % male and female
+            double hamstersMaleProc = Math.Round((double)(numberOfMale / numberOfhamsters * 100),2);
+            double hamstersFrmaleProc = 100 - hamstersMaleProc;
+
+            // returns the calculated result as string
+            string result = $"{hamstersMaleProc / hamstersFrmaleProc} %";
+            return result;
+        }
         #endregion
 
         #endregion

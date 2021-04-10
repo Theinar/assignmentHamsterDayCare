@@ -174,7 +174,7 @@ namespace UIWindows
                                         $"{newArgs.NumberOfcages}," +
                                         $"{newArgs.NumberOfExAreas}," +
                                         $"{newArgs.NumberOfTicks}," +
-                                        $"{newArgs.PauseRequest}," +
+                                        $"{newArgs.CanselationRequest}," +
                                         $"{newArgs.SimulationTime}," +
                                         $"{newArgs.TickInMilliseconds}");
                 }

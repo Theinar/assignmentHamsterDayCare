@@ -32,23 +32,28 @@ namespace UIWindows
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form_Main));
             this.panel1 = new System.Windows.Forms.Panel();
             this.button_Run_Simulation = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
+            this.button_tick = new System.Windows.Forms.Button();
             this.button_Owner = new System.Windows.Forms.Button();
             this.Button_Hamster = new System.Windows.Forms.Button();
             this.panel3 = new System.Windows.Forms.Panel();
             this.button_Settings = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.textBox_Second_Main = new System.Windows.Forms.TextBox();
-            this.textBox_Main_TextBox = new System.Windows.Forms.TextBox();
+            this.panel5 = new System.Windows.Forms.Panel();
+            this.button_stopSimulation = new System.Windows.Forms.Button();
+            this.ChoiseReport_Text = new System.Windows.Forms.Label();
+            this.panel4 = new System.Windows.Forms.Panel();
+            this.MainReport_Test = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.panel3.SuspendLayout();
             this.panel2.SuspendLayout();
+            this.panel5.SuspendLayout();
+            this.panel4.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
             // 
             this.panel1.Controls.Add(this.button_Run_Simulation);
-            this.panel1.Controls.Add(this.button3);
+            this.panel1.Controls.Add(this.button_tick);
             this.panel1.Controls.Add(this.button_Owner);
             this.panel1.Controls.Add(this.Button_Hamster);
             this.panel1.Controls.Add(this.panel3);
@@ -77,24 +82,24 @@ namespace UIWindows
             this.button_Run_Simulation.UseVisualStyleBackColor = true;
             this.button_Run_Simulation.Click += new System.EventHandler(this.button_Run_Simulation_Click);
             // 
-            // button3
+            // button_tick
             // 
-            this.button3.Dock = System.Windows.Forms.DockStyle.Top;
-            this.button3.FlatAppearance.BorderColor = System.Drawing.Color.Black;
-            this.button3.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Black;
-            this.button3.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(57)))), ((int)(((byte)(75)))));
-            this.button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button3.Font = new System.Drawing.Font("Century Gothic", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.button3.Image = ((System.Drawing.Image)(resources.GetObject("button3.Image")));
-            this.button3.Location = new System.Drawing.Point(0, 400);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(217, 120);
-            this.button3.TabIndex = 2;
-            this.button3.Tag = "";
-            this.button3.Text = "Tick";
-            this.button3.TextAlign = System.Drawing.ContentAlignment.TopLeft;
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
+            this.button_tick.Dock = System.Windows.Forms.DockStyle.Top;
+            this.button_tick.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.button_tick.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Black;
+            this.button_tick.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(57)))), ((int)(((byte)(75)))));
+            this.button_tick.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button_tick.Font = new System.Drawing.Font("Century Gothic", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.button_tick.Image = ((System.Drawing.Image)(resources.GetObject("button_tick.Image")));
+            this.button_tick.Location = new System.Drawing.Point(0, 400);
+            this.button_tick.Name = "button_tick";
+            this.button_tick.Size = new System.Drawing.Size(217, 120);
+            this.button_tick.TabIndex = 2;
+            this.button_tick.Tag = "";
+            this.button_tick.Text = "Tick";
+            this.button_tick.TextAlign = System.Drawing.ContentAlignment.TopLeft;
+            this.button_tick.UseVisualStyleBackColor = true;
+            this.button_tick.Click += new System.EventHandler(this.button_tick_Click);
             // 
             // button_Owner
             // 
@@ -164,36 +169,69 @@ namespace UIWindows
             // 
             // panel2
             // 
-            this.panel2.Controls.Add(this.textBox_Second_Main);
+            this.panel2.Controls.Add(this.panel5);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel2.Location = new System.Drawing.Point(217, 441);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(887, 293);
             this.panel2.TabIndex = 1;
             // 
-            // textBox_Second_Main
+            // panel5
             // 
-            this.textBox_Second_Main.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(30)))), ((int)(((byte)(33)))));
-            this.textBox_Second_Main.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBox_Second_Main.Location = new System.Drawing.Point(6, 14);
-            this.textBox_Second_Main.Margin = new System.Windows.Forms.Padding(10);
-            this.textBox_Second_Main.Multiline = true;
-            this.textBox_Second_Main.Name = "textBox_Second_Main";
-            this.textBox_Second_Main.Size = new System.Drawing.Size(869, 260);
-            this.textBox_Second_Main.TabIndex = 3;
-            this.textBox_Second_Main.TextChanged += new System.EventHandler(this.textBox_Second_Main_TextChanged);
+            this.panel5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(23)))), ((int)(((byte)(26)))));
+            this.panel5.Controls.Add(this.button_stopSimulation);
+            this.panel5.Controls.Add(this.ChoiseReport_Text);
+            this.panel5.Location = new System.Drawing.Point(6, 0);
+            this.panel5.Name = "panel5";
+            this.panel5.Size = new System.Drawing.Size(869, 268);
+            this.panel5.TabIndex = 3;
             // 
-            // textBox_Main_TextBox
+            // button_stopSimulation
             // 
-            this.textBox_Main_TextBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(30)))), ((int)(((byte)(33)))));
-            this.textBox_Main_TextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBox_Main_TextBox.Location = new System.Drawing.Point(223, 12);
-            this.textBox_Main_TextBox.Margin = new System.Windows.Forms.Padding(10);
-            this.textBox_Main_TextBox.Multiline = true;
-            this.textBox_Main_TextBox.Name = "textBox_Main_TextBox";
-            this.textBox_Main_TextBox.Size = new System.Drawing.Size(869, 423);
-            this.textBox_Main_TextBox.TabIndex = 2;
-            this.textBox_Main_TextBox.TextChanged += new System.EventHandler(this.textBox_Main_TextBox_TextChanged);
+            this.button_stopSimulation.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.button_stopSimulation.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Black;
+            this.button_stopSimulation.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(57)))), ((int)(((byte)(75)))));
+            this.button_stopSimulation.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button_stopSimulation.Font = new System.Drawing.Font("Century Gothic", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.button_stopSimulation.Image = ((System.Drawing.Image)(resources.GetObject("button_stopSimulation.Image")));
+            this.button_stopSimulation.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.button_stopSimulation.Location = new System.Drawing.Point(652, 156);
+            this.button_stopSimulation.Name = "button_stopSimulation";
+            this.button_stopSimulation.Size = new System.Drawing.Size(217, 112);
+            this.button_stopSimulation.TabIndex = 2;
+            this.button_stopSimulation.Tag = "";
+            this.button_stopSimulation.Text = "Stop Simulation";
+            this.button_stopSimulation.TextAlign = System.Drawing.ContentAlignment.TopLeft;
+            this.button_stopSimulation.UseVisualStyleBackColor = true;
+            this.button_stopSimulation.Visible = false;
+            this.button_stopSimulation.Click += new System.EventHandler(this.button_stopSimulation_Click);
+            // 
+            // ChoiseReport_Text
+            // 
+            this.ChoiseReport_Text.AutoSize = true;
+            this.ChoiseReport_Text.Location = new System.Drawing.Point(1, 0);
+            this.ChoiseReport_Text.Name = "ChoiseReport_Text";
+            this.ChoiseReport_Text.Size = new System.Drawing.Size(44, 16);
+            this.ChoiseReport_Text.TabIndex = 0;
+            this.ChoiseReport_Text.Text = "label1";
+            // 
+            // panel4
+            // 
+            this.panel4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(23)))), ((int)(((byte)(26)))));
+            this.panel4.Controls.Add(this.MainReport_Test);
+            this.panel4.Location = new System.Drawing.Point(223, 12);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(869, 414);
+            this.panel4.TabIndex = 2;
+            // 
+            // MainReport_Test
+            // 
+            this.MainReport_Test.AutoSize = true;
+            this.MainReport_Test.Location = new System.Drawing.Point(1, 1);
+            this.MainReport_Test.Name = "MainReport_Test";
+            this.MainReport_Test.Size = new System.Drawing.Size(44, 16);
+            this.MainReport_Test.TabIndex = 0;
+            this.MainReport_Test.Text = "label1";
             // 
             // Form_Main
             // 
@@ -201,7 +239,7 @@ namespace UIWindows
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(30)))), ((int)(((byte)(33)))));
             this.ClientSize = new System.Drawing.Size(1104, 734);
-            this.Controls.Add(this.textBox_Main_TextBox);
+            this.Controls.Add(this.panel4);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
@@ -214,9 +252,11 @@ namespace UIWindows
             this.panel1.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
-            this.panel2.PerformLayout();
+            this.panel5.ResumeLayout(false);
+            this.panel5.PerformLayout();
+            this.panel4.ResumeLayout(false);
+            this.panel4.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -227,11 +267,14 @@ namespace UIWindows
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Button button_Owner;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.TextBox textBox_Main_TextBox;
+        private System.Windows.Forms.Button button_tick;
         private System.Windows.Forms.Button button_Run_Simulation;
-        private System.Windows.Forms.TextBox textBox_Second_Main;
         private System.Windows.Forms.Button button_Settings;
+        private System.Windows.Forms.Panel panel4;
+        private System.Windows.Forms.Panel panel5;
+        private System.Windows.Forms.Label ChoiseReport_Text;
+        private System.Windows.Forms.Label MainReport_Test;
+        private System.Windows.Forms.Button button_stopSimulation;
     }
 }
 

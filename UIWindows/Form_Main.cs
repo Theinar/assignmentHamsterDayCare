@@ -15,18 +15,29 @@ namespace UIWindows
 {
     internal partial class Form_Main : Form
     {
-        TickerArgs theArgs;
+
         static BackendLogic dayCareBackEnd;
         static HDCDbContext hDCDbContext;
+        
+        TickerArgs theArgs;
+        ReportArgs reportArgs;
+
+        Ticker theTicker;
+
+        delegate void SetTextCallback(string text);
+
         public static bool reportRelease = false;
         public static bool reportAwaiter_whilebool = true;
 
-        public Form_Main(HDCDbContext _hDCDbContext)
+        public Form_Main(HDCDbContext _hDCDbContext
+            , ReportArgs _reportArgs
+            , Ticker _theTicker)
         {
             InitializeComponent();
             theArgs =  new TickerArgs();
             hDCDbContext = _hDCDbContext;
-
+            reportArgs = _reportArgs;
+            theTicker = _theTicker;
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -44,11 +55,6 @@ namespace UIWindows
                 Form_Choose form = new Form_Choose(labelString);
                 form.Show();
             }
-        }
-
-        private void button3_Click(object sender, EventArgs e)
-        {
-
         }
 
         private void button_Owner_Click(object sender, EventArgs e)
@@ -69,10 +75,17 @@ namespace UIWindows
         }
         private void button_Settings_Click(object sender, EventArgs e)
         {
-            if (!Form_Settings.IsShowing)
+            if (!theTicker.startRequest)
             {
-                Form_Settings form = new Form_Settings();
-                form.Show();
+                if (!Form_Settings.IsShowing)
+                {
+                    Form_Settings form = new Form_Settings();
+                    form.Show();
+                } 
+            }
+            else
+            {
+                MessageBox.Show("It is not possible to change settings\n with on going simulation");
             }
         }
 
@@ -88,46 +101,82 @@ namespace UIWindows
 
         private async void button_Run_Simulation_Click(object sender, EventArgs e)
         {
-            Program.SimulationOnFirstClick();
-            Program.simulationRelease = true;
-            await UIInfo();
+            if (!theTicker.startRequest || theTicker.canselationRequest)
+            {
+                theTicker.startRequest = true;
+                theTicker.canselationRequest = false;
+                theArgs.CanselationRequest = false;
+                theArgs.Finished = false;
+
+                Thread infoThread = new Thread(UIInfo);
+                
+                infoThread.Start();
+                Program.SimulationOnFirstClick();
+                Program.simulationRelease = true;
+                this.button_stopSimulation.Visible = true;
+
+            }
+
+            else if (theTicker.startRequest && theTicker.pauseRequest)
+            {
+                theTicker.pauseRequest = false;
+            }
+            else if (theTicker.startRequest)
+            {
+                theTicker.pauseRequest = true;
+            }
+
+
         }
         private static async void StartSimulation(object sender, TickerArgs e)
         {
             await dayCareBackEnd.SimulationProgress(e);
             //dayCareUI.WriteOut();
         }
-        private async Task UIInfo()
+        private async void UIInfo()
         {
-
-            while (reportAwaiter_whilebool)
+            while (!theArgs.CanselationRequest)
             {
-                if (reportRelease)
+                Thread.Sleep(theArgs.TickInMilliseconds);
+                SetMainReportText(reportArgs.MainReport);
+
+                if ()
                 {
-                   var bla = MainTextboxInfoBuilder();
-                   var bla2 = MainTextboxInfoBuilder2();
 
-                    Task.WhenAll(bla, bla2);
-
-                    this.textBox_Main_TextBox.Text = bla.Result;
-                    this.textBox_Second_Main.Text = bla2.Result;
-
-
-
-
-                    reportRelease = false;
                 }
+
+            }
+
+        }
+        private void SetMainReportText(string text)
+        {
+            // InvokeRequired required compares the thread ID of the
+            // calling thread to the thread ID of the creating thread.
+            // If these threads are different, it returns true.
+            if (this.MainReport_Test.InvokeRequired)
+            {
+                SetTextCallback d = new SetTextCallback(SetMainReportText);
+                this.Invoke(d, new object[] { text });
+            }
+            else
+            {
+                this.MainReport_Test.Text = text;
             }
         }
 
-        private void textBox_Main_TextBox_TextChanged(object sender, EventArgs e)
+
+        private void button_tick_Click(object sender, EventArgs e)
         {
 
         }
 
-        private void textBox_Second_Main_TextChanged(object sender, EventArgs e)
+        private void button_stopSimulation_Click(object sender, EventArgs e)
         {
-
+            theTicker.canselationRequest = true;
+            theTicker.startRequest = false;
+            theTicker.reStartRequest = true;
+            theArgs.CanselationRequest = true;
+            Program.simulationRelease = false;
         }
     }
 }
