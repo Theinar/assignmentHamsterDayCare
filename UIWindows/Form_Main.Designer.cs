@@ -42,6 +42,7 @@ namespace UIWindows
             this.button_stopSimulation = new System.Windows.Forms.Button();
             this.ChoiseReport_Text = new System.Windows.Forms.Label();
             this.panel4 = new System.Windows.Forms.Panel();
+            this.button_Show_EndReport = new System.Windows.Forms.Button();
             this.MainReport_Test = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -218,11 +219,32 @@ namespace UIWindows
             // panel4
             // 
             this.panel4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(23)))), ((int)(((byte)(26)))));
+            this.panel4.Controls.Add(this.button_Show_EndReport);
             this.panel4.Controls.Add(this.MainReport_Test);
             this.panel4.Location = new System.Drawing.Point(223, 12);
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(869, 414);
             this.panel4.TabIndex = 2;
+            // 
+            // button_Show_EndReport
+            // 
+            this.button_Show_EndReport.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.button_Show_EndReport.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Black;
+            this.button_Show_EndReport.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(57)))), ((int)(((byte)(75)))));
+            this.button_Show_EndReport.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button_Show_EndReport.Font = new System.Drawing.Font("Century Gothic", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.button_Show_EndReport.Image = ((System.Drawing.Image)(resources.GetObject("button_Show_EndReport.Image")));
+            this.button_Show_EndReport.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.button_Show_EndReport.Location = new System.Drawing.Point(652, 302);
+            this.button_Show_EndReport.Name = "button_Show_EndReport";
+            this.button_Show_EndReport.Size = new System.Drawing.Size(217, 112);
+            this.button_Show_EndReport.TabIndex = 3;
+            this.button_Show_EndReport.Tag = "";
+            this.button_Show_EndReport.Text = "Show End Report";
+            this.button_Show_EndReport.TextAlign = System.Drawing.ContentAlignment.TopLeft;
+            this.button_Show_EndReport.UseVisualStyleBackColor = true;
+            this.button_Show_EndReport.Visible = false;
+            this.button_Show_EndReport.Click += new System.EventHandler(this.button_Show_EndReport_Click);
             // 
             // MainReport_Test
             // 
@@ -275,6 +297,7 @@ namespace UIWindows
         private System.Windows.Forms.Label ChoiseReport_Text;
         private System.Windows.Forms.Label MainReport_Test;
         private System.Windows.Forms.Button button_stopSimulation;
+        private System.Windows.Forms.Button button_Show_EndReport;
     }
 }
 

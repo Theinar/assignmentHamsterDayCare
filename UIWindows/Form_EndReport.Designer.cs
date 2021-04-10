@@ -30,93 +30,74 @@ namespace UIWindows
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form_EndReport));
-            this.Label_Head_Choose = new System.Windows.Forms.Label();
-            this.label_ID = new System.Windows.Forms.Label();
-            this.textBox_For_ID = new System.Windows.Forms.TextBox();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.Button_Submit = new System.Windows.Forms.Button();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.label_Endreport_Head = new System.Windows.Forms.Label();
+            this.label_eNDREPORT_tEXT = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // Label_Head_Choose
-            // 
-            this.Label_Head_Choose.Location = new System.Drawing.Point(10, 10);
-            this.Label_Head_Choose.Name = "Label_Head_Choose";
-            this.Label_Head_Choose.Size = new System.Drawing.Size(367, 23);
-            this.Label_Head_Choose.TabIndex = 2;
-            this.Label_Head_Choose.Click += new System.EventHandler(this.Form_EndReport_Load);
-            // 
-            // label_ID
-            // 
-            this.label_ID.AutoSize = true;
-            this.label_ID.Location = new System.Drawing.Point(42, 96);
-            this.label_ID.Name = "label_ID";
-            this.label_ID.Size = new System.Drawing.Size(25, 16);
-            this.label_ID.TabIndex = 1;
-            this.label_ID.Text = "ID: ";
-            // 
-            // textBox_For_ID
-            // 
-            this.textBox_For_ID.BackColor = System.Drawing.SystemColors.ScrollBar;
-            this.textBox_For_ID.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.textBox_For_ID.Location = new System.Drawing.Point(82, 93);
-            this.textBox_For_ID.Name = "textBox_For_ID";
-            this.textBox_For_ID.Size = new System.Drawing.Size(100, 22);
-            this.textBox_For_ID.TabIndex = 0;
-            // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.Button_Submit);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel1.Location = new System.Drawing.Point(189, 0);
+            this.panel1.Controls.Add(this.label_Endreport_Head);
+            this.panel1.Controls.Add(this.panel2);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(200, 254);
-            this.panel1.TabIndex = 3;
+            this.panel1.Size = new System.Drawing.Size(734, 94);
+            this.panel1.TabIndex = 0;
             // 
-            // Button_Submit
+            // panel2
             // 
-            this.Button_Submit.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.Button_Submit.FlatAppearance.BorderColor = System.Drawing.Color.Black;
-            this.Button_Submit.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Black;
-            this.Button_Submit.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(57)))), ((int)(((byte)(75)))));
-            this.Button_Submit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Button_Submit.Font = new System.Drawing.Font("Century Gothic", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.Button_Submit.Image = ((System.Drawing.Image)(resources.GetObject("Button_Submit.Image")));
-            this.Button_Submit.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.Button_Submit.Location = new System.Drawing.Point(0, 161);
-            this.Button_Submit.Name = "Button_Submit";
-            this.Button_Submit.Size = new System.Drawing.Size(200, 93);
-            this.Button_Submit.TabIndex = 4;
-            this.Button_Submit.Tag = "";
-            this.Button_Submit.Text = "Submit";
-            this.Button_Submit.UseVisualStyleBackColor = true;
+            this.panel2.Location = new System.Drawing.Point(38, 100);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(679, 569);
+            this.panel2.TabIndex = 1;
+            // 
+            // label_Endreport_Head
+            // 
+            this.label_Endreport_Head.AutoSize = true;
+            this.label_Endreport_Head.Font = new System.Drawing.Font("Century Gothic", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.label_Endreport_Head.Location = new System.Drawing.Point(309, 28);
+            this.label_Endreport_Head.Name = "label_Endreport_Head";
+            this.label_Endreport_Head.Size = new System.Drawing.Size(134, 25);
+            this.label_Endreport_Head.TabIndex = 1;
+            this.label_Endreport_Head.Text = "END REPORT";
+            // 
+            // label_eNDREPORT_tEXT
+            // 
+            this.label_eNDREPORT_tEXT.AutoSize = true;
+            this.label_eNDREPORT_tEXT.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.label_eNDREPORT_tEXT.Location = new System.Drawing.Point(38, 100);
+            this.label_eNDREPORT_tEXT.Name = "label_eNDREPORT_tEXT";
+            this.label_eNDREPORT_tEXT.Size = new System.Drawing.Size(58, 19);
+            this.label_eNDREPORT_tEXT.TabIndex = 1;
+            this.label_eNDREPORT_tEXT.Text = "label1";
             // 
             // Form_EndReport
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(23)))), ((int)(((byte)(26)))));
-            this.ClientSize = new System.Drawing.Size(389, 254);
+            this.ClientSize = new System.Drawing.Size(734, 711);
+            this.Controls.Add(this.label_eNDREPORT_tEXT);
             this.Controls.Add(this.panel1);
-            this.Controls.Add(this.Label_Head_Choose);
-            this.Controls.Add(this.textBox_For_ID);
-            this.Controls.Add(this.label_ID);
             this.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(146)))), ((int)(((byte)(182)))), ((int)(((byte)(199)))));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "Form_EndReport";
             this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-        private Label Label_Head_Choose;
-        private Label label_ID;
-        private TextBox textBox_For_ID;
+
         private Panel panel1;
-        private Button Button_Submit;
+        private Label label_Endreport_Head;
+        private Panel panel2;
+        private Label label_eNDREPORT_tEXT;
     }
 }
 

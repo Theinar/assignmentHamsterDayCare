@@ -32,10 +32,10 @@ namespace UIWindows
         public static bool simulationRelease = false;
         public static bool SimulationAwaiter_whilebool = true;
 
-
-        // private static UILogic dayCareUI;
         private static int nrOfDaysInSimulation;
         private static int tickInMilliSec;
+
+
         /// <summary>
         ///  The main entry point for the application.
         /// </summary>

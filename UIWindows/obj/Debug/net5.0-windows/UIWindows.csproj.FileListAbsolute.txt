@@ -62,3 +62,4 @@ C:\Users\einar\source\repos\HamsterDayCare1.3\UIWindows\bin\Debug\net5.0-windows
 C:\Users\einar\source\repos\HamsterDayCare1.3\UIWindows\bin\Debug\net5.0-windows\HamsterDayCare.Domain.pdb
 C:\Users\einar\source\repos\HamsterDayCare1.3\UIWindows\obj\Debug\net5.0-windows\UIWindows.csproj.CopyComplete
 C:\Users\einar\source\repos\HamsterDayCare1.3\UIWindows\obj\Debug\net5.0-windows\UIWindows.Form_Settings.resources
+C:\Users\einar\source\repos\HamsterDayCare1.3\UIWindows\obj\Debug\net5.0-windows\UIWindows.Form_EndReport.resources

@@ -135,18 +135,14 @@ namespace UIWindows
         }
         private async void UIInfo()
         {
-            while (!theArgs.CanselationRequest)
-            {
-                Thread.Sleep(theArgs.TickInMilliseconds);
-                SetMainReportText(reportArgs.MainReport);
 
-                if ()
+                while (!theArgs.CanselationRequest)
                 {
+                    Thread.Sleep(theArgs.TickInMilliseconds);
+                    SetMainReportText(reportArgs.MainReport);
 
                 }
-
-            }
-
+            
         }
         private void SetMainReportText(string text)
         {
@@ -177,6 +173,15 @@ namespace UIWindows
             theTicker.reStartRequest = true;
             theArgs.CanselationRequest = true;
             Program.simulationRelease = false;
+        }
+
+        private void button_Show_EndReport_Click(object sender, EventArgs e)
+        {
+            if (!Form_EndReport.IsShowing)
+            {
+                Form_EndReport form = new Form_EndReport(reportArgs.EndReport);
+                form.Show();
+            }
         }
     }
 }

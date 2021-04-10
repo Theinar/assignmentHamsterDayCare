@@ -10,11 +10,26 @@ using System.Windows.Forms;
 
 namespace UIWindows
 {
+
+
     public partial class Form_EndReport : Form
     {
-        public Form_EndReport()
+        static bool isShowing;
+        public static bool IsShowing { get => isShowing; }
+        public Form_EndReport(string _text)
         {
             InitializeComponent();
+            this.label_eNDREPORT_tEXT.Text = _text;
+        }
+        protected override void OnFormClosing(FormClosingEventArgs e)
+        {
+            base.OnFormClosing(e);
+
+            if (e.CloseReason == CloseReason.WindowsShutDown) return;
+            isShowing = false;
+            e.Cancel = true;
+            this.Dispose();
+
         }
     }
 }
