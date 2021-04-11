@@ -44,11 +44,15 @@ namespace UIWindows
             this.panel4 = new System.Windows.Forms.Panel();
             this.button_Show_EndReport = new System.Windows.Forms.Button();
             this.MainReport_Test = new System.Windows.Forms.Label();
+            this.panel6 = new System.Windows.Forms.Panel();
+            this.panel7 = new System.Windows.Forms.Panel();
             this.panel1.SuspendLayout();
             this.panel3.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel5.SuspendLayout();
             this.panel4.SuspendLayout();
+            this.panel6.SuspendLayout();
+            this.panel7.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
@@ -181,10 +185,10 @@ namespace UIWindows
             // 
             this.panel5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(23)))), ((int)(((byte)(26)))));
             this.panel5.Controls.Add(this.button_stopSimulation);
-            this.panel5.Controls.Add(this.ChoiseReport_Text);
-            this.panel5.Location = new System.Drawing.Point(6, 0);
+            this.panel5.Controls.Add(this.panel7);
+            this.panel5.Location = new System.Drawing.Point(7, 0);
             this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(869, 268);
+            this.panel5.Size = new System.Drawing.Size(868, 268);
             this.panel5.TabIndex = 3;
             // 
             // button_stopSimulation
@@ -210,17 +214,18 @@ namespace UIWindows
             // ChoiseReport_Text
             // 
             this.ChoiseReport_Text.AutoSize = true;
-            this.ChoiseReport_Text.Location = new System.Drawing.Point(1, 0);
+            this.ChoiseReport_Text.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.ChoiseReport_Text.Location = new System.Drawing.Point(2, 0);
             this.ChoiseReport_Text.Name = "ChoiseReport_Text";
-            this.ChoiseReport_Text.Size = new System.Drawing.Size(44, 16);
+            this.ChoiseReport_Text.Size = new System.Drawing.Size(157, 18);
             this.ChoiseReport_Text.TabIndex = 0;
-            this.ChoiseReport_Text.Text = "label1";
+            this.ChoiseReport_Text.Text = "User Choise Window";
             // 
             // panel4
             // 
             this.panel4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(23)))), ((int)(((byte)(26)))));
             this.panel4.Controls.Add(this.button_Show_EndReport);
-            this.panel4.Controls.Add(this.MainReport_Test);
+            this.panel4.Controls.Add(this.panel6);
             this.panel4.Location = new System.Drawing.Point(223, 12);
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(869, 414);
@@ -244,16 +249,34 @@ namespace UIWindows
             this.button_Show_EndReport.TextAlign = System.Drawing.ContentAlignment.TopLeft;
             this.button_Show_EndReport.UseVisualStyleBackColor = true;
             this.button_Show_EndReport.Visible = false;
+            this.button_Show_EndReport.VisibleChanged += new System.EventHandler(this.button_Show_EndReport_VisibleChanged);
             this.button_Show_EndReport.Click += new System.EventHandler(this.button_Show_EndReport_Click);
             // 
             // MainReport_Test
             // 
             this.MainReport_Test.AutoSize = true;
-            this.MainReport_Test.Location = new System.Drawing.Point(1, 1);
+            this.MainReport_Test.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.MainReport_Test.Location = new System.Drawing.Point(0, 0);
             this.MainReport_Test.Name = "MainReport_Test";
-            this.MainReport_Test.Size = new System.Drawing.Size(44, 16);
+            this.MainReport_Test.Size = new System.Drawing.Size(160, 18);
             this.MainReport_Test.TabIndex = 0;
-            this.MainReport_Test.Text = "label1";
+            this.MainReport_Test.Text = "Main Report Window";
+            // 
+            // panel6
+            // 
+            this.panel6.Controls.Add(this.MainReport_Test);
+            this.panel6.Location = new System.Drawing.Point(16, 20);
+            this.panel6.Name = "panel6";
+            this.panel6.Size = new System.Drawing.Size(837, 378);
+            this.panel6.TabIndex = 4;
+            // 
+            // panel7
+            // 
+            this.panel7.Controls.Add(this.ChoiseReport_Text);
+            this.panel7.Location = new System.Drawing.Point(15, 19);
+            this.panel7.Name = "panel7";
+            this.panel7.Size = new System.Drawing.Size(837, 232);
+            this.panel7.TabIndex = 3;
             // 
             // Form_Main
             // 
@@ -275,9 +298,11 @@ namespace UIWindows
             this.panel3.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             this.panel5.ResumeLayout(false);
-            this.panel5.PerformLayout();
             this.panel4.ResumeLayout(false);
-            this.panel4.PerformLayout();
+            this.panel6.ResumeLayout(false);
+            this.panel6.PerformLayout();
+            this.panel7.ResumeLayout(false);
+            this.panel7.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -298,6 +323,8 @@ namespace UIWindows
         private System.Windows.Forms.Label MainReport_Test;
         private System.Windows.Forms.Button button_stopSimulation;
         private System.Windows.Forms.Button button_Show_EndReport;
+        private System.Windows.Forms.Panel panel7;
+        private System.Windows.Forms.Panel panel6;
     }
 }
 

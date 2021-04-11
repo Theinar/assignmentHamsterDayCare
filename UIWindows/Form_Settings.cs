@@ -85,7 +85,11 @@ namespace UIWindows
         /// <param name="e"></param>
         private void Button_Submit_Click(object sender, EventArgs e)
         {
+            MakeNewArgsAndDBFromSettings();
+        }
 
+        private void MakeNewArgsAndDBFromSettings()
+        {
             TickerArgs newArgs = new TickerArgs();
 
             // bool that stays true if all variables gets parsed in the right format
@@ -106,6 +110,7 @@ namespace UIWindows
                                          CultureInfo.InvariantCulture);
                 newArgs.EndTick = int.Parse(this.textBox_set_nr_of_days.Text) * 100;
                 newArgs.TickInMilliseconds = 1000 / (int.Parse(this.textBox_Set_ticks_Per_Second.Text));
+                newArgs.SettingsID = TickerArgs.settingsID + 1;
             }
             catch (Exception ex)
             {
@@ -161,8 +166,7 @@ namespace UIWindows
             // If no format exeptions where cought everythingParseble is true and newArgs is sent to Program Class
             if (everythingParseble == true)
             {
-                Program.ChangeTheArgs(newArgs);
-
+                Program.ChangeTheArgAndRebuildFromSettings(newArgs);
 
                 using (StreamWriter saveSettings = new StreamWriter("Settings.csv"))
                 {
@@ -176,7 +180,8 @@ namespace UIWindows
                                         $"{newArgs.NumberOfTicks}," +
                                         $"{newArgs.CanselationRequest}," +
                                         $"{newArgs.SimulationTime}," +
-                                        $"{newArgs.TickInMilliseconds}");
+                                        $"{newArgs.TickInMilliseconds}," +
+                                        $"{newArgs.SettingsID}");
                 }
                 // Notefies user that new settings are in place
                 MessageBox.Show("Your settings has now been applied");
@@ -187,7 +192,6 @@ namespace UIWindows
                 MessageBox.Show("It seems there is something wrong with your formating\n" +
                                 "Please check if all checked feilds are in correct format");
             }
-        
         }
 
 

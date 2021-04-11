@@ -28,7 +28,7 @@ namespace HamsterDayCare.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-           
+  
             optionsBuilder.UseSqlServer(
                 " Server = BARRI\\SQLEXPRESS; Database = TestHamster; Trusted_Connection = True; MultipleActiveResultSets=True;")
                 //.LogTo(Console.WriteLine, LogLevel.Information).EnableSensitiveDataLogging().UseLazyLoadingProxies();       

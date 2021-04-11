@@ -20,6 +20,7 @@ namespace UIWindows
         {
             InitializeComponent();
             this.label_eNDREPORT_tEXT.Text = _text;
+            isShowing = true;
         }
         protected override void OnFormClosing(FormClosingEventArgs e)
         {

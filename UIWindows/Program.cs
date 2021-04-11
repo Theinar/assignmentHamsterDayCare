@@ -22,7 +22,7 @@ namespace UIWindows
         static ReportArgs reportArgs;
 
         private static HDCDbContext hDCDbContext;
-        private static BackendLogic dayCareBackEnd;
+        private static BackendLogic dayCareBackEndAccess;
 
         private static TickerArgs theArgs;
         private static Ticker theTicker;
@@ -56,11 +56,11 @@ namespace UIWindows
             theTicker = new Ticker();
             theTicker.tick += StartSimulation;
 
-            dayCareBackEnd = new BackendLogic(hDCDbContext, theArgs, reportArgs);
+            dayCareBackEndAccess = new BackendLogic(hDCDbContext, theArgs, reportArgs);
 
             Main_Form = new Form_Main(hDCDbContext, reportArgs, theTicker);
 
-            SetArgsFromSettings();
+            SetArgsFromSettingsFile();
 
             Thread t2 = new Thread(StartForm);
             t2.Start();
@@ -76,7 +76,7 @@ namespace UIWindows
         {
             if (!_theArgs.CanselationRequest)
             {
-                var backendTask = dayCareBackEnd.SimulationProgress(_theArgs);
+                var backendTask = dayCareBackEndAccess.SimulationProgress(_theArgs);
 
                 await Task.WhenAll(backendTask);
 
@@ -84,10 +84,10 @@ namespace UIWindows
         }
         internal static void SimulationOnFirstClick()
         {
-            dayCareBackEnd.StartOfTheDayRoutine(theArgs);
+            dayCareBackEndAccess.StartOfTheDayRoutine(theArgs);
 
         }
-        private static void SetArgsFromSettings()
+        private static void SetArgsFromSettingsFile()
         {
             string fileContent = "";
             using (StreamReader readFromSettingsFile = new StreamReader("Settings.csv"))
@@ -108,6 +108,7 @@ namespace UIWindows
             theArgs.CanselationRequest = bool.Parse(fileContentArr[8]);
             theArgs.SimulationTime = DateTime.Parse(fileContentArr[9]);
             theArgs.TickInMilliseconds = int.Parse(fileContentArr[10]);
+            theArgs.SettingsID = int.Parse(fileContentArr[11]);
 
 
         }
@@ -137,9 +138,11 @@ namespace UIWindows
 
 
 
-        internal static void ChangeTheArgs(TickerArgs _newArgs)
+        internal static void ChangeTheArgAndRebuildFromSettings(TickerArgs _newArgs)
         {
             theArgs = _newArgs;
+
+            dayCareBackEndAccess.UnSeedDBAndSeedFromNewArgs(theArgs);
         }
     }
 }

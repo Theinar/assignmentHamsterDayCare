@@ -8,18 +8,19 @@ namespace HamsterDayCare.Domain
 {
     public class TickerArgs : EventArgs
     {
-        int numberOfTicks = 0;
-        DateTime fictionalStartDate = DateTime.Now;
-        DateTime simulationTime = DateTime.Now;
-        string filePath = "Hamsterlista30.csv";
-        int endTick = 100;
-        int tickInMilliseconds = 500;
-        bool canselationRequest = false;
-        int maxnrOfHamInEachCage = 3;
-        int maxnrOfHamInExArea = 6;
-        int numberOfcages = 10;
-        int numberOfExAreas = 1;
-        bool finished = false;
+        static int numberOfTicks = 0;
+        static DateTime fictionalStartDate = DateTime.Now;
+        static DateTime simulationTime = DateTime.Now;
+        static string filePath = "Hamsterlista30.csv";
+        static int endTick = 100;
+        static int tickInMilliseconds = 500;
+        static bool canselationRequest = false;
+        static int maxnrOfHamInEachCage = 3;
+        static int maxnrOfHamInExArea = 6;
+        static int numberOfcages = 10;
+        static int numberOfExAreas = 1;
+        static bool finished = false;
+        public static int settingsID;
 
 
         public int NumberOfTicks { get => numberOfTicks;  set => numberOfTicks = value; }
@@ -34,6 +35,7 @@ namespace HamsterDayCare.Domain
         public int NumberOfcages { get => numberOfcages; set => numberOfcages = value; }
         public int NumberOfExAreas { get => numberOfExAreas; set => numberOfExAreas = value; }
         public bool Finished { get => finished; set => finished = value; }
+        public int SettingsID { get => settingsID; set => settingsID = value; }
 
         public TickerArgs(DateTime _fictionalDate
                         , int _nrOfDaysInSimulation

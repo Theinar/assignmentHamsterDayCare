@@ -37,12 +37,12 @@ namespace UIWindows
         /// <summary>
         /// Initial seeding of DB, effects cages and ExAreas
         /// </summary>
-        internal async Task SeedDB(TickerArgs e)
+        internal async Task SeedDB(TickerArgs _theArgs)
         {
             // Read self explanatory titles
-            var addCage = AddCage(e.NumberOfcages, e.MaxnrOfHamInEachCage);
+            var addCage = AddCage(_theArgs.NumberOfcages, _theArgs.MaxnrOfHamInEachCage);
 
-            var addExersiceAreas = AddExersiceAreas(e.NumberOfExAreas, e.MaxnrOfHamInExArea);
+            var addExersiceAreas = AddExersiceAreas(_theArgs.NumberOfExAreas, _theArgs.MaxnrOfHamInExArea);
 
             // awaits completion of task methodes
             await Task.WhenAll(addCage, addExersiceAreas);
@@ -54,13 +54,11 @@ namespace UIWindows
         /// and there by get uncompairable.
         /// </summary>
         /// <param name="e"></param>
-        internal void UnSeedDBAndStartFresh(TickerArgs _theArgs)
+        internal void UnSeedDBAndSeedFromNewArgs(TickerArgs _theArgs)
         {
             var resetDb = ResetDb();
 
-
             var seedDb = SeedDB(_theArgs);
-
 
             var createAndAddHamsterClientele = CreateAndAddHamsterClientele(_theArgs);
 
@@ -73,19 +71,7 @@ namespace UIWindows
         /// and there by get uncompairable. Paul standard is as the directives given by teacher in assignment explaination
         /// </summary>
         /// <param name="e"></param>
-        internal void UnSeedDBAndStartWithPaulStandard(TickerArgs _theArgs)
-        {
-            // var resetDb = ResetDb();  
 
-            //var seedDb = SeedDB(_theArgs);
-
-            //var createAndAddHamsterClientele = CreateAndAddHamsterClientele(_theArgs);
-
-            //Task.WhenAll(resetDb, seedDb, createAndAddHamsterClientele);
-
-            //Task.WhenAll(seedDb, createAndAddHamsterClientele);
-
-        }
         /// <summary>
         /// Methode used to resed db in order to reseed it with different DB model
         /// </summary>
@@ -93,28 +79,33 @@ namespace UIWindows
         private Task ResetDb()
         {
             // Selecting all entities that needs to be removed in order to reed seed db (not logs)
-            var hamsters = hDCDbContext.Hamsters;
+            //var hamsters = hDCDbContext.Hamsters;
 
-            var cages = hDCDbContext.Cages;
+            //var cages = hDCDbContext.Cages;
 
-            var exAreas = hDCDbContext.ExerciseAreas;
+            //var exAreas = hDCDbContext.ExerciseAreas;
 
-            //Removes selected entities
-            if (hamsters != null)
-            {
-                hDCDbContext.Hamsters.RemoveRange(hamsters);
-            }
-            if (cages != null)
-            {
-                hDCDbContext.Cages.RemoveRange(cages);
-            }
-            if (exAreas != null)
-            {
-                hDCDbContext.ExerciseAreas.RemoveRange(exAreas);
-            }
+            ////Removes selected entities
+            //if (hamsters != null)
+            //{
+            //    hDCDbContext.Hamsters.RemoveRange(hamsters);
+            //}
+            //if (cages != null)
+            //{
+            //    hDCDbContext.Cages.RemoveRange(cages);
+            //}
+            //if (exAreas != null)
+            //{
+            //    hDCDbContext.ExerciseAreas.RemoveRange(exAreas);
+            //}
+            hDCDbContext.Database.EnsureDeleted();
 
             // Saves changes
             hDCDbContext.SaveChanges();
+
+            hDCDbContext = new HDCDbContext();
+
+            hDCDbContext.Database.EnsureCreated();
 
             return Task.CompletedTask;
         }
@@ -179,9 +170,16 @@ namespace UIWindows
                 }
             }
             var attribs = sb.ToString();
-            var hamsterAttribArr = attribs.Split("¤");              //Spliting the string frirst into lines and then down to parsible string objects
+            var hamsterAttribArr = attribs.Split("¤");              //Spliting the string first into lines and then down to parsible string objects
 
-            for (int i = 0; i < hamsterAttribArr.Length - 1; i++)
+            int loopStart = 0;
+
+            if (_theArgs.FilePath == "HamsterlistaCustom.csv")
+            {
+                loopStart = 1;
+            }
+
+            for (int i = loopStart; i < hamsterAttribArr.Length - 1; i++)
             {
                 var thisHamster = hamsterAttribArr[i].Split(";");
                 int isMale = 0;
@@ -277,10 +275,11 @@ namespace UIWindows
         /// methode thet is part off initial seeding, adds instances og ExersiceAreas to db
         /// </summary>
         /// <param name="_numberOfcages"></param>
-        private async Task AddExersiceAreas(int _numberOfcages, int _maxnrOfHamInEachCage)
+        private async Task AddExersiceAreas(int _numberOfExAreas, int _maxnrOfHamInEachCage)
         {
+
             // instansiates ÉxerciseArea and sets Gendet to .NotChosen
-            for (int i = 0; i < _numberOfcages; i++)
+            for (int i = 0; i < _numberOfExAreas; i++)
             {
                 this.hDCDbContext.ExerciseAreas.Add(new ExerciseArea()
                 {
@@ -336,12 +335,11 @@ namespace UIWindows
 
         }
 
-
         /// <summary>
-        /// The metode that gets called every tick, uses theArgs to determen course of action in the spesific tick
-        /// </summary>
-        /// <param name="_theArgs"></param>
-        /// <returns></returns>
+            /// The metode that gets called every tick, uses theArgs to determen course of action in the spesific tick
+            /// </summary>
+            /// <param name="_theArgs"></param>
+            /// <returns></returns>
         public async Task SimulationProgress(TickerArgs _theArgs)
         {
             // Number of ticks determins action 
@@ -557,68 +555,71 @@ namespace UIWindows
         public void MoveHamsterToExersiceArea(TickerArgs _theArgs)
         {
 
-            //Loop itterates and add as manny animals as the nrOfHamsters variable indicates
-            for (int i = 0; i < _theArgs.MaxnrOfHamInExArea; i++)
+            for (int j = 0; j < _theArgs.NumberOfExAreas; j++)
             {
-                // Defaule values wich is given in Linq operations if thay end up without an object
-                Cage defaultCage = null;
-
-                // Selects the hamster wich is about to exersice
-                // sets a dummy instans to prevens false value in next step
-                var hamster = this.hDCDbContext.Hamsters
-                    .OrderBy(h => h.LastActivity).FirstOrDefault(c => c.CageId != null) ?? new Hamster() { Id = 0 };
-
-                // Finds wich cage that animal is in 
-                var cage = this.hDCDbContext.Cages
-                    .FirstOrDefault(c => c.Id == hamster.CageId) ?? defaultCage;
-
-                //Finds ongoing DayCareStay instatnce for above selected hamster
-                var thisStay = this.hDCDbContext.DayCareStays
-                    .OrderByDescending(d => d.Id)
-                    .FirstOrDefault(d => d.HamasterId == hamster.Id) ?? null;
-
-                // Selects an Exersicerea sets to null if none is chosen
-                var ExersiceArea = this.hDCDbContext.ExerciseAreas.FirstOrDefault(e => e.NrOfHamsters < e.Capacity) ?? null;
-
-                // Log that executes if ExerciseArea is chosen
-                if (ExersiceArea != null && cage != null)
+                //Loop itterates and add as manny animals as the nrOfHamsters variable indicates
+                for (int i = 0; i < _theArgs.MaxnrOfHamInExArea; i++)
                 {
-                    // ExersiceArea gender is set if needed
-                    if (ExersiceArea.Gender == Gender.NotChosen)
+                    // Defaule values wich is given in Linq operations if thay end up without an object
+                    Cage defaultCage = null;
+
+                    // Selects the hamster wich is about to exersice
+                    // sets a dummy instans to prevens false value in next step
+                    var hamster = this.hDCDbContext.Hamsters
+                        .OrderBy(h => h.LastActivity).FirstOrDefault(c => c.CageId != null) ?? new Hamster() { Id = 0 };
+
+                    // Finds wich cage that animal is in 
+                    var cage = this.hDCDbContext.Cages
+                        .FirstOrDefault(c => c.Id == hamster.CageId) ?? defaultCage;
+
+                    //Finds ongoing DayCareStay instatnce for above selected hamster
+                    var thisStay = this.hDCDbContext.DayCareStays
+                        .OrderByDescending(d => d.Id)
+                        .FirstOrDefault(d => d.HamasterId == hamster.Id) ?? null;
+
+                    // Selects an Exersicerea sets to null if none is chosen
+                    var ExersiceArea = this.hDCDbContext.ExerciseAreas.FirstOrDefault(e => e.NrOfHamsters < e.Capacity) ?? null;
+
+                    // Log that executes if ExerciseArea is chosen
+                    if (ExersiceArea != null && cage != null)
                     {
-                        ExersiceArea.Gender = hamster.Gender;
+                        // ExersiceArea gender is set if needed
+                        if (ExersiceArea.Gender == Gender.NotChosen)
+                        {
+                            ExersiceArea.Gender = hamster.Gender;
+                        }
+
+                        // Adding Exersice to DayCareStay.Activity and setting dage and hamster values
+                        thisStay.Activities.Add(new Activity
+                        {
+                            AccuredAt = _theArgs.SimulationTime,
+                            HamsterId = hamster.Id,
+                            TypeOfActivity = TypeOfActivity.MoveToExeExerciseArea
+                        });
+                        thisStay.Activities.Add(new Activity
+                        {
+                            AccuredAt = _theArgs.SimulationTime,
+                            HamsterId = hamster.Id,
+                            TypeOfActivity = TypeOfActivity.Exercise
+                        });
+
+                        // Cage set to gender.NotChosen if empty
+                        cage.NrOfHamsters--;
+                        if (cage.NrOfHamsters == 0)
+                        {
+                            cage.Gender = Gender.NotChosen;
+                        }
+
+                        // Updates hamster values
+                        hamster.CageId = null;
+                        hamster.ExerciseAreaId = ExersiceArea.Id;
+
+                        // updates the numbre of animals in cage
+                        ExersiceArea.NrOfHamsters++;
+
+                        //saves to db each loop itteration  
+                        this.hDCDbContext.SaveChanges(); 
                     }
-
-                    // Adding Exersice to DayCareStay.Activity and setting dage and hamster values
-                    thisStay.Activities.Add(new Activity
-                    {
-                        AccuredAt = _theArgs.SimulationTime,
-                        HamsterId = hamster.Id,
-                        TypeOfActivity = TypeOfActivity.MoveToExeExerciseArea
-                    });
-                    thisStay.Activities.Add(new Activity
-                    {
-                        AccuredAt = _theArgs.SimulationTime,
-                        HamsterId = hamster.Id,
-                        TypeOfActivity = TypeOfActivity.Exercise
-                    });
-
-                    // Cage set to gender.NotChosen if empty
-                    cage.NrOfHamsters--;
-                    if (cage.NrOfHamsters == 0)
-                    {
-                        cage.Gender = Gender.NotChosen;
-                    }
-
-                    // Updates hamster values
-                    hamster.CageId = null;
-                    hamster.ExerciseAreaId = ExersiceArea.Id;
-
-                    // updates the numbre of animals in cage
-                    ExersiceArea.NrOfHamsters++;
-
-                    //saves to db each loop itteration  
-                    this.hDCDbContext.SaveChanges();
                 }
             }
 
@@ -707,27 +708,55 @@ namespace UIWindows
         private void UpdateMainReport(TickerArgs _theArgs)
         {
 
+            var simulationID = hDCDbContext.DayCareLogs.OrderByDescending(dcl => dcl.Id).First();
             var numberOfhamsters = hDCDbContext.Hamsters.Count();
+            var GenderProcent = GenderProcentQoute();
+            var avgWaitForActivity = AvrageExersiceWait(_theArgs);
+            string mainReport = "";
 
-            //var numberOfActivities 
+            //mainReport = String.Format("{0, -120}{1}\n\n{2, -120}{3}\n{4,-110}{5}\n{6}{7, 120}\n{8}{9, 120}\n{10}{11, 120}{12}\n" +
+            //                           "{13, -120}{14}\n{15, -120}{16}\n\n{17, -120}{18}\n{19, -120}{20}\n\n{21, -120}{22}\n{23, -120}{24}"
+            //                          , "INFO TYPE" //index 0
+            //                          , "VALUE"     //index 1
+            //                          , "Simulation ID:"    //index 2
+            //                          , simulationID.Id     //index 3
+            //                          , "Simulation started at:"        //index 4
+            //                          , _theArgs.FictionalStartDate     //index 5
+            //                          , "Simulation time now:"      //index 6
+            //                          , _theArgs.SimulationTime     //index 7
+            //                          , "Number of Hamdters in Cleintele this simulation:"  //index 8
+            //                          , numberOfhamsters                                    //index 9
+            //                          , "The Hamster gender distribution is"    //index 10
+            //                          , GenderProcent                           //index 11
+            //                          , "(M/F)"                                  //index 12
+            //                          , "Tick number:"              //index 13
+            //                          , _theArgs.NumberOfTicks    //index 14
+            //                          , "AVG Wait for first Exersice: " //index 15
+            //                          , avgWaitForActivity           //index 16
+            //                          , "Number of Cages:"                           //index 17
+            //                          , _theArgs.NumberOfcages                        //index 18
+            //                          , "Capacity of each Cage:"                //indes 19
+            //                          , _theArgs.MaxnrOfHamInEachCage            //index 20
+            //                          , "Number of Exersice Areas:"              //index 21
+            //                          , _theArgs.NumberOfExAreas             //index 22
+            //                          , "Capacity of each Exersice Area:"    //index 23
+            //                          , _theArgs.MaxnrOfHamInExArea);        //index 24
 
 
-
-            string mainReport = String.Format("Simulation started at: {0}\n" +
-                                              "Number of Hamdters in Cleintele this simulation: {1}\n" +
-                                              "The Hamster gender distribution is {2} (M/F)" +
-                                              "{3}"
-                                              
-                                              , _theArgs.FictionalStartDate
-                                              , numberOfhamsters
-                                              , GenderProcentQoute()
-                                              , _theArgs.NumberOfTicks);
+            mainReport = $"INFO TYPE                                                        VALUE\n\n" +
+                         $"Simulation ID:                                                   {simulationID.Id}\n\n" +
+                         $"Simulation started at:                                           { _theArgs.FictionalStartDate}\n" +
+                         $"Simulation time now:                                             {_theArgs.SimulationTime}\n" +
+                         $"Tick number now:                                                 {_theArgs.NumberOfTicks}\n\n" +
+                         $"Number of Hamdters in Cleintele this simulation:                 {numberOfhamsters}\n" +
+                         $"The Hamster gender distribution is:                              {GenderProcent} (M/F)\n\n" +
+                         $"AVG Wait for first Exersice:                                     {avgWaitForActivity}\n" +
+                         $"Number of Cages:                                                 {_theArgs.NumberOfcages}\n" +
+                         $"Capacity of each Cage:                                           {_theArgs.MaxnrOfHamInEachCage}\n\n" +
+                         $"Number of Exersice Areas:                                        {_theArgs.NumberOfExAreas}\n" +
+                         $"Capacity of each Exersice Area:                                  {_theArgs.MaxnrOfHamInExArea}\n"; 
 
             reportArgs.MainReport = mainReport;
-
-
-
-
         }
         /// <summary>
         /// Calculates Animal Gender % with dbQueries
@@ -735,17 +764,42 @@ namespace UIWindows
         /// <returns></returns>
         private string GenderProcentQoute()
         {
-            // Queries for total number of hamsters and male hamsters
-            var numberOfhamsters = hDCDbContext.Hamsters.Count();
-            var numberOfMale = hDCDbContext.Hamsters.Where(h => h.Gender == Gender.Male).Count();
+            // Queries for total number of hamsters and male hamster
+            double numberOfhamsters = hDCDbContext.Hamsters.Count();
+            double numberOfMale = hDCDbContext.Hamsters.Where(h => h.Gender == Gender.Male).Count();
 
             // calculates the % male and female
-            double hamstersMaleProc = Math.Round((double)(numberOfMale / numberOfhamsters * 100),2);
+            double hamstersMaleProc = Math.Round(((numberOfMale / numberOfhamsters) * 100), 2);
             double hamstersFrmaleProc = 100 - hamstersMaleProc;
 
             // returns the calculated result as string
-            string result = $"{hamstersMaleProc / hamstersFrmaleProc} %";
+            string result = $"{hamstersMaleProc} / {hamstersFrmaleProc} %";
             return result;
+        }
+        private string AvrageExersiceWait(TickerArgs _theArgs)
+        {
+            DateTime defaultNowTime = _theArgs.SimulationTime;
+            var timeSpanInMinutesList = new List<double>();
+
+            var dayCareLog = hDCDbContext.DayCareLogs.OrderByDescending(dcl => dcl.Id).First();
+            var dayCareStays = hDCDbContext.DayCareStays.Where(cds => cds.DayCareLogId == dayCareLog.Id);
+
+            foreach (var dcs in dayCareStays)
+            {
+                var firstActivity = dcs.Activities.OrderBy(a => a.AccuredAt).Select(ac => ac.AccuredAt).First();
+                var firstActivityOfNow = dcs.Activities.OrderBy(a => a.AccuredAt).Select(ac => ac.AccuredAt).Skip(1).DefaultIfEmpty(defaultNowTime).FirstOrDefault();
+
+                var timeSpanInMinutes = (firstActivityOfNow - firstActivity).TotalMinutes;
+
+                timeSpanInMinutesList.Add(timeSpanInMinutes);
+
+            }
+
+            var avgWaitTime = timeSpanInMinutesList.Average();
+
+            string resault = $"{avgWaitTime}";
+
+            return resault;
         }
         #endregion
 

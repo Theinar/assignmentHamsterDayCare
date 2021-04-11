@@ -18,7 +18,10 @@ namespace UIWindows
 
         static BackendLogic dayCareBackEnd;
         static HDCDbContext hDCDbContext;
-        
+
+        public delegate void SimulationFinished(object sender, EventArgs e);
+        public event SimulationFinished SimulationFinishedEvent;
+
         TickerArgs theArgs;
         ReportArgs reportArgs;
 
@@ -38,6 +41,7 @@ namespace UIWindows
             hDCDbContext = _hDCDbContext;
             reportArgs = _reportArgs;
             theTicker = _theTicker;
+            this.SimulationFinishedEvent += button_Show_EndReport_VisibleChanged;
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -135,14 +139,25 @@ namespace UIWindows
         }
         private async void UIInfo()
         {
+            while (!theArgs.CanselationRequest)
+            {
+                Thread.Sleep(theArgs.TickInMilliseconds);
+                SetMainReportText(reportArgs.MainReport);
 
-                while (!theArgs.CanselationRequest)
-                {
-                    Thread.Sleep(theArgs.TickInMilliseconds);
-                    SetMainReportText(reportArgs.MainReport);
+            }
+            if (theArgs.Finished)
+            {
+                SimulationFinishedEvent?.Invoke(this, EventArgs.Empty);
+            }
 
-                }
-            
+        }
+        private void OnSimulationFinished()
+        {
+            if (!Form_EndReport.IsShowing)
+            {
+                Form_EndReport form = new Form_EndReport(reportArgs.EndReport);
+                form.Show();
+            }
         }
         private void SetMainReportText(string text)
         {
@@ -159,6 +174,7 @@ namespace UIWindows
                 this.MainReport_Test.Text = text;
             }
         }
+
 
 
         private void button_tick_Click(object sender, EventArgs e)
@@ -182,6 +198,22 @@ namespace UIWindows
                 Form_EndReport form = new Form_EndReport(reportArgs.EndReport);
                 form.Show();
             }
+        }
+
+        private void button_Show_EndReport_VisibleChanged(object sender, EventArgs e)
+        {
+            if (button_Show_EndReport.InvokeRequired)
+            {
+                button_Show_EndReport.Invoke(new MethodInvoker(delegate
+                {
+                    button_Show_EndReport.Visible = true;
+                }));
+            }
+            else
+            {
+                button_Show_EndReport.Visible = true;
+            }
+
         }
     }
 }
