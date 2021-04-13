@@ -300,6 +300,10 @@ namespace UIWindows
         /// <returns></returns>
         public async Task StartOfTheDayRoutine(TickerArgs _theArgs)
         {
+
+            // Adds new daycarelog
+            this.hDCDbContext.DayCareLogs.Add(new DayCareLog());
+
             _theArgs.NumberOfTicks = 0;
             _theArgs.SimulationTime = _theArgs.FictionalStartDate;
 
@@ -412,8 +416,6 @@ namespace UIWindows
             bool loopBool = true;
             Cage defaultCage = null;
 
-            // Adds new daycarelog
-            this.hDCDbContext.DayCareLogs.Add(new DayCareLog());
 
             // is saved directly so that it can be raferenced by other entities
             this.hDCDbContext.SaveChanges();
@@ -462,7 +464,9 @@ namespace UIWindows
                     thisStay.Activities.Add(new Activity()
                     {
                         AccuredAt = _theArgs.SimulationTime,
-                        TypeOfActivity = TypeOfActivity.CheckIn
+                        TypeOfActivity = TypeOfActivity.CheckIn,
+                        DayCareLogId = dayCareLog.Id
+
                     });
 
                     // Updates database fields for each entity 
@@ -611,13 +615,15 @@ namespace UIWindows
                     {
                         AccuredAt = _theArgs.SimulationTime,
                         HamsterId = hamster.Id,
-                        TypeOfActivity = TypeOfActivity.MoveToExeExerciseArea
+                        TypeOfActivity = TypeOfActivity.MoveToExeExerciseArea,
+                        DayCareLogId = thisStay.DayCareLogId
                     });
                     thisStay.Activities.Add(new Activity
                     {
                         AccuredAt = _theArgs.SimulationTime,
                         HamsterId = hamster.Id,
-                        TypeOfActivity = TypeOfActivity.Exercise
+                        TypeOfActivity = TypeOfActivity.Exercise,
+                        DayCareLogId = thisStay.DayCareLogId
                     });
 
                     // Cage set to gender.NotChosen if empty
@@ -687,7 +693,8 @@ namespace UIWindows
                     {
                         AccuredAt = _theArgs.SimulationTime,
                         HamsterId = hamster.Id,
-                        TypeOfActivity = TypeOfActivity.MoveFromExerciseArea
+                        TypeOfActivity = TypeOfActivity.MoveFromExerciseArea,
+                        DayCareLogId = thisStay.DayCareLogId
                     };
 
                     // Sets cage.gender
@@ -936,9 +943,7 @@ namespace UIWindows
             // get this daycareLog
             var dcl = hDCDbContext.DayCareLogs.OrderByDescending(d => d.Id).First();
             // counts number of activities
-            var totNumberOfActiviteies = hDCDbContext.DayCareStays
-                .Where(d => d.DayCareLogId == dcl.Id)
-                .Select(a => a.Activities).Count();
+            var totNumberOfActiviteies = hDCDbContext.Activities.Where(a => a.DayCareLogId == dcl.Id).Count();
 
             string EndReportTypes = $"INFO TYPE\n\n" +
                                      $"Simulation ID:\n\n" +
@@ -1020,7 +1025,7 @@ namespace UIWindows
 
             }
             // calculates avrage in double
-            var avgWaitTime = timeSpanInMinutesList.Average();
+            var avgWaitTime = Math.Round(timeSpanInMinutesList.Average(),2);
 
             // result to use
             string resault = $"{avgWaitTime}";

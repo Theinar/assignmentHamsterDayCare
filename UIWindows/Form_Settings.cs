@@ -187,7 +187,7 @@ namespace UIWindows
                                         $"{newArgs.SettingsID}");
                 }
                 // Notefies user that new settings are in place
-                MessageBox.Show("Your settings has now been applied\nPlease restart application fore new settings worke propperly");
+                MessageBox.Show("Your settings has now been applied\nPlease restart application fore new settings work propperly");
             }
             else
             {

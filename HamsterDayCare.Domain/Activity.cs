@@ -12,5 +12,6 @@ namespace HamsterDayCare.Domain
         public int HamsterId { get; set; }
         public TypeOfActivity TypeOfActivity { get; set; }
         public DateTime AccuredAt { get; set; }
+        public int DayCareLogId { get; set; }
     }
 }

@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HamsterDayCare.Data.Migrations
 {
     [DbContext(typeof(HDCDbContext))]
-    [Migration("20210409071052_1")]
+    [Migration("20210413090103_1")]
     partial class _1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -30,6 +30,9 @@ namespace HamsterDayCare.Data.Migrations
 
                     b.Property<DateTime>("AccuredAt")
                         .HasColumnType("datetime2");
+
+                    b.Property<int>("DayCareLogId")
+                        .HasColumnType("int");
 
                     b.Property<int?>("DayCareStayId")
                         .HasColumnType("int");
@@ -132,7 +135,7 @@ namespace HamsterDayCare.Data.Migrations
 
             modelBuilder.Entity("HamsterDayCare.Domain.Hamster", b =>
                 {
-                    b.Property<int>("id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -158,7 +161,7 @@ namespace HamsterDayCare.Data.Migrations
                     b.Property<string>("Owner")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("id");
+                    b.HasKey("Id");
 
                     b.HasIndex("CageId");
 

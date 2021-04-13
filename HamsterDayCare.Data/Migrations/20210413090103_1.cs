@@ -76,7 +76,7 @@ namespace HamsterDayCare.Data.Migrations
                 name: "Hamsters",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Owner = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -88,7 +88,7 @@ namespace HamsterDayCare.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Hamsters", x => x.id);
+                    table.PrimaryKey("PK_Hamsters", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Hamsters_Cages_CageId",
                         column: x => x.CageId,
@@ -112,6 +112,7 @@ namespace HamsterDayCare.Data.Migrations
                     HamsterId = table.Column<int>(type: "int", nullable: false),
                     TypeOfActivity = table.Column<int>(type: "int", nullable: false),
                     AccuredAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DayCareLogId = table.Column<int>(type: "int", nullable: false),
                     DayCareStayId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
