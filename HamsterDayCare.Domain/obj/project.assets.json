@@ -7475,11 +7475,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\einar\\source\\repos\\HamsterDayCare1.3\\HamsterDayCare.Domain\\HamsterDayCare.Domain.csproj",
+      "projectUniqueName": "C:\\Users\\einar\\source\\repos\\HamsterDayCare1.5\\HamsterDayCare.Domain\\HamsterDayCare.Domain.csproj",
       "projectName": "HamsterDayCare.Domain",
-      "projectPath": "C:\\Users\\einar\\source\\repos\\HamsterDayCare1.3\\HamsterDayCare.Domain\\HamsterDayCare.Domain.csproj",
+      "projectPath": "C:\\Users\\einar\\source\\repos\\HamsterDayCare1.5\\HamsterDayCare.Domain\\HamsterDayCare.Domain.csproj",
       "packagesPath": "C:\\Users\\einar\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\einar\\source\\repos\\HamsterDayCare1.3\\HamsterDayCare.Domain\\obj\\",
+      "outputPath": "C:\\Users\\einar\\source\\repos\\HamsterDayCare1.5\\HamsterDayCare.Domain\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\einar\\AppData\\Roaming\\NuGet\\NuGet.Config",

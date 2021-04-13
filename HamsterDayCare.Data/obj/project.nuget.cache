@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "7gC7Dz3+0aIi9FMUi4FL4gUWn3jblJ8Xb1qcsegHFVjGVG3vxsCvHsUg3RJ/xmyUmzvBu0dla55GBD/HCiovyA==",
+  "dgSpecHash": "JYimoBJeKvZnH5MsYlAzIADW50g1/zPaUsk8N2JXCfaFfEFTOzG54cyi0qNyi31oBsVlp0XbVF+Tnmo5g2h9fw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\einar\\source\\repos\\HamsterDayCare1.3\\HamsterDayCare.Data\\HamsterDayCare.Data.csproj",
+  "projectFilePath": "C:\\Users\\einar\\source\\repos\\HamsterDayCare1.5\\HamsterDayCare.Data\\HamsterDayCare.Data.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\einar\\.nuget\\packages\\castle.core\\4.4.1\\castle.core.4.4.1.nupkg.sha512",
     "C:\\Users\\einar\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",

@@ -18,23 +18,24 @@ namespace UIWindows
 {
     static class Program
     {
+        #region Fields
         public static event EventHandler<ReportArgs> report;
-        static ReportArgs reportArgs;
+        static ReportArgs ReportArgs;
 
         private static HDCDbContext hDCDbContext;
-        private static BackendLogic dayCareBackEndAccess;
+        private static BackendLogic dayCareBackEndAccessAccess;
 
         private static TickerArgs theArgs;
         private static Ticker theTicker;
 
-        private static Form_Main Main_Form;
+        internal static Form_Main Main_Form;
 
         public static bool simulationRelease = false;
         public static bool SimulationAwaiter_whilebool = true;
 
         private static int nrOfDaysInSimulation;
-        private static int tickInMilliSec;
-
+        private static int tickInMilliSec; 
+        #endregion
 
         /// <summary>
         ///  The main entry point for the application.
@@ -46,54 +47,87 @@ namespace UIWindows
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-
+            // creates a new custom EF dbConteqt
             hDCDbContext = new HDCDbContext();
+            // if there are no db in system one will be created in SQLEXPERSS
+            hDCDbContext.Database.EnsureCreated();
 
+            // theArgs are the info engine in the backend, it is an info carrier
+            // supplies info to various parts ot thr program and is ofthen updated
             theArgs = new TickerArgs();
-            reportArgs = new ReportArgs();
 
+            // Is the same idea as theArgs but in the UI part of the program
+            // carries info to different parts of UI, used to construct info Raports
+            ReportArgs = new ReportArgs();
 
+            // is the more literal engine, drives the program ittration and drives the simulation
             theTicker = new Ticker();
+            // Ticker has tick event wich starts each iterration of the simulatin
             theTicker.tick += StartSimulation;
 
-            dayCareBackEndAccess = new BackendLogic(hDCDbContext, theArgs, reportArgs);
+            // BackendLogic id the go between UI and backend, here are pretty much
+            // all the methodes used to gather data from backend
+            dayCareBackEndAccessAccess = new BackendLogic(hDCDbContext, theArgs, ReportArgs);
 
-            Main_Form = new Form_Main(hDCDbContext, reportArgs, theTicker);
-
+            // sets theArgs form last saves settings
             SetArgsFromSettingsFile();
 
-            Thread t2 = new Thread(StartForm);
-            t2.Start();
+            // if Hamsters are empty 
+            if (hDCDbContext.Hamsters.Count() == 0)
+            {
+                dayCareBackEndAccessAccess.SeedDB(theArgs);
+            }
 
+            // creates Main window form
+            Main_Form = new Form_Main(hDCDbContext, theTicker, dayCareBackEndAccessAccess);
+
+            // Creates separate UIthred to handle all of the forms logic
+            Thread UIThread = new Thread(StartForm);
+            UIThread.Start();
+
+            // creates a loop to keep alive main thread untill simulation strts
             SimulationAwaiter(theTicker);
 
         }
+
+        #region Methodes
         private static void StartForm()
         {
             Application.Run(Main_Form);
         }
+        /// <summary>
+        /// Method wich is called on each simulation itteration start
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="_theArgs"></param>
         private static async void StartSimulation(object sender, TickerArgs _theArgs)
         {
             if (!_theArgs.CanselationRequest)
             {
-                var backendTask = dayCareBackEndAccess.SimulationProgress(_theArgs);
+                var backendTask = dayCareBackEndAccessAccess.SimulationProgress(_theArgs);
 
                 await Task.WhenAll(backendTask);
 
             }
         }
-        internal static void SimulationOnFirstClick()
+        /// <summary>
+        /// metode wich is called onley on first click of simulation start
+        /// </summary>
+        internal static void OnSimulationStart()
         {
-            dayCareBackEndAccess.StartOfTheDayRoutine(theArgs);
+            dayCareBackEndAccessAccess.StartOfTheDayRoutine(theArgs);
 
         }
+        /// <summary>
+        /// metode to build theArgs from Settings file
+        /// </summary>
         private static void SetArgsFromSettingsFile()
         {
             string fileContent = "";
             using (StreamReader readFromSettingsFile = new StreamReader("Settings.csv"))
             {
 
-                    fileContent = readFromSettingsFile.ReadLine();
+                fileContent = readFromSettingsFile.ReadLine();
             }
             string[] fileContentArr = fileContent.Split(',');
 
@@ -123,26 +157,16 @@ namespace UIWindows
                 }
             }
         }
-
-
-
-
-
-/// <summary>
-/// ///////////////////////// Kolla så att det nedan funkar nu när mycket av program har flyttats
-/// </summary>
-/// <param name="_newArgs"></param>
-
-
-
-
-
-
+        /// <summary>
+        /// Methode wich is called when new settings are invoked, rebuilds and reseds db to fitt new settings
+        /// </summary>
+        /// <param name="_newArgs"></param>
         internal static void ChangeTheArgAndRebuildFromSettings(TickerArgs _newArgs)
         {
             theArgs = _newArgs;
 
-            dayCareBackEndAccess.UnSeedDBAndSeedFromNewArgs(theArgs);
-        }
+            dayCareBackEndAccessAccess.UnSeedDBAndSeedFromNewArgs(theArgs);
+        } 
+        #endregion
     }
 }

@@ -25,6 +25,9 @@ namespace UIWindows
             IsShowing = true;
             InitializeComponent();
             Paul_Standard_Checked = true;
+            this.label1.Text = "VARNING! If you get greedy\n" +
+                "with the settings the application \n" +
+                "will crash! Be responsible!";
         }
         private void radioButton_Paulstandard_Click_Changed(object sender, EventArgs e)
         {
@@ -184,7 +187,7 @@ namespace UIWindows
                                         $"{newArgs.SettingsID}");
                 }
                 // Notefies user that new settings are in place
-                MessageBox.Show("Your settings has now been applied");
+                MessageBox.Show("Your settings has now been applied\nPlease restart application fore new settings worke propperly");
             }
             else
             {

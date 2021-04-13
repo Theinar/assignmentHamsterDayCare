@@ -49,6 +49,7 @@ namespace UIWindows
             this.radioButton_custom = new System.Windows.Forms.RadioButton();
             this.radioButton_Paulstandard = new System.Windows.Forms.RadioButton();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.label1 = new System.Windows.Forms.Label();
             this.label_mandetory = new System.Windows.Forms.Label();
             this.label_Change_ExArea_Cap = new System.Windows.Forms.Label();
             this.label_Set_Nr_Of_Days = new System.Windows.Forms.Label();
@@ -242,6 +243,7 @@ namespace UIWindows
             // 
             // panel3
             // 
+            this.panel3.Controls.Add(this.label1);
             this.panel3.Controls.Add(this.label_mandetory);
             this.panel3.Controls.Add(this.label_Change_ExArea_Cap);
             this.panel3.Controls.Add(this.label_Set_Nr_Of_Days);
@@ -259,6 +261,15 @@ namespace UIWindows
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(252, 752);
             this.panel3.TabIndex = 3;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Century Gothic", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label1.Location = new System.Drawing.Point(12, 659);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(0, 17);
+            this.label1.TabIndex = 11;
             // 
             // label_mandetory
             // 
@@ -424,6 +435,7 @@ namespace UIWindows
         private Label label_Change_ExArea_Cap;
         private Label label_mandetory;
         private TextBox textBox_change_nr_of_EXAREA;
+        private Label label1;
     }
 }
 

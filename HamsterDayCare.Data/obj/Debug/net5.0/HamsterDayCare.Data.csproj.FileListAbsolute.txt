@@ -34,3 +34,21 @@ C:\Users\einar\source\repos\HamsterDayCare1.3\HamsterDayCare.Data\obj\Debug\net5
 C:\Users\einar\source\repos\HamsterDayCare1.3\HamsterDayCare.Data\obj\Debug\net5.0\ref\HamsterDayCare.Data.dll
 C:\Users\einar\source\repos\HamsterDayCare1.3\HamsterDayCare.Data\obj\Debug\net5.0\HamsterDayCare.Data.pdb
 C:\Users\einar\source\repos\HamsterDayCare1.3\HamsterDayCare.Data\obj\Debug\net5.0\HamsterDayCare.Data.genruntimeconfig.cache
+C:\Users\einar\source\repos\HamsterDayCare1.3 - Copy (4)\HamsterDayCare.Data\bin\Debug\net5.0\HamsterDayCare.Data.deps.json
+C:\Users\einar\source\repos\HamsterDayCare1.3 - Copy (4)\HamsterDayCare.Data\bin\Debug\net5.0\HamsterDayCare.Data.runtimeconfig.json
+C:\Users\einar\source\repos\HamsterDayCare1.3 - Copy (4)\HamsterDayCare.Data\bin\Debug\net5.0\HamsterDayCare.Data.runtimeconfig.dev.json
+C:\Users\einar\source\repos\HamsterDayCare1.3 - Copy (4)\HamsterDayCare.Data\bin\Debug\net5.0\HamsterDayCare.Data.dll
+C:\Users\einar\source\repos\HamsterDayCare1.3 - Copy (4)\HamsterDayCare.Data\bin\Debug\net5.0\ref\HamsterDayCare.Data.dll
+C:\Users\einar\source\repos\HamsterDayCare1.3 - Copy (4)\HamsterDayCare.Data\bin\Debug\net5.0\HamsterDayCare.Data.pdb
+C:\Users\einar\source\repos\HamsterDayCare1.3 - Copy (4)\HamsterDayCare.Data\bin\Debug\net5.0\HamsterDayCare.Domain.dll
+C:\Users\einar\source\repos\HamsterDayCare1.3 - Copy (4)\HamsterDayCare.Data\bin\Debug\net5.0\HamsterDayCare.Domain.pdb
+C:\Users\einar\source\repos\HamsterDayCare1.3 - Copy (4)\HamsterDayCare.Data\obj\Debug\net5.0\HamsterDayCare.Data.csprojAssemblyReference.cache
+C:\Users\einar\source\repos\HamsterDayCare1.3 - Copy (4)\HamsterDayCare.Data\obj\Debug\net5.0\HamsterDayCare.Data.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\einar\source\repos\HamsterDayCare1.3 - Copy (4)\HamsterDayCare.Data\obj\Debug\net5.0\HamsterDayCare.Data.AssemblyInfoInputs.cache
+C:\Users\einar\source\repos\HamsterDayCare1.3 - Copy (4)\HamsterDayCare.Data\obj\Debug\net5.0\HamsterDayCare.Data.AssemblyInfo.cs
+C:\Users\einar\source\repos\HamsterDayCare1.3 - Copy (4)\HamsterDayCare.Data\obj\Debug\net5.0\HamsterDayCare.Data.csproj.CoreCompileInputs.cache
+C:\Users\einar\source\repos\HamsterDayCare1.3 - Copy (4)\HamsterDayCare.Data\obj\Debug\net5.0\HamsterDayCare.Data.csproj.CopyComplete
+C:\Users\einar\source\repos\HamsterDayCare1.3 - Copy (4)\HamsterDayCare.Data\obj\Debug\net5.0\HamsterDayCare.Data.dll
+C:\Users\einar\source\repos\HamsterDayCare1.3 - Copy (4)\HamsterDayCare.Data\obj\Debug\net5.0\ref\HamsterDayCare.Data.dll
+C:\Users\einar\source\repos\HamsterDayCare1.3 - Copy (4)\HamsterDayCare.Data\obj\Debug\net5.0\HamsterDayCare.Data.pdb
+C:\Users\einar\source\repos\HamsterDayCare1.3 - Copy (4)\HamsterDayCare.Data\obj\Debug\net5.0\HamsterDayCare.Data.genruntimeconfig.cache

@@ -16,10 +16,11 @@ namespace UIWindows
     {
         static bool isShowing;
         public static bool IsShowing { get => isShowing; }
-        public Form_EndReport(string _text)
+        public Form_EndReport()
         {
             InitializeComponent();
-            this.label_eNDREPORT_tEXT.Text = _text;
+            this.label_EndReportTypes.Text = ReportArgs.EndReportTypes;
+            this.label_Endreport_vauess.Text = ReportArgs.EndReportValues;
             isShowing = true;
         }
         protected override void OnFormClosing(FormClosingEventArgs e)

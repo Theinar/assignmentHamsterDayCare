@@ -40,19 +40,22 @@ namespace UIWindows
             this.panel2 = new System.Windows.Forms.Panel();
             this.panel5 = new System.Windows.Forms.Panel();
             this.button_stopSimulation = new System.Windows.Forms.Button();
-            this.ChoiseReport_Text = new System.Windows.Forms.Label();
+            this.panel7 = new System.Windows.Forms.Panel();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label0 = new System.Windows.Forms.Label();
             this.panel4 = new System.Windows.Forms.Panel();
             this.button_Show_EndReport = new System.Windows.Forms.Button();
-            this.MainReport_Test = new System.Windows.Forms.Label();
             this.panel6 = new System.Windows.Forms.Panel();
-            this.panel7 = new System.Windows.Forms.Panel();
+            this.MainReport_Test_Values = new System.Windows.Forms.Label();
+            this.MainReport_Test_Types = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.panel3.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel5.SuspendLayout();
+            this.panel7.SuspendLayout();
             this.panel4.SuspendLayout();
             this.panel6.SuspendLayout();
-            this.panel7.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
@@ -120,10 +123,10 @@ namespace UIWindows
             this.button_Owner.Size = new System.Drawing.Size(217, 120);
             this.button_Owner.TabIndex = 1;
             this.button_Owner.Tag = "";
-            this.button_Owner.Text = "Owner";
+            this.button_Owner.Text = "Cage";
             this.button_Owner.TextAlign = System.Drawing.ContentAlignment.TopLeft;
             this.button_Owner.UseVisualStyleBackColor = true;
-            this.button_Owner.Click += new System.EventHandler(this.button_Owner_Click);
+            this.button_Owner.Click += new System.EventHandler(this.button_Owner_Click_1);
             // 
             // Button_Hamster
             // 
@@ -152,7 +155,6 @@ namespace UIWindows
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(217, 160);
             this.panel3.TabIndex = 0;
-            this.panel3.Paint += new System.Windows.Forms.PaintEventHandler(this.panel3_Paint);
             // 
             // button_Settings
             // 
@@ -211,15 +213,43 @@ namespace UIWindows
             this.button_stopSimulation.Visible = false;
             this.button_stopSimulation.Click += new System.EventHandler(this.button_stopSimulation_Click);
             // 
-            // ChoiseReport_Text
+            // panel7
             // 
-            this.ChoiseReport_Text.AutoSize = true;
-            this.ChoiseReport_Text.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.ChoiseReport_Text.Location = new System.Drawing.Point(2, 0);
-            this.ChoiseReport_Text.Name = "ChoiseReport_Text";
-            this.ChoiseReport_Text.Size = new System.Drawing.Size(157, 18);
-            this.ChoiseReport_Text.TabIndex = 0;
-            this.ChoiseReport_Text.Text = "User Choise Window";
+            this.panel7.Controls.Add(this.label2);
+            this.panel7.Controls.Add(this.label1);
+            this.panel7.Controls.Add(this.label0);
+            this.panel7.Location = new System.Drawing.Point(15, 19);
+            this.panel7.Name = "panel7";
+            this.panel7.Size = new System.Drawing.Size(837, 232);
+            this.panel7.TabIndex = 3;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(312, 50);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(14, 16);
+            this.label2.TabIndex = 2;
+            this.label2.Text = "2";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(20, 50);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(14, 16);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "1";
+            // 
+            // label0
+            // 
+            this.label0.AutoSize = true;
+            this.label0.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.label0.Location = new System.Drawing.Point(2, 0);
+            this.label0.Name = "label0";
+            this.label0.Size = new System.Drawing.Size(157, 18);
+            this.label0.TabIndex = 0;
+            this.label0.Text = "User Choise Window";
             // 
             // panel4
             // 
@@ -252,31 +282,32 @@ namespace UIWindows
             this.button_Show_EndReport.VisibleChanged += new System.EventHandler(this.button_Show_EndReport_VisibleChanged);
             this.button_Show_EndReport.Click += new System.EventHandler(this.button_Show_EndReport_Click);
             // 
-            // MainReport_Test
-            // 
-            this.MainReport_Test.AutoSize = true;
-            this.MainReport_Test.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.MainReport_Test.Location = new System.Drawing.Point(0, 0);
-            this.MainReport_Test.Name = "MainReport_Test";
-            this.MainReport_Test.Size = new System.Drawing.Size(160, 18);
-            this.MainReport_Test.TabIndex = 0;
-            this.MainReport_Test.Text = "Main Report Window";
-            // 
             // panel6
             // 
-            this.panel6.Controls.Add(this.MainReport_Test);
+            this.panel6.Controls.Add(this.MainReport_Test_Values);
+            this.panel6.Controls.Add(this.MainReport_Test_Types);
             this.panel6.Location = new System.Drawing.Point(16, 20);
             this.panel6.Name = "panel6";
             this.panel6.Size = new System.Drawing.Size(837, 378);
             this.panel6.TabIndex = 4;
             // 
-            // panel7
+            // MainReport_Test_Values
             // 
-            this.panel7.Controls.Add(this.ChoiseReport_Text);
-            this.panel7.Location = new System.Drawing.Point(15, 19);
-            this.panel7.Name = "panel7";
-            this.panel7.Size = new System.Drawing.Size(837, 232);
-            this.panel7.TabIndex = 3;
+            this.MainReport_Test_Values.AutoSize = true;
+            this.MainReport_Test_Values.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.MainReport_Test_Values.Location = new System.Drawing.Point(458, 2);
+            this.MainReport_Test_Values.Name = "MainReport_Test_Values";
+            this.MainReport_Test_Values.Size = new System.Drawing.Size(0, 18);
+            this.MainReport_Test_Values.TabIndex = 1;
+            // 
+            // MainReport_Test_Types
+            // 
+            this.MainReport_Test_Types.AutoSize = true;
+            this.MainReport_Test_Types.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.MainReport_Test_Types.Location = new System.Drawing.Point(0, 0);
+            this.MainReport_Test_Types.Name = "MainReport_Test_Types";
+            this.MainReport_Test_Types.Size = new System.Drawing.Size(0, 18);
+            this.MainReport_Test_Types.TabIndex = 0;
             // 
             // Form_Main
             // 
@@ -292,17 +323,16 @@ namespace UIWindows
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "Form_Main";
             this.Text = "Form1";
-            this.Activated += new System.EventHandler(this.Form_Main_Activated);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.panel1.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             this.panel5.ResumeLayout(false);
+            this.panel7.ResumeLayout(false);
+            this.panel7.PerformLayout();
             this.panel4.ResumeLayout(false);
             this.panel6.ResumeLayout(false);
             this.panel6.PerformLayout();
-            this.panel7.ResumeLayout(false);
-            this.panel7.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -313,18 +343,21 @@ namespace UIWindows
         private System.Windows.Forms.Button Button_Hamster;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.Button button_Owner;
         private System.Windows.Forms.Button button_tick;
         private System.Windows.Forms.Button button_Run_Simulation;
         private System.Windows.Forms.Button button_Settings;
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.Panel panel5;
-        private System.Windows.Forms.Label ChoiseReport_Text;
-        private System.Windows.Forms.Label MainReport_Test;
+        private System.Windows.Forms.Label label0;
+        private System.Windows.Forms.Label MainReport_Test_Types;
         private System.Windows.Forms.Button button_stopSimulation;
         private System.Windows.Forms.Button button_Show_EndReport;
         private System.Windows.Forms.Panel panel7;
         private System.Windows.Forms.Panel panel6;
+        private System.Windows.Forms.Label MainReport_Test_Values;
+        private System.Windows.Forms.Button button_Owner;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label1;
     }
 }
 

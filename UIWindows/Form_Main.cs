@@ -16,32 +16,56 @@ namespace UIWindows
     internal partial class Form_Main : Form
     {
 
-        static BackendLogic dayCareBackEnd;
+        static BackendLogic dayCareBackEndAccess;
         static HDCDbContext hDCDbContext;
 
         public delegate void SimulationFinished(object sender, EventArgs e);
         public event SimulationFinished SimulationFinishedEvent;
 
         TickerArgs theArgs;
-        ReportArgs reportArgs;
+        string mainReportTypes;
 
         Ticker theTicker;
+        bool showTickReport;
 
-        delegate void SetTextCallback(string text);
+        delegate void SetTextCallbackMain(string text);
+        delegate void SetTextCallbackSecondTypes(string text);
+        delegate void SetTextCallbackSecondValues(string text);
+
+
 
         public static bool reportRelease = false;
         public static bool reportAwaiter_whilebool = true;
 
         public Form_Main(HDCDbContext _hDCDbContext
-            , ReportArgs _reportArgs
-            , Ticker _theTicker)
+            , Ticker _theTicker
+            , BackendLogic _dayCareBackEndAccess)
         {
             InitializeComponent();
             theArgs =  new TickerArgs();
             hDCDbContext = _hDCDbContext;
-            reportArgs = _reportArgs;
             theTicker = _theTicker;
+            dayCareBackEndAccess = _dayCareBackEndAccess;
+            this.label1.Text = "";
+            this.label2.Text = "";
             this.SimulationFinishedEvent += button_Show_EndReport_VisibleChanged;
+
+            this.mainReportTypes =               $"INFO TYPE\n\n" +
+                                                 $"Simulation ID:\n\n" +
+                                                 $"Simulation started at:\n" +
+                                                 $"Simulation time now:\n" +
+                                                 $"Tick number now:\n\n" +
+                                                 $"Number of Hamdters in Cleintele this simulation:\n" +
+                                                 $"Capacity of daycare:\n" +
+                                                 $"The Hamster gender distribution is:\n\n" +
+                                                 $"AVG Wait for first Exersice:\n" +
+                                                 $"Number of Cages:\n" +
+                                                 $"Capacity of each Cage:\n\n" +
+                                                 $"Number of Exersice Areas:\n" +
+                                                 $"Capacity of each Exersice Area:\n";
+
+            this.MainReport_Test_Types.Text = "Main Report Window";
+
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -61,21 +85,12 @@ namespace UIWindows
             }
         }
 
-        private void button_Owner_Click(object sender, EventArgs e)
-        {
-            List<string> labelString = new List<string>();
-            labelString.Add("Choose Owner");
-            labelString.Add("Enter the ID of the Owner you wich to see");
-            if (!Form_Choose.IsShowing)
-            {
-                Form_Choose form = new Form_Choose(labelString);
-                form.Show();
-            }
-        }
         protected override void OnClosing(CancelEventArgs e)
         {
             base.OnClosing(e);
             Program.SimulationAwaiter_whilebool = false;
+            theArgs.CanselationRequest = true;
+            Thread.Sleep(theArgs.TickInMilliseconds);
         }
         private void button_Settings_Click(object sender, EventArgs e)
         {
@@ -93,15 +108,6 @@ namespace UIWindows
             }
         }
 
-        private void Form_Main_Activated(object sender, EventArgs e)
-        {
-
-        }
-
-        private void panel3_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
 
         private async void button_Run_Simulation_Click(object sender, EventArgs e)
         {
@@ -115,7 +121,8 @@ namespace UIWindows
                 Thread infoThread = new Thread(UIInfo);
                 
                 infoThread.Start();
-                Program.SimulationOnFirstClick();
+                Program.OnSimulationStart();
+                this.MainReport_Test_Types.Text = mainReportTypes;
                 Program.simulationRelease = true;
                 this.button_stopSimulation.Visible = true;
 
@@ -134,52 +141,17 @@ namespace UIWindows
         }
         private static async void StartSimulation(object sender, TickerArgs e)
         {
-            await dayCareBackEnd.SimulationProgress(e);
-            //dayCareUI.WriteOut();
+            await dayCareBackEndAccess.SimulationProgress(e);
         }
-        private async void UIInfo()
-        {
-            while (!theArgs.CanselationRequest)
-            {
-                Thread.Sleep(theArgs.TickInMilliseconds);
-                SetMainReportText(reportArgs.MainReport);
-
-            }
-            if (theArgs.Finished)
-            {
-                SimulationFinishedEvent?.Invoke(this, EventArgs.Empty);
-            }
-
-        }
-        private void OnSimulationFinished()
-        {
-            if (!Form_EndReport.IsShowing)
-            {
-                Form_EndReport form = new Form_EndReport(reportArgs.EndReport);
-                form.Show();
-            }
-        }
-        private void SetMainReportText(string text)
-        {
-            // InvokeRequired required compares the thread ID of the
-            // calling thread to the thread ID of the creating thread.
-            // If these threads are different, it returns true.
-            if (this.MainReport_Test.InvokeRequired)
-            {
-                SetTextCallback d = new SetTextCallback(SetMainReportText);
-                this.Invoke(d, new object[] { text });
-            }
-            else
-            {
-                this.MainReport_Test.Text = text;
-            }
-        }
-
-
 
         private void button_tick_Click(object sender, EventArgs e)
         {
+            if (!TickReport.IsShowing)
+            {                
+                TickReport form = new TickReport();
+                form.Show();
 
+            }
         }
 
         private void button_stopSimulation_Click(object sender, EventArgs e)
@@ -195,7 +167,7 @@ namespace UIWindows
         {
             if (!Form_EndReport.IsShowing)
             {
-                Form_EndReport form = new Form_EndReport(reportArgs.EndReport);
+                Form_EndReport form = new Form_EndReport();
                 form.Show();
             }
         }
@@ -215,5 +187,101 @@ namespace UIWindows
             }
 
         }
+
+        private void button_Owner_Click_1(object sender, EventArgs e)
+        {
+            List<string> labelString = new List<string>();
+            labelString.Add("Choose Cage");
+            labelString.Add("Enter the ID of the Cage you wich to see");
+            if (!Form_Choose.IsShowing)
+            {
+                Form_Choose form = new Form_Choose(labelString);
+                form.Show();
+            }
+        }
+        private async void UIInfo()
+        {
+            while (!theArgs.CanselationRequest)
+            {
+                Thread.Sleep(theArgs.TickInMilliseconds);
+                SetMainReportTextValues(ReportArgs.MainReportValues);
+                if (ReportArgs.IsTrackingHamster != null)
+                {
+                    SetSecondReportTextTypes(ReportArgs.SecondReportTypes);
+                    SetSecondReportTextValues(ReportArgs.SecondReportValues);
+                }
+
+            }
+            if (theArgs.Finished)
+            {
+                await dayCareBackEndAccess.GenerateEndReport(theArgs);
+                Thread.Sleep(100);
+                SimulationFinishedEvent?.Invoke(this, EventArgs.Empty);
+            }
+
+
+        }
+        private void SetMainReportTextTypes(string text)
+        {
+            // InvokeRequired required compares the thread ID of the
+            // calling thread to the thread ID of the creating thread.
+            // If these threads are different, it returns true.
+            if (this.MainReport_Test_Types.InvokeRequired)
+            {
+                SetTextCallbackMain d = new SetTextCallbackMain(SetMainReportTextTypes);
+                this.Invoke(d, new object[] { text });
+            }
+            else
+            {
+                this.MainReport_Test_Types.Text = text;
+            }
+        }
+
+        private void SetMainReportTextValues(string text)
+        {
+            // InvokeRequired required compares the thread ID of the
+            // calling thread to the thread ID of the creating thread.
+            // If these threads are different, it returns true.
+            if (this.MainReport_Test_Values.InvokeRequired)
+            {
+                SetTextCallbackMain d = new SetTextCallbackMain(SetMainReportTextValues);
+                this.Invoke(d, new object[] { text });
+            }
+            else
+            {
+                this.MainReport_Test_Values.Text = text;
+            }
+        }
+        private void SetSecondReportTextValues(string text)
+        {
+            // InvokeRequired required compares the thread ID of the
+            // calling thread to the thread ID of the creating thread.
+            // If these threads are different, it returns true.
+            if (this.label2.InvokeRequired)
+            {
+                SetTextCallbackSecondValues d = new SetTextCallbackSecondValues(SetSecondReportTextValues);
+                this.Invoke(d, new object[] { text });
+            }
+            else
+            {
+                this.label2.Text = text;
+            }
+        }
+        private void SetSecondReportTextTypes(string text)
+        {
+            // InvokeRequired required compares the thread ID of the
+            // calling thread to the thread ID of the creating thread.
+            // If these threads are different, it returns true.
+            if (this.label1.InvokeRequired)
+            {
+                SetTextCallbackSecondTypes d = new SetTextCallbackSecondTypes(SetSecondReportTextTypes);
+                this.Invoke(d, new object[] { text });
+            }
+            else
+            {
+                this.label1.Text = text;
+            }
+        }
+
     }
 }

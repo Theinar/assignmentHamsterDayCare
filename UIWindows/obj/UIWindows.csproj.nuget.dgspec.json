@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\einar\\source\\repos\\HamsterDayCare1.3\\UIWindows\\UIWindows.csproj": {}
+    "C:\\Users\\einar\\source\\repos\\HamsterDayCare1.5\\UIWindows\\UIWindows.csproj": {}
   },
   "projects": {
-    "C:\\Users\\einar\\source\\repos\\HamsterDayCare1.3\\HamsterDayCare.Data\\HamsterDayCare.Data.csproj": {
+    "C:\\Users\\einar\\source\\repos\\HamsterDayCare1.5\\HamsterDayCare.Data\\HamsterDayCare.Data.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\einar\\source\\repos\\HamsterDayCare1.3\\HamsterDayCare.Data\\HamsterDayCare.Data.csproj",
+        "projectUniqueName": "C:\\Users\\einar\\source\\repos\\HamsterDayCare1.5\\HamsterDayCare.Data\\HamsterDayCare.Data.csproj",
         "projectName": "HamsterDayCare.Data",
-        "projectPath": "C:\\Users\\einar\\source\\repos\\HamsterDayCare1.3\\HamsterDayCare.Data\\HamsterDayCare.Data.csproj",
+        "projectPath": "C:\\Users\\einar\\source\\repos\\HamsterDayCare1.5\\HamsterDayCare.Data\\HamsterDayCare.Data.csproj",
         "packagesPath": "C:\\Users\\einar\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\einar\\source\\repos\\HamsterDayCare1.3\\HamsterDayCare.Data\\obj\\",
+        "outputPath": "C:\\Users\\einar\\source\\repos\\HamsterDayCare1.5\\HamsterDayCare.Data\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\einar\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -28,8 +28,8 @@
           "net5.0": {
             "targetAlias": "net5.0",
             "projectReferences": {
-              "C:\\Users\\einar\\source\\repos\\HamsterDayCare1.3\\HamsterDayCare.Domain\\HamsterDayCare.Domain.csproj": {
-                "projectPath": "C:\\Users\\einar\\source\\repos\\HamsterDayCare1.3\\HamsterDayCare.Domain\\HamsterDayCare.Domain.csproj"
+              "C:\\Users\\einar\\source\\repos\\HamsterDayCare1.5\\HamsterDayCare.Domain\\HamsterDayCare.Domain.csproj": {
+                "projectPath": "C:\\Users\\einar\\source\\repos\\HamsterDayCare1.5\\HamsterDayCare.Domain\\HamsterDayCare.Domain.csproj"
               }
             }
           }
@@ -92,14 +92,14 @@
         }
       }
     },
-    "C:\\Users\\einar\\source\\repos\\HamsterDayCare1.3\\HamsterDayCare.Domain\\HamsterDayCare.Domain.csproj": {
+    "C:\\Users\\einar\\source\\repos\\HamsterDayCare1.5\\HamsterDayCare.Domain\\HamsterDayCare.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\einar\\source\\repos\\HamsterDayCare1.3\\HamsterDayCare.Domain\\HamsterDayCare.Domain.csproj",
+        "projectUniqueName": "C:\\Users\\einar\\source\\repos\\HamsterDayCare1.5\\HamsterDayCare.Domain\\HamsterDayCare.Domain.csproj",
         "projectName": "HamsterDayCare.Domain",
-        "projectPath": "C:\\Users\\einar\\source\\repos\\HamsterDayCare1.3\\HamsterDayCare.Domain\\HamsterDayCare.Domain.csproj",
+        "projectPath": "C:\\Users\\einar\\source\\repos\\HamsterDayCare1.5\\HamsterDayCare.Domain\\HamsterDayCare.Domain.csproj",
         "packagesPath": "C:\\Users\\einar\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\einar\\source\\repos\\HamsterDayCare1.3\\HamsterDayCare.Domain\\obj\\",
+        "outputPath": "C:\\Users\\einar\\source\\repos\\HamsterDayCare1.5\\HamsterDayCare.Domain\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\einar\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -176,14 +176,14 @@
         }
       }
     },
-    "C:\\Users\\einar\\source\\repos\\HamsterDayCare1.3\\UIWindows\\UIWindows.csproj": {
+    "C:\\Users\\einar\\source\\repos\\HamsterDayCare1.5\\UIWindows\\UIWindows.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\einar\\source\\repos\\HamsterDayCare1.3\\UIWindows\\UIWindows.csproj",
+        "projectUniqueName": "C:\\Users\\einar\\source\\repos\\HamsterDayCare1.5\\UIWindows\\UIWindows.csproj",
         "projectName": "UIWindows",
-        "projectPath": "C:\\Users\\einar\\source\\repos\\HamsterDayCare1.3\\UIWindows\\UIWindows.csproj",
+        "projectPath": "C:\\Users\\einar\\source\\repos\\HamsterDayCare1.5\\UIWindows\\UIWindows.csproj",
         "packagesPath": "C:\\Users\\einar\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\einar\\source\\repos\\HamsterDayCare1.3\\UIWindows\\obj\\",
+        "outputPath": "C:\\Users\\einar\\source\\repos\\HamsterDayCare1.5\\UIWindows\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\einar\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -200,11 +200,11 @@
           "net5.0-windows7.0": {
             "targetAlias": "net5.0-windows",
             "projectReferences": {
-              "C:\\Users\\einar\\source\\repos\\HamsterDayCare1.3\\HamsterDayCare.Data\\HamsterDayCare.Data.csproj": {
-                "projectPath": "C:\\Users\\einar\\source\\repos\\HamsterDayCare1.3\\HamsterDayCare.Data\\HamsterDayCare.Data.csproj"
+              "C:\\Users\\einar\\source\\repos\\HamsterDayCare1.5\\HamsterDayCare.Data\\HamsterDayCare.Data.csproj": {
+                "projectPath": "C:\\Users\\einar\\source\\repos\\HamsterDayCare1.5\\HamsterDayCare.Data\\HamsterDayCare.Data.csproj"
               },
-              "C:\\Users\\einar\\source\\repos\\HamsterDayCare1.3\\HamsterDayCare.Domain\\HamsterDayCare.Domain.csproj": {
-                "projectPath": "C:\\Users\\einar\\source\\repos\\HamsterDayCare1.3\\HamsterDayCare.Domain\\HamsterDayCare.Domain.csproj"
+              "C:\\Users\\einar\\source\\repos\\HamsterDayCare1.5\\HamsterDayCare.Domain\\HamsterDayCare.Domain.csproj": {
+                "projectPath": "C:\\Users\\einar\\source\\repos\\HamsterDayCare1.5\\HamsterDayCare.Domain\\HamsterDayCare.Domain.csproj"
               }
             }
           }
@@ -218,6 +218,32 @@
       "frameworks": {
         "net5.0-windows7.0": {
           "targetAlias": "net5.0-windows",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[5.0.4, )"
+            },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[5.0.4, )"
+            },
+            "Microsoft.EntityFrameworkCore.Proxies": {
+              "target": "Package",
+              "version": "[5.0.4, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[5.0.4, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[5.0.4, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",

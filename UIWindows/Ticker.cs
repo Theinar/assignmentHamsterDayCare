@@ -50,7 +50,7 @@ namespace HamsterDayCare.Domain
 
                     theArgs.NumberOfTicks++;
 
-                    if (theArgs.NumberOfTicks > theArgs.EndTick)
+                    if (theArgs.NumberOfTicks > theArgs.EndTick -1)
                     {
                         startRequest = false;
                         canselationRequest = true;

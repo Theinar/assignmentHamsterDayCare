@@ -30,7 +30,7 @@ namespace HamsterDayCare.Data
         {
   
             optionsBuilder.UseSqlServer(
-                " Server = BARRI\\SQLEXPRESS; Database = TestHamster; Trusted_Connection = True; MultipleActiveResultSets=True;")
+                " Server = BARRI\\SQLEXPRESS; Database = hamsterDB; Trusted_Connection = True; MultipleActiveResultSets=True;")
                 //.LogTo(Console.WriteLine, LogLevel.Information).EnableSensitiveDataLogging().UseLazyLoadingProxies();       
                 .EnableSensitiveDataLogging().UseLazyLoadingProxies();       
 

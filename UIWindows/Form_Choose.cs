@@ -14,12 +14,10 @@ namespace UIWindows
     {
         List<String> labelStrings;
         static bool isShowing;
-        int idWeAreLookingFor;
-        
+
 
         public static bool IsShowing { get => isShowing;}
         public List<string> LabelStrings { get => labelStrings;}
-        public int IdWeAreLookingFor { get => idWeAreLookingFor; private set => idWeAreLookingFor = value; }
 
         public Form_Choose(List<String> _labelString)
         {
@@ -38,6 +36,8 @@ namespace UIWindows
         {
             base.OnFormClosing(e);
 
+
+
             if (e.CloseReason == CloseReason.WindowsShutDown) return;
             isShowing = false;
             e.Cancel = true;
@@ -47,9 +47,17 @@ namespace UIWindows
 
         private void Button_Submit_Click(object sender, EventArgs e)
         {
-            if (int.TryParse(textBox_For_ID.Text, out int a))
+            if (int.TryParse(textBox_For_ID.Text, out int idWeareLookingFor))
             {
-                IdWeAreLookingFor = a;
+                if (this.labelStrings[0] == "Choose Hamster")
+                {
+                    ReportArgs.IsTrackingHamster = true;
+                }
+                else if (this.labelStrings[0] == "Choose Cage")
+                {
+                    ReportArgs.IsTrackingHamster = false;
+                }
+                ReportArgs.TrackingID = idWeareLookingFor;
             }
             else
             {
@@ -58,6 +66,7 @@ namespace UIWindows
             this.Close();
             
         }
+
     }
 }
 //MessageBox.Show("YES");
